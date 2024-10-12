@@ -1,0 +1,21 @@
+.movie-card {
+    width: 240px;
+    background-color: #2a2a2a;
+    color: #ffd700;
+  }
+  
+  .movie-card-meta {
+    color: #ffd700;
+  }
+  
+  .movie-card-price {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #ffd700;
+  }
+  
+  .movie-card-button {
+    background-color: #ffbd59;
+    border-color: #ffbd59;
+  }
+  

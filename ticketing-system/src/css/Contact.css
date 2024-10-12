@@ -1,0 +1,49 @@
+/* Adjust the top padding to create space for the header */
+.faq-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 60px 20px 20px; /* Top padding increased to 60px */
+    background-color: #f9f9f9;
+  }
+  
+  h1 {
+    text-align: left;
+    color: #2e3b4e;
+    margin-bottom: 30px;
+  }
+  
+  .faq-item {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .faq-item h2 {
+    font-size: 1.4rem;
+    color: #2e3b4e;
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  ul li {
+    font-size: 1rem;
+    color: #5a5a5a;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  
+  ul li::before {
+    content: '•';
+    color: #2e3b4e;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  
