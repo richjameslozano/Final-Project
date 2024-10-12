@@ -1,5 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import SignUp from '../signup/SignUp';
 
 const { Link } = Typography;
 
@@ -8,6 +10,12 @@ const Login = ({ onCancel }) => {
     console.log('Received values:', values);
     // Handle the sign-up logic here
     onCancel(); // Close the modal after submission
+  };
+
+  const navigate = useNavigate(); 
+
+  const goToSignup = () => {
+    navigate('/signup'); 
   };
 
   return (
@@ -37,7 +45,7 @@ const Login = ({ onCancel }) => {
       </Form.Item>
       <Form.Item>
         <span>Don't have an account? </span>
-        <Link onClick={() => console.log("Navigate to registration page")}>
+        <Link onClick={goToSignup}>
           Register Here!
         </Link>
       </Form.Item>
