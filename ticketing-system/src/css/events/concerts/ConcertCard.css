@@ -1,0 +1,22 @@
+.concert-card {
+    width: 300px;
+    margin: 20px;
+}
+  
+.concert-card-footer {
+    margin-top: 15px;
+    text-align: center;
+}
+  
+.buy-tickets-button {
+    width: 100%;
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+    color: #fff;
+}
+  
+.buy-tickets-button:hover {
+    background-color: #ff7875;
+    border-color: #ff7875;
+}
+  

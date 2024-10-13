@@ -1,0 +1,38 @@
+/* src/css/events/concerts/SliderComponent.css */
+.carousel-wrapper {
+    max-width: 1200px; /* Adjust the width as needed */
+    width: 100%;
+    position: relative;
+    margin: auto;
+  }
+  
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ff4d4f;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .left-nav {
+    left: -20px;
+  }
+  
+  .right-nav {
+    right: -20px;
+  }
+  
+  .carousel-nav:hover {
+    background-color: #ff7875;
+  }
+  
