@@ -6,19 +6,21 @@ import Navbar from '../components/NavBar';
 import Sidebar from '../components/SideBar';
 import MovieCard from '../components/MovieCard';
 import Header from '../components/Header';
+import '../css/HomePage.css';
+
 const { Sider, Content } = Layout;
 
 const HomePage = () => {
     return (
-      <Layout style={{ minHeight: '100vh', backgroundColor: '#1b1b1b' }}>
+      <Layout className="home-page-layout">
         <Header />
         <Layout>
           {/* <Sider width={250} style={{ backgroundColor: '#2a2a2a' }}>
             <Sidebar />
           </Sider> */}
-          <Content style={{ padding: '20px', backgroundColor: '#1b1b1b' }}>
+          <Content className="home-page-content">
             <UpcomingMovie />
-            <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', marginTop: '20px' }}>
+            <div className="movie-card-container">
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
@@ -29,5 +31,5 @@ const HomePage = () => {
       </Layout>
     );
   };
-  
-  export default HomePage;
+
+export default HomePage;

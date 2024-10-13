@@ -1,0 +1,20 @@
+/* Main layout styles */
+.home-page-layout {
+    min-height: 100vh;
+    background-color: #1b1b1b;
+}
+  
+  /* Content area styles */
+.home-page-content {
+    padding: 20px;
+    background-color: #1b1b1b;
+}
+  
+  /* Movie card container styles */
+.movie-card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+  

@@ -1,15 +1,14 @@
 import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import SignUp from '../signup/SignUp';
 
 const { Link } = Typography;
 
 const Login = ({ onCancel }) => {
+
   const onFinish = (values) => {
     console.log('Received values:', values);
-    // Handle the sign-up logic here
-    onCancel(); // Close the modal after submission
+    onCancel(); // Handle the sign-in logic and form submission
   };
 
   const navigate = useNavigate(); 
@@ -19,37 +18,44 @@ const Login = ({ onCancel }) => {
   };
 
   return (
-    <Form
-      name="signup"
-      onFinish={onFinish}
-      layout="vertical"
-    >
-      <Form.Item
-        name="username"
-        label="Username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input.Password />
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Sign Up
-        </Button>
-      </Form.Item>
-      <Form.Item>
-        <span>Don't have an account? </span>
-        <Link onClick={goToSignup}>
-          Register Here!
-        </Link>
-      </Form.Item>
-    </Form>
+    <div style={{ width: 300, margin: '0 auto', padding: '50px 0' }}> {/* Center the form */}
+      <h1 style={{ textAlign: 'center' }}>Sign In</h1> {/* Sign In label */}
+      
+      <Form
+        name="signin"
+        onFinish={onFinish}
+        layout="vertical"
+      > 
+        <Form.Item
+          name="username"
+          label="Username"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block> {/* Full width button */}
+            Sign In
+          </Button>
+        </Form.Item>
+
+        <Form.Item style={{ textAlign: 'center' }}>
+          <span>Don't have an account? </span>
+          <Link onClick={goToSignup}>
+            Register Here!
+          </Link>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

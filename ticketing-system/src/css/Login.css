@@ -1,0 +1,5 @@
+/* Custom CSS to hide the modal title for Login */
+.custom-login-modal .ant-modal-header {
+    display: none; /* This hides the entire modal header including the title */
+  }
+  
