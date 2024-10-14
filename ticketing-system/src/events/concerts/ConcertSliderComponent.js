@@ -1,8 +1,8 @@
 // src/components/SliderComponent.js
 import React, { useRef } from 'react';
 import { Carousel, Button } from 'antd';
-import ConcertCard from '../events/concerts/ConcertCard';
-import '../css/componentsStyle/SliderComponent.css'; 
+import ConcertCard from './ConcertCard';
+import '../../css/events/concerts/ConcertSliderComponent.css';
 
 const SliderComponent = ({ concertData }) => {
   const carouselRef = useRef(null);

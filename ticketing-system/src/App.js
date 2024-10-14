@@ -6,6 +6,7 @@ import Login from '../src/login/Login';   // Import Login component
 import ContactUs from './contact/ContactUs';
 import ConcertList from './events/concerts/ConcertList';
 import ConcertDetails from './events/concerts/ConcertDetails';
+import MovieList from './events/movies/MovieList';
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/concerts" element={<ConcertList />} />
         <Route path="/concert-details" element={<ConcertDetails />} />
+        <Route path="/movies" element={<MovieList />} />
+        <Route path="/movie-details" element={<ConcertDetails />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>

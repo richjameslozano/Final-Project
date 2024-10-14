@@ -1,15 +1,16 @@
-// src/events/concerts/ConcertDetails.js
 import React, { useState } from 'react';
-import { Button, Card, Divider, Typography, Modal } from 'antd';
+import { Button, Card, Typography, Modal } from 'antd';
 import '../../css/events/concerts/ConcertDetails.css';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
+import Login from '../../login/Login';
 
 const { Link } = Typography;
 
 const ConcertDetails = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false); 
-  const navigate = useNavigate(); 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const navigate = useNavigate();
 
   const ticketPackages = [
     { location: 'Early Entry VIP Package', price: '₱ 21,350.00', type: 'Standing' },
@@ -35,9 +36,13 @@ const ConcertDetails = () => {
     setIsModalVisible(false);
   };
 
+  const toggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
   return (
     <div className="concert-details">
-      <Header/>
+      <Header />
 
       <div className="concert-header">
         <img src="/images/olivia.jpg" alt="Maroon 5 Concert" className="concert-image" />
@@ -51,14 +56,26 @@ const ConcertDetails = () => {
       <div className="concert-description">
         <h3>ABOUT</h3>
         <Card className="description-card">
-          <img src="/images/maroon5-poster.jpg" alt="Concert Poster" className="concert-poster" />
+          <div className="poster-details">
+            {showDetails && (
+              <>
+                <img src="/images/olivia.jpg" alt="Concert Poster" className="concert-poster" />
+                <div className="concert-extra-details">
+                  <p>Join us for an unforgettable night as Maroon 5 brings their Asia 2025 tour to the SM Mall of Asia Arena. Experience live performances of their top hits and enjoy exclusive ticket packages tailored for every fan.</p>
+                </div>
+              </>
+            )}
+          </div>
+          <Button type="link" onClick={toggleDetails}>
+            {showDetails ? 'Hide details' : 'Show more details'}
+          </Button>
         </Card>
       </div>
 
       <div className="concert-ticket-section">
         <div className="seat-plan">
           <h3>SEAT PLAN</h3>
-          <img src="/images/seat-plan.jpg" alt="Seat Plan" className="seat-plan-image" />
+          <img src="/images/olivia.jpg" alt="Seat Plan" className="seat-plan-image" />
         </div>
         <div className="tickets">
           <h3>TICKETS</h3>
@@ -77,16 +94,14 @@ const ConcertDetails = () => {
         </div>
       </div>
 
-      {/* Login Modal */}
-      <Modal 
-        title="Login Required" 
-        visible={isModalVisible} 
-        onOk={handleOk} 
+      <Modal
+        // title="Sign In"
+        visible={isModalVisible}
+        onOk={handleOk}
         onCancel={handleCancel}
-        okText="Go to Login"
-        cancelText="Close"
+        footer={null}
       >
-        <p>You need to log in to view ticket availability and purchase tickets.</p>
+        <Login onCancel={handleCancel} />
       </Modal>
     </div>
   );

@@ -3,7 +3,7 @@ import { Carousel, Button } from 'antd';
 import ConcertCard from './ConcertCard';
 import '../../css/events/concerts/ConcertList.css';
 import Header from '../../components/Header';
-import SliderComponent from '../../components/SliderComponent';
+import SliderComponent from './ConcertSliderComponent';
 
 const concertData = [
     { title: 'Rock Festival', date: '2024-10-20', venue: 'Madison Square Garden', image: '/images/olivia.jpg' },

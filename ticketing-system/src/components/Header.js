@@ -114,6 +114,10 @@ const Header = () => {
     navigate('/concerts');
   };
 
+  const goToMoviesList = () => {
+    navigate('/movies');
+  };
+
   // Effect to remove bullets from menu items
   useEffect(() => {
     const menuItems = document.querySelectorAll('.header-menu li');
@@ -131,7 +135,7 @@ const Header = () => {
       <Menu mode="horizontal" className="header-menu">
         <Menu.Item key="home" onClick={goToHomePage}>Home</Menu.Item>
         <SubMenu key="events" title="Events">
-          <Menu.Item key="movies">Movies</Menu.Item>
+          <Menu.Item key="movies" onClick={goToMoviesList}>Movies</Menu.Item>
           <Menu.Item key="concerts" onClick={goToConcertList}>Concerts</Menu.Item>
           <Menu.Item key="sports">Sports</Menu.Item>
           <Menu.Item key="theaters">Performing Arts</Menu.Item>
