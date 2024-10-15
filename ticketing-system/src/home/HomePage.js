@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import MovieList from '../components/MovieList';
-import UpcomingMovie from '../components/UpcomingMovie';
+import HomePageSlider from '../components/HomePageSlider';
 import Navbar from '../components/NavBar';
 import Sidebar from '../components/SideBar';
 import MovieCard from '../components/MovieCard';
@@ -19,7 +19,7 @@ const HomePage = () => {
             <Sidebar />
           </Sider> */}
           <Content className="home-page-content">
-            <UpcomingMovie />
+            <HomePageSlider />
             <div className="movie-card-container">
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />

@@ -7,6 +7,8 @@ import ContactUs from './contact/ContactUs';
 import ConcertList from './events/concerts/ConcertList';
 import ConcertDetails from './events/concerts/ConcertDetails';
 import MovieList from './events/movies/MovieList';
+import UpcomingMovies from './news/UpcomingMovies';
+import UpcomingMovieTrailer from './news/UpcomingMoviesTrailer';
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/concert-details" element={<ConcertDetails />} />
         <Route path="/movies" element={<MovieList />} />
         <Route path="/movie-details" element={<ConcertDetails />} />
+        <Route path="/upcomingmovies" element={<UpcomingMovies />} />
+        <Route path="/trailer" element={<UpcomingMovieTrailer />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>

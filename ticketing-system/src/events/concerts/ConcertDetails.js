@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Card, Typography, Modal } from 'antd';
+import { Button, Card, Typography, Modal, Select } from 'antd';
 import '../../css/events/concerts/ConcertDetails.css';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
 import Login from '../../login/Login';
 
 const { Link } = Typography;
+const { Option } = Select;
 
 const ConcertDetails = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -13,10 +14,12 @@ const ConcertDetails = () => {
   const navigate = useNavigate();
 
   const ticketPackages = [
-    { location: 'Early Entry VIP Package', price: '₱ 21,350.00', type: 'Standing' },
-    { location: 'Floor Standing', price: '₱ 15,850.00', type: 'Standing' },
-    { location: 'Lower Box B Premium', price: '₱ 15,250.00', type: 'Reserved Seating' },
-    { location: 'Upper Box Premium', price: '₱ 8,850.00', type: 'Reserved Seating' },
+    { location: 'SVIP', price: '₱ 4,490.00', type: 'Reserved Seating' },
+    { location: 'VIP', price: '₱ 3,950.00', type: 'Reserved Seating' },
+    { location: 'Lower Box A', price: '₱ 2,950.00', type: 'Reserved Seating' },
+    { location: 'Lower Box B', price: '₱ 2,350.00', type: 'Reserved Seating' },
+    { location: 'Upper Box', price: '₱ 1,650.00', type: 'Reserved Seating' },
+    { location: 'General Admission', price: '₱ 690.00', type: 'Reserved Seating' },
   ];
 
   const goToLogin = () => {
@@ -80,22 +83,43 @@ const ConcertDetails = () => {
         <div className="tickets">
           <h3>TICKETS</h3>
           <p>To buy or to view price availability, please log in <Link onClick={showModal}>Here</Link>.</p>
-          {ticketPackages.map((ticket, index) => (
-            <div className="ticket-package" key={index}>
-              <div className="ticket-info">
-                <p>{ticket.location}</p>
-                <span>{ticket.type}</span>
-              </div>
-              <div className="ticket-price">
-                <p>{ticket.price}</p>
-              </div>
-            </div>
-          ))}
+          <table className="ticket-table">
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Section</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ticketPackages.map((ticket, index) => (
+                <tr key={index} className="ticket-row">
+                  <td>
+                    <div className="ticket-info">
+                      <p><strong>{ticket.location}</strong></p>
+                      <span>{ticket.type}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <Select placeholder="Select Section" className="section-select">
+                      <Option value="Section A">Section A</Option>
+                      <Option value="Section B">Section B</Option>
+                      <Option value="Section C">Section C</Option>
+                    </Select>
+                  </td>
+                  <td>{ticket.price}</td>
+                  <td>
+                    <Button type="primary" className="select-seats-button">Select Seats</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
       <Modal
-        // title="Sign In"
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}

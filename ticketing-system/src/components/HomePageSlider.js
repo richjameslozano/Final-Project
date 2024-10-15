@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'; // Import useRef
 import { Button, Carousel } from 'antd';
-import '../css/componentsStyle/UpcomingMovie.css'; // Import the CSS file
+import '../css/componentsStyle/HomePageSlider.css'; // Import the CSS file
 
 const UpcomingMovie = () => {
   const carouselRef = useRef(null); // Create a ref for the Carousel
@@ -12,7 +12,7 @@ const UpcomingMovie = () => {
       title: 'Tokyo Drift', 
       date: '20-26 November 2024', 
       director: 'Tristan Aquino' 
-    },
+    },  
     { 
       image: `${process.env.PUBLIC_URL}/images/ff7ls.jpg`, 
       backgroundImage: `${process.env.PUBLIC_URL}/images/test.png`, // Use the same for testing
@@ -47,6 +47,7 @@ const UpcomingMovie = () => {
             <div className="upcoming-movie-poster">
               <img src={movie.image} alt={movie.title} className="upcoming-movie-image" />
             </div>
+            
             <div className="upcoming-movie-info">
               <h1 className="upcoming-movie-title">{movie.title}</h1>
               <p className="upcoming-movie-director">Directed By {movie.director}</p>

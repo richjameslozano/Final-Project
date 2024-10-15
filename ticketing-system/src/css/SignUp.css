@@ -9,6 +9,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box; /* Ensure padding and width behave correctly */
+    padding-top: 70px; /* Adjust this value based on your header's height */    
 }
 
 /* Section Headers */
@@ -107,12 +108,6 @@
 .signup-checkbox label {
     margin-left: 8px;
 }
-
-/* Add padding to prevent overlap with the fixed header */
-.signup-container {
-    padding-top: 70px; /* Adjust this value based on your header's height */
-}
-  
 
 /* Make checkbox labels wrap nicely on smaller screens */
 @media (max-width: 768px) {
