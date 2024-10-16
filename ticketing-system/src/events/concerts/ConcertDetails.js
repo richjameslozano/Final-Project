@@ -14,12 +14,12 @@ const ConcertDetails = () => {
   const navigate = useNavigate();
 
   const ticketPackages = [
-    { location: 'SVIP', price: '₱ 4,490.00', type: 'Reserved Seating' },
-    { location: 'VIP', price: '₱ 3,950.00', type: 'Reserved Seating' },
-    { location: 'Lower Box A', price: '₱ 2,950.00', type: 'Reserved Seating' },
-    { location: 'Lower Box B', price: '₱ 2,350.00', type: 'Reserved Seating' },
-    { location: 'Upper Box', price: '₱ 1,650.00', type: 'Reserved Seating' },
-    { location: 'General Admission', price: '₱ 690.00', type: 'Reserved Seating' },
+    { location: 'SVIP', price: '₱ 4,490.00', type: 'Reserved Seating', ticketsLeft: 10 },
+    { location: 'VIP', price: '₱ 3,950.00', type: 'Reserved Seating', ticketsLeft: 5 },
+    { location: 'Lower Box A', price: '₱ 2,950.00', type: 'Reserved Seating', ticketsLeft: 8 },
+    { location: 'Lower Box B', price: '₱ 2,350.00', type: 'Reserved Seating', ticketsLeft: 12 },
+    { location: 'Upper Box', price: '₱ 1,650.00', type: 'Reserved Seating', ticketsLeft: 20 },
+    { location: 'General Admission', price: '₱ 690.00', type: 'Reserved Seating', ticketsLeft: 50 },
   ];
 
   const goToLogin = () => {
@@ -89,6 +89,7 @@ const ConcertDetails = () => {
                 <th>Location</th>
                 <th>Section</th>
                 <th>Price</th>
+                <th>Tickets Left</th>
                 <th>Quantity</th>
               </tr>
             </thead>
@@ -109,6 +110,7 @@ const ConcertDetails = () => {
                     </Select>
                   </td>
                   <td>{ticket.price}</td>
+                  <td>{ticket.ticketsLeft}</td>
                   <td>
                     <Button type="primary" className="select-seats-button">Select Seats</Button>
                   </td>
