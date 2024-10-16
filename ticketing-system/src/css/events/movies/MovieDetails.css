@@ -1,0 +1,65 @@
+.movie-details-all-cinema {
+  padding: 20px;
+  padding-top: 70px;
+}
+
+.movie-header {
+  display: flex;
+  gap: 20px;
+}
+
+.movie-poster {
+  width: 300px;
+  height: auto;
+}
+
+.movie-info {
+  flex-grow: 1;
+}
+
+.movie-meta {
+  margin-top: 20px;
+}
+
+.cinema-selection {
+  margin-top: 40px;
+}
+
+.logo-section {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.cinema-logo {
+  height: 50px;
+  width: auto;
+}
+
+.showtime-section {
+  margin-top: 20px;
+}
+
+.cinema-search {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.cinema-schedule {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.cinema-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.show-date {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.showtimes .ant-btn {
+  margin-right: 10px;
+}

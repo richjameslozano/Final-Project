@@ -9,6 +9,10 @@ import ConcertDetails from './events/concerts/ConcertDetails';
 import MovieList from './events/movies/MovieList';
 import UpcomingMovies from './news/UpcomingMovies';
 import UpcomingMovieTrailer from './news/UpcomingMoviesTrailer';
+import TicketOutlets from './outlets/TicketOutlets';
+import UpcomingEvents from './news/UpcomingEvents';
+import MovieDetails from './events/movies/MovieDetails';
+import MovieSeats from './events/movies/MovieSeats';
 
 const App = () => {
   return (
@@ -22,10 +26,12 @@ const App = () => {
         <Route path="/concerts" element={<ConcertList />} />
         <Route path="/concert-details" element={<ConcertDetails />} />
         <Route path="/movies" element={<MovieList />} />
-        <Route path="/movie-details" element={<ConcertDetails />} />
-        <Route path="/upcomingmovies" element={<UpcomingMovies />} />
+        <Route path="/movie-details" element={<MovieDetails />} />
+        <Route path="/movie-seats" element={<MovieSeats />} />
+        <Route path="/upcoming-events" element={<UpcomingEvents />} />
+        <Route path="/upcoming-movies" element={<UpcomingMovies />} />
         <Route path="/trailer" element={<UpcomingMovieTrailer />} />
-        {/* Add more routes as needed */}
+        <Route path="/ticket-outlets" element={<TicketOutlets />} />
       </Routes>
     </Router>
   );

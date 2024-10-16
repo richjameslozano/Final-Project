@@ -1,0 +1,13 @@
+/* src/css/news/EventDetails.css */
+.event-details {
+    padding: 20px;
+  }
+  
+  .event-details .ant-typography-title {
+    margin-bottom: 15px;
+  }
+  
+  .event-details .event-trailer {
+    margin-top: 20px;
+  }
+  
