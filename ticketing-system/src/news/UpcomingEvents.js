@@ -20,7 +20,6 @@ const events = [
     trailerUrl: 'https://www.youtube.com/embed/example2',
     description: 'Explore contemporary art at the annual art exhibition.' 
   },
-  // Add more events as needed
 ];
 
 const UpcomingEvents = () => {
