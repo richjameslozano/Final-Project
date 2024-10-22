@@ -78,6 +78,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/Header.css'; 
 import Login from '../login/Login';
+import ProfileButton from './ProfileButton';
 
 const { Search } = Input;
 const { SubMenu } = Menu;
@@ -190,6 +191,7 @@ const Header = () => {
         <Login onCancel={handleCancel} />
       </Modal> */}
 
+
       <div className='btn-container'>
         <button>Home</button>
         <button>Events</button>
@@ -198,10 +200,9 @@ const Header = () => {
         <button>Contact Us</button>
         <input placeholder='Looking for anything?'></input>
         <img className='search-btn' src='https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png'></img>
-        <ShoppingCartOutlined className='cart-icon'/>
-        <img src='https://www.citypng.com/public/uploads/small/11639594342hjraqgbufi3xlb66lt30fz1pwfcydxkjqbynfqdpvufz41ysjtngiet4dyrywgqqqqu56w5nozgrhyecs4ixrlllkl150ogbiid1.png' className='profile-btn'/>
-      </div>
-        
+        <ShoppingCartOutlined className='cart-icon'/> 
+        <ProfileButton />
+        </div>
     </div>
   );
 };

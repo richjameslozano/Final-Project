@@ -1,12 +1,14 @@
 /* Carousel styling */
 .upcoming-movie-carousel-container{
-  position: absolute;
+  position:relative;
+  width: 10px;
+  height: 500px;
 }
 
 .upcoming-movie-carousel {
-  width: 100%;
-  height: 100%;
-  padding-top: 80px;
+  width: 500px;
+  height: 90%;
+  padding-top: 100px;
 
 }
 
@@ -17,7 +19,7 @@
   justify-content: space-between;
   align-items: center;
   height: 500px;
-  width: 100%;
+  width: 80%;
   padding: 20px;
   background-color: rgba(0,0,0,0); /* Fallback background color */
   color: #fff; /* Ensure text is visible on dark backgrounds */
@@ -35,7 +37,7 @@
 
 .upcoming-movie-image {
   max-width: 300px;
-  max-height: 400px;
+  max-height: 300px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

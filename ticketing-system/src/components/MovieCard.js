@@ -15,7 +15,7 @@ const MovieCard = ({ title, screen, price, image }) => (
 
   <div className='movie-card-container'>
     <div>
-      <div>{price}</div>
+      <div>{<img alt={title} src={image} />} {price}</div>
     </div>
   </div>
 );
