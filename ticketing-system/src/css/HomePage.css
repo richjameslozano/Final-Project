@@ -1,20 +1,54 @@
+body{
+  overflow-x: hidden;
+}
+
 /* Main layout styles */
 .home-page-layout {
     min-height: 100vh;
-    background-color: #1b1b1b;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
   
   /* Content area styles */
 .home-page-content {
     padding: 20px;
     background-color: #1b1b1b;
+    margin-top: 100px;
 }
   
+.main-content-container{
+  display: flex;
+  flex-direction: column;
+  width: 1900px;
+  height: 1000px;
+  background-color: #171717;
+  padding: 20px 300px;
+ 
+}
   /* Movie card container styles */
 .movie-card-container {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
     margin-top: 20px;
+    flex-direction: row;
+    margin-left: 200px;
 }
-  
+
+.slider-bg{
+    /* margin-top: 80px; */
+    height: 960px;
+    width: 1900px;
+    z-index: -1;
+
+}
+
+.black-fade{
+  position: absolute;
+  background-color: black;
+  opacity: 90%;
+  width: 1900px;
+  height: 960px;
+  z-index: 0;
+}
+

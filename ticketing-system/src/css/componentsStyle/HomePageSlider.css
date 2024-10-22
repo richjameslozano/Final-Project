@@ -1,20 +1,25 @@
 /* Carousel styling */
+.upcoming-movie-carousel-container{
+  position: absolute;
+}
+
 .upcoming-movie-carousel {
   width: 100%;
   height: 100%;
   padding-top: 80px;
+
 }
 
 /* Slide container with background image */
 .upcoming-movie-container {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 500px;
   width: 100%;
   padding: 20px;
-  position: relative;
-  background-color: #000; /* Fallback background color */
+  background-color: rgba(0,0,0,0); /* Fallback background color */
   color: #fff; /* Ensure text is visible on dark backgrounds */
   background-size: cover; /* Ensure the background image covers the entire container */
   background-position: center;

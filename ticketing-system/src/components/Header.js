@@ -142,9 +142,9 @@ const Header = () => {
 
   return (
     <div className="header-container">
-      <div className="header-logo">ONEPIXEL</div>
+      <div className="header-logo">ONEPIXEL.<span className='ticket-logo'>Ticket</span></div>
 
-      <Menu mode="horizontal" className="header-menu">
+      {/* <Menu mode="horizontal" className="header-menu">
         <Menu.Item key="home" onClick={goToHomePage}>Home</Menu.Item>
         <SubMenu key="events" title="Events">
           <Menu.Item key="movies" onClick={goToMoviesList}>Movies</Menu.Item>
@@ -188,7 +188,20 @@ const Header = () => {
         footer={null}
       >
         <Login onCancel={handleCancel} />
-      </Modal>
+      </Modal> */}
+
+      <div className='btn-container'>
+        <button>Home</button>
+        <button>Events</button>
+        <button>Ticket Outlets</button>
+        <button>News</button>
+        <button>Contact Us</button>
+        <input placeholder='Looking for anything?'></input>
+        <img className='search-btn' src='https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png'></img>
+        <ShoppingCartOutlined className='cart-icon'/>
+        <img src='https://www.citypng.com/public/uploads/small/11639594342hjraqgbufi3xlb66lt30fz1pwfcydxkjqbynfqdpvufz41ysjtngiet4dyrywgqqqqu56w5nozgrhyecs4ixrlllkl150ogbiid1.png' className='profile-btn'/>
+      </div>
+        
     </div>
   );
 };

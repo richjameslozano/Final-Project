@@ -1,130 +1,90 @@
+body{
+
+}
 .header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #2a2a2a;
-  padding: 10px 20px;
+  background-color: #171717;
+  padding: 20px 150px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  height: 120px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  border-bottom: 0.5px solid #37FD12;
 }
 
 .header-logo {
-  font-size: 24px;
-  color: #ffd700;
+  font-size: 35px;
+  color: white;
   margin-right: 20px;
   text-decoration: none;
   font-weight: bold;
+  font-style: italic;
 }
 
-.header-menu {
+.ticket-logo{
+  color: #37FD12;
+}
+
+.btn-container{
   display: flex;
-  justify-content: space-between;
-  flex-grow: 1;
-  background-color: #2a2a2a !important;
+  flex-direction: row;
+}
+
+button{
+  color: white;
+  font-size: 17px;
+  background: none;
+  border: 0px;
+  font-weight: bolder;
+  margin-right: 40px;
+  transition: all 0.1s ease-in-out;
+}
+
+input{
+  height: 45px;
+  width: 250px;
+  border-radius: 50px 0px 0px 50px;
+  padding: 1px 20px;
+  background-color: #090909;
   border: none;
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  list-style: none; /* Ensure no list style */
-}
-
-.header-menu .ant-menu-item,
-.header-menu .ant-menu-submenu-title {
-  color: white !important;
-  padding: 0 !important; /* Ensure no extra padding */
-  margin: 0 !important; /* Ensure no margin */
-  list-style: none !important; /* Ensure no bullets */
-}
-
-.header-menu .ant-menu-item::before {
-  content: none !important; /* Remove any content before menu items */
-}
-
-.header-menu .ant-menu-submenu {
-  list-style: none !important; /* Ensure no bullets on submenu */
-  padding: 0 !important; /* Remove padding */
-  margin: 0 !important; /* Remove margin */
-}
-
-.header-menu .ant-menu-submenu > .ant-menu {
-  list-style: none !important; /* Ensure no bullets on submenu items */
-  padding: 0 !important; /* Remove padding */
-  margin: 0 !important; /* Remove margin */
-}
-
-.header-menu .ant-menu-submenu .ant-menu-item {
-  list-style-type: none !important; /* Ensure no bullets on submenu items */
-  padding: 0 !important; /* Ensure no extra padding */
-  margin: 0 !important; /* Ensure no extra margin */
-}
-
-.header-menu .ant-menu-submenu-title {
-  list-style: none !important; /* Ensure no bullets on submenu title */
-  padding: 0 !important; /* Ensure no padding */
-}
-
-.header-menu .ant-menu-item:hover,
-.header-menu .ant-menu-submenu-title:hover {
-  color: #ffd700 !important;
-}
-
-.header-search {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-}
-
-.header-search input {
-  padding: 5px 10px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
+  color: white;
+  font-size: 15px;
   outline: none;
 }
 
-.header-search button {
-  background-color: #007bff;
+.search-btn{
+  height: 45px;
+  background-color: #008000;
+  width: 45px;
+  border-radius: 0px 50px 50px 0px;
+  border-left: 1px solid #171717;
+  padding: 12px 12px;
+  cursor: pointer;
+}
+
+.cart-icon{
   color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 0 20px 20px 0;
+  font-size: 30px;
+  margin-left: 40px;
   cursor: pointer;
 }
 
-.header-icons {
-  display: flex;
-  align-items: center;
-}
-
-.header-icon {
-  color: #ffd700;
-  font-size: 20px;
-  margin-right: 15px;
-}
-
-.header-button {
-  color: #ffd700;
-  border: none;
-  background: none;
-  margin-left: 15px;
-  font-size: 16px;
-  padding: 0;
+.profile-btn{
+  height: 35px;
+  width: 35px;
+  margin-left: 40px;
+  align-self: center;
+  color: white;
   cursor: pointer;
 }
 
-.header-button:hover {
-  text-decoration: underline;
-}
-
-.header-menu,
-.header-menu .ant-menu-item,
-.header-menu .ant-menu-submenu-title,
-.header-menu .ant-menu-submenu,
-.header-menu .ant-menu-item::before,
-.header-menu .ant-menu-submenu-title::before {
-  list-style: none !important; /* Remove bullets */
-  padding: 0 !important; /* Ensure no padding */
-  margin: 0 !important; /* Ensure no margin */
+button:hover{
+  color: #37FD12;
+  transform: scale(1.1);
+  cursor: pointer;
 }
