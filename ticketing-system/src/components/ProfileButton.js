@@ -27,6 +27,10 @@ function ProfileButton() {
     setDropdownVisible((prev) => !prev); // Toggle dropdown visibility
   };
 
+  const goToSignup = () => {
+    navigate('/signup'); 
+  };
+
   const handleOptionClick = (option) => {
     alert(`${option} clicked!`); // Handle option click (replace with actual navigation if needed)
     setDropdownVisible(false); // Close dropdown after option click
@@ -57,8 +61,12 @@ function ProfileButton() {
       />
       {dropdownVisible && (
         <div className="dropdown">
-          <a href="/create-account" onClick={() => handleOptionClick('Create Account')}>Create Account</a>
-          <a href="/sign-in" onClick={() => handleOptionClick('Sign In')}>Sign In</a>
+          <Button className="header-button" onClick={showModal}>
+          Sign In
+          </Button> 
+          <Button className="header-button" onClick={goToSignup}>
+          Create Account
+          </Button> 
         </div>
       )}
 

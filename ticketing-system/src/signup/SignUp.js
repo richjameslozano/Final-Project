@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../css/SignUp.css';
-import Header from '../components/Header'; // Import the Header component
+import Header from '../components/Header';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -10,28 +11,42 @@ const SignUp = () => {
         firstName: '',
         lastName: '',
         email: '',
-        mobileNumber: '',
-        agreeToTerms: false,
-        receiveNewsletter: false,
+        mobileNumber: ''
     });
 
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value,
         });
     };
-    
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Implement form submission logic here
-        console.log(formData);
+
+        // Check if passwords match
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        // Send the form data to the backend
+        try {
+            const response = await axios.post('http://localhost:8017/signup', formData);
+            if (response.status === 201) {
+                alert('User registered successfully');
+
+
+            }
+        } catch (error) {
+            console.error('There was an error registering the user!', error);
+        }
     };
 
     return (
         <div>
-            <Header /> {/* Include the Header here */}
+            <Header />
             <form className="signup-container" onSubmit={handleSubmit}>
                 <h2>Register</h2>
                 <div className="signup-form">
@@ -62,7 +77,7 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 name="confirmPassword"
-                                value={formData.password}
+                                value={formData.confirmPassword}
                                 onChange={handleChange}
                                 required
                             />
@@ -117,26 +132,6 @@ const SignUp = () => {
                                 required
                             />
                         </div>
-                    </div>
-
-                    <div className="signup-checkbox">
-                        <input
-                            type="checkbox"
-                            name="agreeToTerms"
-                            checked={formData.agreeToTerms}
-                            onChange={handleChange}
-                            required
-                        />
-                        <label>I agree to the Terms & Conditions and Data Privacy Policy</label>
-                    </div>
-                    <div className="signup-checkbox">
-                        <input
-                            type="checkbox"
-                            name="receiveNewsletter"
-                            checked={formData.receiveNewsletter}
-                            onChange={handleChange}
-                        />
-                        <label>I agree to receive News Letters, Updates and Promotions</label>
                     </div>
 
                     <div className="signup-buttons">
