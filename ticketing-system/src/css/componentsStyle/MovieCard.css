@@ -50,33 +50,3 @@
 }
 
 
-
-
-
-.black-overlay {
-  position: relative;
-  width: 300px;
-  height: 200px;
-  background-color: lightblue;
-  padding: 20px;
-}
-
-.black-overlay::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0); /* Initially transparent */
-  transition: background-color 0.3s ease; /* Smooth transition */
-  z-index: 1;
-}
-
-.black-overlay:hover::before {
-  background-color: rgba(0, 0, 0, 0.5); /* Overlay appears on hover */
-}
-
-
-
-
