@@ -1,0 +1,29 @@
+.profile-button-container {
+  position: relative;
+  display: inline-block; /* Ensures the dropdown is positioned relative to the button */
+  margin-top: 8px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%; /* Positions the dropdown below the button */
+  right: 0; /* Aligns the dropdown to the right */
+  background-color: #090909; /* Background color of the dropdown */
+  border: 1px solid #ccc; /* Border around the dropdown */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+  z-index: 1000; /* Ensures dropdown appears above other elements */
+  padding: 10px; /* Padding for the dropdown */
+  border-radius: 4px; /* Rounded corners */
+  width: 150px;
+}
+
+.dropdown a {
+  display: block; /* Makes the links take the full width */
+  padding: 8px 12px; /* Padding for the links */
+  text-decoration: none; /* Removes underline from links */
+  color: rgb(255, 255, 255); /* Text color */
+}
+
+.dropdown a:hover {
+  background-color: #585858; /* Background color on hover */
+}

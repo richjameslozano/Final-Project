@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'; // Import useRef
 import { Button, Carousel } from 'antd';
 import '../css/componentsStyle/HomePageSlider.css'; // Import the CSS file
+import HomePage from '../home/HomePage';
 
-const UpcomingMovie = () => {
+const HomePageSlider = () => {
   const carouselRef = useRef(null); // Create a ref for the Carousel
 
   const movieData = [
@@ -79,4 +80,4 @@ const UpcomingMovie = () => {
   );
 };
 
-export default UpcomingMovie;
+export default HomePageSlider;

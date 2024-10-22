@@ -1,0 +1,111 @@
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px; /* Fixed height for the slider area */
+  overflow: hidden;
+  margin-top: 100px;
+  padding-top: 50px;
+}
+
+.slider-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the background image covers the area proportionally */
+  z-index: 1; /* Places the background behind the carousel */
+}
+
+.slider-content {
+  position: relative;
+  z-index: 2; /* Keeps the carousel content in front of the background image */
+  width: 1900px; /* Fixed width for the carousel */
+  height: 400px; /* Fixed height for the carousel */
+  margin: 0 auto; /* Centers the carousel */
+  margin-top: 20px;
+  border-radius: 20px; /* Reduce the border-radius for a sleeker look */
+}
+
+.carousel-image {
+  width: 700px;
+  height: 400px;
+  margin-left: 1100px; /* Centers the image horizontally */
+}
+
+.slider-slide {
+  position: relative;
+  height: 100%;
+}
+
+/* Dark Overlay */
+.dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black to darken the background */
+  z-index: 1;
+}
+
+/* Text and Button Overlay */
+.slider-text {
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  transform: translateY(-50%);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adds shadow for better readability */
+}
+
+.slider-text h2 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.slider-text p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.buy-ticket-btn {
+  background-color: #ff6347; /* Tomato color for the button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.buy-ticket-btn:hover {
+  background-color: #ff4500; /* Darker shade on hover */
+}
+
+/* Custom navigation buttons */
+.prev-btn, .next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for buttons */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  z-index: 3; /* Ensure buttons are above the carousel content */
+  font-size: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.prev-btn {
+  left: 10px; /* Position the prev button to the left */
+}
+
+.next-btn {
+  right: 10px; /* Position the next button to the right */
+}
+
+.prev-btn:hover, .next-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Darker shade on hover */
+}

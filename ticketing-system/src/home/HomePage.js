@@ -7,6 +7,7 @@ import Sidebar from '../components/SideBar';
 import MovieCard from '../components/MovieCard';
 import Header from '../components/Header';
 import '../css/HomePage.css';
+import HomeSlider from '../components/HomeSlider';
 
 const { Sider, Content } = Layout;
 
@@ -17,8 +18,8 @@ const HomePage = () => {
         <div >
           <div className='slider-container'>
             {/* <HomePageSlider /> */}
-            <div className='black-fade'/>
-            <img src='/images/HomeImages/slider-bg.jpg' className='slider-bg'></img>
+            
+            <HomeSlider/>
           </div>
 
 
@@ -28,7 +29,7 @@ const HomePage = () => {
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
               <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
-              {/* Add more MovieCard components as needed */}
+            
             </div>
           </div>
             
