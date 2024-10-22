@@ -11,11 +11,7 @@ const HomeSlider = () => {
 
   return (
     <div className='slider-wrapper'>
-      {/* Background Image */}
-      <img src='/images/HomeImages/slider-bg.jpg' className='slider-bg' alt='slider background' />
 
-      {/* Dark Overlay */}
-      <div className='dark-overlay'></div> 
 
       <div className='slider-content'>
         <Carousel autoplay ref={carouselRef}>

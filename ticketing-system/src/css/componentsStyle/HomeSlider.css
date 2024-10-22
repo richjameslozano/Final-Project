@@ -1,20 +1,25 @@
 .slider-wrapper {
   position: relative;
-  width: 100%;
-  height: 500px; /* Fixed height for the slider area */
+  width: 1900;
+  height: 900px; /* Fixed height for the slider area */
   overflow: hidden;
   margin-top: 100px;
   padding-top: 50px;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:  rgba(0, 0, 0, 0.9 )
 }
 
 .slider-bg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  height: 1000px;
+  width: 1900px;
   object-fit: cover; /* Ensure the background image covers the area proportionally */
-  z-index: 1; /* Places the background behind the carousel */
+  z-index: 0; /* Places the background behind the carousel */
 }
 
 .slider-content {
@@ -22,8 +27,7 @@
   z-index: 2; /* Keeps the carousel content in front of the background image */
   width: 1900px; /* Fixed width for the carousel */
   height: 400px; /* Fixed height for the carousel */
-  margin: 0 auto; /* Centers the carousel */
-  margin-top: 20px;
+  margin-top: -70px;
   border-radius: 20px; /* Reduce the border-radius for a sleeker look */
 }
 
@@ -35,7 +39,6 @@
 
 .slider-slide {
   position: relative;
-  height: 100%;
 }
 
 /* Dark Overlay */
@@ -43,8 +46,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black to darken the background */
   z-index: 1;
 }

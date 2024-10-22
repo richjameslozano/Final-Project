@@ -15,26 +15,29 @@ const HomePage = () => {
     return (
       <Layout className="home-page-layout">
         <Header />
-        <div >
+     
           <div className='slider-container'>
-            {/* <HomePageSlider /> */}
-            
-            <HomeSlider/>
-          </div>
+            <HomeSlider />
+            <div className='black-fade'/>
+            <img src='/images/HomeImages/slider-bg.jpg' className='slider-bg'></img>
+            </div>
 
-
-          <div className='main-content-container'>
-            <h1>HELLO WORLDDDD</h1>
-            <div className="movie-card-container">
-              <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
-              <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
-              <MovieCard title="Fast & Furious" screen="Platinum" price={15} image="/images/ff1.jpg" />
-            
+          <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
+            <h1 className='title-one'>FEATURED SHOWS</h1>
+            <h2 className='sub-title'>FROM INF224</h2>
+        
+            <div className="movie-card-container-main">
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15}  image="/images/HomeImages/hardstuck-poster.png" />
+              {/* Add more MovieCard components as needed */}
             </div>
           </div>
             
 
-        </div>
+        
       </Layout>
     );
   };

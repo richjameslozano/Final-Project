@@ -1,6 +1,3 @@
-body{
-
-}
 .header-container {
   display: flex;
   align-items: center;
@@ -43,6 +40,7 @@ button{
   font-weight: bolder;
   margin-right: 40px;
   transition: all 0.1s ease-in-out;
+  font-family: theBold;
 }
 
 input{
@@ -88,3 +86,4 @@ button:hover{
   transform: scale(1.1);
   cursor: pointer;
 }
+
