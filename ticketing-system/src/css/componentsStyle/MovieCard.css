@@ -1,99 +1,82 @@
 
-/* .movie-card {
-    width: 240px;
-    background-color: #2a2a2a;
-    color: #ffd700;
-  }
-  
-  .movie-card-meta {
-    color: #ffd700;
-  }
-  
-  .movie-card-price {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #ffd700;
-  }
-  
-  .movie-card-button {
-    background-color: #ffbd59;
-    border-color: #ffbd59;
-  }
-   */
-.upcoming-movies {
-  padding: 20px; /* Padding around the entire section */
-  text-align: center;
-  padding-top: 100px;
-}
-
-.upcoming-movies h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Wider columns */
-  gap: 80px; /* More space between items */
-  padding: 20px; /* Padding around the grid */
-}
-
-.movie-card {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px; /* Padding inside the card */
+.movie-card-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 400px;
+  background-color: white;
+  margin-left: 30px;
+  margin-right: 30px; 
+  background-color: rgba(0, 0, 0, 0);
+  margin-top: 80px;
 }
 
-.rating-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 5px 8px;
-  border-radius: 3px;
-  font-size: 12px;
+.card-posters{
+  padding-left: 60px;
+  padding-right: 60px;
+  height: auto;
+  max-width: 100%;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0)
 }
 
-.movie-poster {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px; /* Space between the image and the title */
-}
-
-.movie-title {
-  font-size: 16px;
+.details{
+  margin: 20px;
+  font-size: 20px;
   font-weight: bold;
-  color: #f4b400;
-  text-align: center;
+  font-family: AlteBold ;
+  margin-bottom: 2px;
 }
 
-.rating-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: #fff;
-    padding: 5px 8px;
-    border-radius: 3px;
-    font-size: 12px;
+.deet-date{
+  color: gray;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
-  
-.rating-badge.r16 {
-    background-color: #0353dc; 
+.deet-venue{
+  color: rgb(255, 100, 39);
+  border: 0.5px solid white;
+  text-wrap: wrap;
 }
-  
-.rating-badge.pg {
-    background-color: #2ecc71; 
+
+.card-posters:hover{
+  border: 1px solid gray;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+  background-color: rgba(0, 0, 0, 0.5);
 }
-  
-.rating-badge.tbc {
-    background-color: #f31212; 
+
+
+
+
+
+.black-overlay {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background-color: lightblue;
+  padding: 20px;
 }
-  
+
+.black-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Initially transparent */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  z-index: 1;
+}
+
+.black-overlay:hover::before {
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay appears on hover */
+}
+
+
+
+

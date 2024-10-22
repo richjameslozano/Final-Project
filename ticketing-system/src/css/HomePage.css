@@ -1,3 +1,33 @@
+@font-face {
+  font-family: 'Evers';
+  src: url('./text-fonts/Evers.ttf');
+}
+
+@font-face {
+  font-family: 'Akira';
+  src: url('./text-fonts/Akira\ Expanded\ Demo.otf');
+}
+
+@font-face {
+  font-family: 'Coffee';
+  src: url('./text-fonts/kenyan\ coffee\ bd.otf');
+}
+
+@font-face {
+  font-family: 'theBold';
+  src: url('./text-fonts/THE\ BOLD\ FONT\ -\ FREE\ VERSION\ -\ 2023.ttf');
+}
+
+@font-face {
+  font-family: 'AlteBold';
+  src: url('./text-fonts/AlteHaasGroteskBold.ttf');
+}
+
+@font-face {
+  font-family: 'Alte';
+  src: url('./text-fonts/AlteHaasGroteskRegular.ttf');
+}
+
 body{
   overflow-x: hidden;
 }
@@ -6,49 +36,64 @@ body{
 .home-page-layout {
     min-height: 100vh;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
 }
   
-  /* Content area styles */
-.home-page-content {
-    padding: 20px;
-    background-color: #1b1b1b;
-    margin-top: 100px;
-}
-  
+
 .main-content-container{
+  margin-top: -5px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 1900px;
-  height: 1000px;
+  height: 5000px;
   background-color: #171717;
-  padding: 20px 300px;
- 
+  padding-left: 300px;
+  padding-right: 300px;
+  padding-top: 5%;
+  color: white;
 }
   /* Movie card container styles */
-.movie-card-container {
-    display: flex;
-    margin-top: 20px;
-    flex-direction: row;
-    margin-left: 10px;
+.movie-card-container-main {
+  display: flex;
+  flex-direction: row;
+    justify-content: center;
+    width: 1500px;  
+  height: 1100px;
+  margin-bottom: 100px;
+  flex-wrap: wrap;
+}
+
+.slider-container{
+  height: 1000px;
 }
 
 .slider-bg{
-    /* margin-top: 80px; */
     height: 960px;
     width: 1900px;
-    z-index: -1;
-
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    z-index: -4;
 }
 
-.black-fade{
-  position: absolute;
+/* .black-fade{
+  position: relative;
   background-color: black;
   opacity: 90%;
   width: 1900px;
   height: 960px;
-  z-index: 0;
+  z-index: 1;
+} */
+
+.title-one{
+  font-size: 50px;
+  color: white;
+  font-family: Akira;
 }
+
+.sub-title{
+  color: #37FD12;
+  margin-top: -20px;
+  font-family: theBold;
+}
+
 

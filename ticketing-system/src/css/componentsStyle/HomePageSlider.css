@@ -114,9 +114,5 @@
   cursor: pointer;
 }
 
-.carousel-left-button:hover, .carousel-right-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
 
 
