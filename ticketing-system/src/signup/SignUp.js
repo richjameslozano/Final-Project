@@ -11,9 +11,6 @@ const SignUp = () => {
         lastName: '',
         email: '',
         mobileNumber: '',
-        country: '',
-        region: '',
-        city: '',
         agreeToTerms: false,
         receiveNewsletter: false,
     });
@@ -119,48 +116,6 @@ const SignUp = () => {
                                 onChange={handleChange}
                                 required
                             />
-                        </div>
-                        <div className="form-group">
-                            <div className="half-width">
-                                <label>Country</label>
-                                <select
-                                    name="country"
-                                    value={formData.country}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select your Country</option>
-                                    <option value="US">United States</option>
-                                    <option value="IN">India</option>
-                                    {/* Add more options as needed */}
-                                </select>
-                            </div>
-                            <div className="half-width">
-                                <label>Region</label>
-                                <select
-                                    name="region"
-                                    value={formData.region}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select your Region</option>
-                                    {/* Populate dynamically based on country */}
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <div className="half-width">
-                                <label>City</label>
-                                <select
-                                    name="city"
-                                    value={formData.city}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">Select your City</option>
-                                    {/* Populate dynamically based on region */}
-                                </select>
-                            </div>
                         </div>
                     </div>
 

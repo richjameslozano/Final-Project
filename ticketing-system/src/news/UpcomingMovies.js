@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Modal } from 'antd';
 import '../../src/css/news/UpcomingMovies.css';
-import Header from '../components/Header';
+import Header from '../../src/components/Header';
 import UpcomingMovieTrailer from '../news/UpcomingMoviesTrailer';
 
 const movies = [
@@ -89,6 +89,7 @@ const getBadgeClass = (rating) => {
       return '';
   }
 };
+
 
 const UpcomingMovies = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);

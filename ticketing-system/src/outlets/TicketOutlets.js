@@ -12,6 +12,7 @@ const TicketOutlets = () => {
                 SM Tickets has outlets in <strong>SM Cinema branches</strong> (ticket booth), select <strong>The SM Store</strong> (SM Department Store) branches, and <strong>Eastwood Mall</strong>, as well as at the box office of <strong>Mall of Asia Arena</strong>.
             </p>
             
+        
             <div className="outlet-section">
                 <img src='images/olivia.jpg' alt="Mall of Asia Arena Logo" className="outlet-logo" />
                 <h3>SM Mall of Asia Arena Box Office (Cash and Card Transactions)</h3>
