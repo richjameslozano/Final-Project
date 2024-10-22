@@ -7,6 +7,7 @@ import Sidebar from '../components/SideBar';
 import MovieCard from '../components/MovieCard';
 import Header from '../components/Header';
 import '../css/HomePage.css';
+import HomeSlider from '../components/HomeSlider';
 
 const { Sider, Content } = Layout;
 
