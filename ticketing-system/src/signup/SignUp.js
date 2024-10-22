@@ -22,7 +22,7 @@ const SignUp = () => {
             [name]: type === 'checkbox' ? checked : value
         });
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         // Implement form submission logic here
@@ -62,7 +62,7 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 name="confirmPassword"
-                                value={formData.confirmPassword}
+                                value={formData.password}
                                 onChange={handleChange}
                                 required
                             />
