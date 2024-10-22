@@ -8,6 +8,8 @@ import MovieCard from '../components/MovieCard';
 import Header from '../components/Header';
 import '../css/HomePage.css';
 import HomeSlider from '../components/HomeSlider';
+import MovieCard2 from '../components/MovieCard2';
+import Footer from '../components/Footer';
 
 const { Sider, Content } = Layout;
 
@@ -27,13 +29,40 @@ const HomePage = () => {
             <h2 className='sub-title'>FROM INF224</h2>
         
             <div className="movie-card-container-main">
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NUMOA" price={15}  image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15}  image="/images/HomeImages/hardstuck-poster.png" />
               {/* Add more MovieCard components as needed */}
             </div>
+
+            <div className='other-events-container'>
+              <h1 className='title-one'>Other Events</h1>
+              <div className='category-poster-container'>
+                <div className='category-container'>
+                  <ul className='categories'>
+                    <li>Movies</li>
+                    <li>Concerts & Shows</li>
+                    <li>Sports </li>
+                    <li>Tours & Attractions</li>
+                    <li>Family</li>
+                    <li>Promos</li>
+                  </ul>
+                </div>
+                  <div className="other-card-container">
+                    <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+                    <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+                    <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+                    <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+                    <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+                    <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
+                  </div>
+              </div>
+              
+              <Footer/>
+            </div>
+
           </div>
             
 
