@@ -13,7 +13,7 @@ mongoose.connect("mongodb://localhost:27017/")
 
 app.use('/onepixel', getRoutes);
 
-app.listen(8000, () => {
+app.listen(8001, () => {
     console.log("Server is up and running");
 });
 
