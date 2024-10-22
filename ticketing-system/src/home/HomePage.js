@@ -17,10 +17,10 @@ const HomePage = () => {
         <Header />
      
           <div className='slider-container'>
-            {/* <HomePageSlider /> */}
+            <HomeSlider />
             <div className='black-fade'/>
             <img src='/images/HomeImages/slider-bg.jpg' className='slider-bg'></img>
-      
+            </div>
 
           <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
             <h1 className='title-one'>FEATURED SHOWS</h1>
@@ -37,7 +37,7 @@ const HomePage = () => {
           </div>
             
 
-        </div>
+        
       </Layout>
     );
   };

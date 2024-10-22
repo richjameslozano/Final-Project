@@ -64,21 +64,25 @@ body{
   flex-wrap: wrap;
 }
 
+.slider-container{
+  height: 1000px;
+}
+
 .slider-bg{
     height: 960px;
     width: 1900px;
-    z-index: -1;  
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    z-index: -4;
 }
 
-.black-fade{
-  position: absolute;
+/* .black-fade{
+  position: relative;
   background-color: black;
   opacity: 90%;
   width: 1900px;
   height: 960px;
-  z-index: 0;
-}
+  z-index: 1;
+} */
 
 .title-one{
   font-size: 50px;
@@ -91,4 +95,5 @@ body{
   margin-top: -20px;
   font-family: theBold;
 }
+
 
