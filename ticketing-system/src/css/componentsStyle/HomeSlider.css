@@ -31,6 +31,9 @@
   border-radius: 20px; /* Reduce the border-radius for a sleeker look */
 }
 
+.slider-text h2{
+  font-size: 100px;
+}
 .carousel-image {
   width: 700px;
   height: 400px;
@@ -61,9 +64,10 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adds shadow for better readability */
 }
 
-.slider-text h2 {
-  font-size: 36px;
+.slider-title{
+  font-size: 55px;
   margin-bottom: 10px;
+  font-weight: 800;
 }
 
 .slider-text p {

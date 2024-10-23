@@ -15,6 +15,7 @@ const { Sider, Content } = Layout;
 const HomePage = () => {
 
   const [movies, setMovies] = useState([]);
+  const [concerts, setConcerts] = useState([]);
   const [fshows, setFshows] = useState([]);
   const [sports, setSports] = useState([]);
   const [Tours, setTours] = useState([]);
@@ -38,6 +39,35 @@ const HomePage = () => {
 }, []);
 
 useEffect(() => {
+  const fetchTours = async () => {
+      try {
+          const response = await axios.get('http://localhost:8021/tours');
+          console.log(response.data);
+          setTours(response.data); // Set the movie data into state
+      } catch (error) {
+          console.error('Error fetching movies:', error);
+      }
+  };
+
+  fetchTours();
+}, []);
+
+
+useEffect(() => {
+  const fetchConcerts = async () => {
+      try {
+          const response = await axios.get('http://localhost:8021/concerts');
+          console.log(response.data);
+          setConcerts(response.data); // Set the movie data into state
+      } catch (error) {
+          console.error('Error fetching movies:', error);
+      }
+  };
+
+  fetchConcerts();
+}, []);
+
+useEffect(() => {
   const fetchFshows = async () => {
       try {
           const response = await axios.get('http://localhost:8021/featuredshows');
@@ -54,7 +84,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchSports = async () => {
       try {
-          const response = await axios.get('http://localhost:8020/sports');
+          const response = await axios.get('http://localhost:8021/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
       } catch (error) {
@@ -74,7 +104,7 @@ const handleCategoryClick = (category) => {
       case 'Movies':
         return movies;
       case 'Concerts & Shows':
-        return fshows;
+        return concerts;
 
         case 'Sports':
         return sports;
@@ -150,7 +180,7 @@ const handleCategoryClick = (category) => {
 
                   <div className="other-card-container">
                   {getFilteredData().length === 0 ? (
-                <h1>NO EVENTS YET</h1>  // Display this message if no events are found
+                <h1 className = "neven">NO EVENTS YET</h1>  // Display this message if no events are found
               ) :
   
   (getFilteredData().map((item) => (

@@ -131,6 +131,7 @@ body{
 .categories{
   padding-left: 0;
   margin-left: 0;
+  
 }
 
 .other-card-container{
@@ -140,4 +141,13 @@ body{
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
+  max-height: 300px;
+  height: 100%;
+}
+
+.neven{
+
+  margin-top:170px;
+  font-size: 50px;
+  color: rgb(163, 175, 185);
 }

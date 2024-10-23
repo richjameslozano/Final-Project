@@ -36,7 +36,7 @@ const modelSchema = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
-//Concert 
+//Featured Show 
 const featuredShowsSchemas = new mongoose.Schema({
     name:  { type: String},
     runTime:  { type: String},
@@ -48,13 +48,48 @@ const featuredShowsSchemas = new mongoose.Schema({
     image: { type: String }
 });
 
+//Concerts
+const featureConcert = new mongoose.Schema({
+    name:  { type: String},
+    price:  { type: String},
+    time:  { type: String},
+    place: { type: String},
+    date: { type: String},
+    image: { type: String }
+});
+
+const featureSport = new mongoose.Schema({
+    name:  { type: String},
+    price:  { type: String},
+    time:  { type: String},
+    place: { type: String},
+    date: { type: String},
+    image: { type: String }
+});
+
+const featureTour = new mongoose.Schema({
+    name:  { type: String},
+    price:  { type: String},
+    time:  { type: String},
+    place: { type: String},
+    date: { type: String},
+    image: { type: String }
+});
  
+//Concert model
+const Concert = mongoose.model('concerts', featureConcert);
+
+//Sports model
+const Sports = mongoose.model('sports', featureSport);
 
 // User model
 const User = mongoose.model('accounts', userSchema);
 
 //Movies model
 const Movie = mongoose.model('movies', modelSchema);
+
+//Movies model
+const Tours = mongoose.model('tours', featureTour);
 
 //Featured Shows model
 const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
@@ -64,6 +99,39 @@ app.get('/movies', async (req, res) => {
     try {
         const movies = await Movie.find();
         res.status(200).json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
+    }
+});
+
+ //FOR PICTURE TOURS RETRIEVE
+ app.get('/tours', async (req, res) => {
+    try {
+        const tours = await Tours.find();
+        res.status(200).json(tours);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
+    }
+});
+
+ //FOR PICTURE SPORTS RETRIEVE
+ app.get('/sports', async (req, res) => {
+    try {
+        const sport = await Sports.find();
+        res.status(200).json(sport);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
+    }
+});
+
+ //FOR PICTURE CONCERT RETRIEVE
+ app.get('/concerts', async (req, res) => {
+    try {
+        const concert = await Concert.find();
+        res.status(200).json(concert);
     } catch (error) {
         console.error('Error fetching movies:', error);
         res.status(500).json({ message: 'Error fetching movies' });
