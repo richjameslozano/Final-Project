@@ -10,6 +10,7 @@ import '../css/HomePage.css';
 import HomeSlider from '../components/HomeSlider';
 import MovieCard2 from '../components/MovieCard2';
 import Footer from '../components/Footer';
+import { Color } from 'antd/es/color-picker';
 
 const { Sider, Content } = Layout;
 
@@ -59,14 +60,12 @@ const HomePage = () => {
                     <MovieCard2 title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
                   </div>
               </div>
-              
-              <Footer/>
             </div>
 
           </div>
             
 
-        
+          <Footer/>
       </Layout>
     );
   };

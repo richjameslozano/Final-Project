@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/SignUp.css';
 import Header from '../components/Header';
+import { Layout } from 'antd';
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -33,20 +34,20 @@ const SignUp = () => {
 
         // Send the form data to the backend
         try {
-            const response = await axios.post('http://localhost:8017/signup', formData);
+            const response = await axios.post('http://localhost:8020/signup', formData);
             if (response.status === 201) {
                 alert('User registered successfully');
 
 
-            }
+            }   
         } catch (error) {
             console.error('There was an error registering the user!', error);
         }
     };
 
     return (
-        <div>
-            <Header />
+        <Layout>
+            <Header/>
             <form className="signup-container" onSubmit={handleSubmit}>
                 <h2>Register</h2>
                 <div className="signup-form">
@@ -140,7 +141,11 @@ const SignUp = () => {
                     </div>
                 </div>
             </form>
-        </div>
+        </Layout>
+
+            
+            
+ 
     );
 };
 

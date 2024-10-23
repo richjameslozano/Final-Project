@@ -17,7 +17,7 @@
   top: 0;
   left: 0;
   height: 1000px;
-  width: 1900px;
+  width: 100%;
   object-fit: cover; /* Ensure the background image covers the area proportionally */
   z-index: 0; /* Places the background behind the carousel */
 }
