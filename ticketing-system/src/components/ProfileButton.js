@@ -1,26 +1,30 @@
 import React, { useState, useRef, useEffect } from 'react';
-import '../css/componentsStyle/ProfileButton.css'; // Import the CSS file
+import '../css/componentsStyle/ProfileButton.css';
 import { useNavigate } from 'react-router-dom';
-import { Menu, Input, Button, Modal } from 'antd';
+import { Modal } from 'antd';
 import Login from '../login/Login';
 
 function ProfileButton() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const dropdownRef = useRef(null); // Reference for the 
-  
-  const [isModalVisible, setIsModalVisible] = useState(false); 
-  const navigate = useNavigate(); 
+  const dropdownRef = useRef(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const navigate = useNavigate();
+
+  // Check login status on component mount
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem('user');
+    if (loggedInUser) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false); 
-  };
-
   const handleCancel = () => {
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
   };
 
   const handleClick = () => {
@@ -28,12 +32,17 @@ function ProfileButton() {
   };
 
   const goToSignup = () => {
-    navigate('/signup'); 
+    navigate('/signup');
   };
 
-  const handleOptionClick = (option) => {
-    alert(`${option} clicked!`); // Handle option click (replace with actual navigation if needed)
-    setDropdownVisible(false); // Close dropdown after option click
+  const goToProfile = () => {
+    navigate('/profile');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user'); // Clear user data on logout
+    setIsLoggedIn(false);
+    setDropdownVisible(false); // Close dropdown after logout
   };
 
   // Close dropdown when clicking outside
@@ -44,42 +53,57 @@ function ProfileButton() {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside); // Listen for clicks
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside); // Cleanup listener on unmount
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [dropdownRef]);
+
+  // Callback function to set login state to true when login is successful
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
 
   return (
     <div className="profile-button-container" ref={dropdownRef}>
       <img
-        src='https://www.citypng.com/public/uploads/small/11639594342hjraqgbufi3xlb66lt30fz1pwfcydxkjqbynfqdpvufz41ysjtngiet4dyrywgqqqqu56w5nozgrhyecs4ixrlllkl150ogbiid1.png'
-        className='profile-btn'
-        alt='Profile Button'
-        onClick={handleClick} // Toggle dropdown on click
+        src="https://www.citypng.com/public/uploads/small/11639594342hjraqgbufi3xlb66lt30fz1pwfcydxkjqbynfqdpvufz41ysjtngiet4dyrywgqqqqu56w5nozgrhyecs4ixrlllkl150ogbiid1.png"
+        className="profile-btn"
+        alt="Profile Button"
+        onClick={handleClick}
       />
       {dropdownVisible && (
         <div className="dropdown">
-          <a className="header-button" onClick={showModal}>
-          Sign In
-          </a> 
-          <a className="header-button" onClick={goToSignup}>
-          Create Account
-          </a> 
+          {isLoggedIn ? (
+            <>
+              <a className="header-button" onClick={goToProfile}>
+                My Profile
+              </a>
+              <a className="header-button" onClick={handleLogout}>
+                Logout
+              </a>
+            </>
+          ) : (
+            <>
+              <a className="header-button" onClick={showModal}>
+                Sign In
+              </a>
+              <a className="header-button" onClick={goToSignup}>
+                Create Account
+              </a>
+            </>
+          )}
         </div>
       )}
 
-
       <Modal
-        // title="Sign In"
         visible={isModalVisible}
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={null}
       >
-        <Login onCancel={handleCancel} />
-      </Modal> 
+        <Login onCancel={handleCancel} onLoginSuccess={handleLoginSuccess} />
+      </Modal>
     </div>
   );
 }

@@ -13,15 +13,19 @@ import MovieDetails from '../events/movies/MovieDetails';
 import MovieSeats from '../events/movies/MovieSeats';
 import HomePage from '../home/HomePage'; 
 import MainEvent from '../events/MainEvent';
+import Cart from '../cart/Cart';
+
 
 
 const AppController = () => {
     return (
         <BrowserRouter>
         <Routes>
+            <Route path="/cart" element={<Cart />} />
             <Route path="/events" element={<MainEvent />} />
             <Route path='/signup' element={<SignUp/>}> </Route>
             <Route path="/" element={<HomePage />} />
+            <Route path="/homepage" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/concerts" element={<ConcertList />} />
