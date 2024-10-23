@@ -28,7 +28,7 @@ const UserProfile = () => {
                 </div>
 
                 <div className="form-row">
-                    <div className="form-group">
+                    <div className="form-group">   
                         <label>Email</label>
                         <Input className="input-field" value="berlenebamabe12@gmail.com" disabled />
                         <a href="#" className="change-link">Change Email</a>
