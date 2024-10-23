@@ -1,6 +1,6 @@
 .slider-wrapper {
   position: relative;
-  width: 1900;
+  width: 100%;
   height: 900px; /* Fixed height for the slider area */
   overflow: hidden;
   margin-top: 100px;
@@ -25,7 +25,7 @@
 .slider-content {
   position: relative;
   z-index: 2; /* Keeps the carousel content in front of the background image */
-  width: 1900px; /* Fixed width for the carousel */
+  width: 1920px; /* Fixed width for the carousel */
   height: 400px; /* Fixed height for the carousel */
   margin-top: -70px;
   border-radius: 20px; /* Reduce the border-radius for a sleeker look */

@@ -1,20 +1,18 @@
 import React from 'react';
 import { Layout } from 'antd';
-import MovieList from '../components/MovieList';
-import HomePageSlider from '../components/HomePageSlider';
-import Navbar from '../components/NavBar';
-import Sidebar from '../components/SideBar';
 import MovieCard from '../components/MovieCard';
 import Header from '../components/Header';
 import '../css/HomePage.css';
 import HomeSlider from '../components/HomeSlider';
 import MovieCard2 from '../components/MovieCard2';
 import Footer from '../components/Footer';
-import { Color } from 'antd/es/color-picker';
 
 const { Sider, Content } = Layout;
 
 const HomePage = () => {
+
+
+  
     return (
       <Layout className="home-page-layout">
         <Header />

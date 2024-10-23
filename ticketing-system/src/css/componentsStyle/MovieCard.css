@@ -10,6 +10,8 @@
   position: relative;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0);
+  margin-top: 80px;
+  position: relative;
 }
 
 .card-posters {
@@ -21,13 +23,6 @@
   transition: all 0.3s ease-in-out;
   background-color: rgba(0, 0, 0, 0);
   overflow: hidden;
-}
-
-.card-posters img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all 0.3s ease;
 }
 
 .card-posters:hover img {
@@ -65,20 +60,46 @@
   z-index: 1; /* Bring the button to the front */
 }
 
+.card-posters:hover{
+  border: 1px solid gray;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+  background-color: rgba(0, 0, 0, 0.5);
+  filter: brightness(50%);
+}
+
+.button-container { 
+  position: absolute; /* Position the button container absolutely */
+  transform: translate(-50%, -50%); /* Adjust for element size */
+  top: 40%;
+  left: 55%;
+  display: none;
+  z-index: 1; /* Bring the button to the front */
+}
+ 
 .movie-card-container:hover .button-container {
   display: flex; /* Show button on hover */
-  
 }
-.movie-card-container:hover .card-posters img {
-  filter: brightness(50%); /* Apply brightness filter on hover */
-}
+ 
 .button-container button {
   background-color: rgb(255, 100, 39);
   color: white;
   border: none;
   transition: all 0.3s ease;
 }
-
-.button-container button:hover {
+ 
+.button-container button:hover{
   background-color: darkorange;
 }
+.movie-card-container:hover .card-posters {
+  border: 1px solid gray;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+  background-color: rgba(0, 0, 0, 0.5);
+  filter: brightness(50%);
+}
+
+.card-posters:hover img{
+  filter: brightness(50%);
+}
+ 

@@ -46,10 +46,11 @@ const SignUp = () => {
     };
 
     return (
-        <Layout>
+        <Layout style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
             <Header/>
-            <form className="signup-container" onSubmit={handleSubmit}>
-                <h2>Register</h2>
+            <form className="signup-container" onSubmit={handleSubmit} >
+                <div className='register-title'>Register</div>
+                <hr></hr>
                 <div className="signup-form">
                     <div className="signup-section">
                         <h3>User and Password</h3>
@@ -93,6 +94,7 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     name="firstName"
+                                    className='name-input'
                                     value={formData.firstName}
                                     onChange={handleChange}
                                     required
@@ -103,6 +105,7 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     name="lastName"
+                                    className='name-input'
                                     value={formData.lastName}
                                     onChange={handleChange}
                                     required
