@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 100% ;
     height: 4000px;
     background-color: #171717;
     padding-left: 300px;
@@ -23,14 +23,21 @@
   }
     /* Movie card container styles */
   .movie-cart-container-main {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
- 
-    width: 1500px;  
-    height: 1100px;
+    border-radius: 25px;
+    width: 1300px;  
+    height: auto;
+    flex-wrap: wrap;
     margin-bottom: 100px;
     flex-wrap: wrap;
-    background-color: white;
+    background-color: #121212;  
+    padding-left: 170px;
+    padding-right: 170px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border: 1px solid #555555;
   }
   
   .ticket-lists{
@@ -39,14 +46,11 @@
     flex-direction: column;
   }
 
- 
-  
-  
   .title-one-cart{
     font-size: 50px;
     color: white;
     font-family: Akira;
-    margin-top: 70px;
+    margin-top: 100px;
   }
   
   .sub-title-cart{
@@ -54,3 +58,136 @@
     margin-top: -20px;
     font-family: theBold;
   }
+
+  .cart-item-container{
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #222222;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 0px 0px 10px;
+    border: 1px solid #333333;
+    flex-direction: row;
+  }
+
+.item-image{
+    height: 100%;
+    width: 50%;
+}
+
+.main-item-details{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-left: 25px;
+}
+
+.ticket-title{
+  display: flex;
+  margin-top: -5px;
+  font-family: Akira;
+  font-size: 35px;
+  width: 100%;
+}
+
+.ticket-details{
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+}
+
+.detail-one{
+  display: flex;
+  padding-top: 36px;
+  font-size: 17px;
+  font-weight: 400;
+  flex-direction: column;
+  width: 100%;
+}
+
+.detail-one div{
+  margin-bottom: 15px;
+}
+
+.detail-two{
+  display: flex;
+  padding-top: 36px;
+  font-size: 17px;
+  font-weight: 400;
+  flex-direction: column;
+  text-align: end;
+  width: 100%;
+}
+
+.detail-two select{
+  align-self: flex-end;
+  
+}
+
+.hr{
+  width: 100%;
+}
+
+.select-quantity{
+  height: 35px;
+  width: 100px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid gray;
+  border-radius: 2px;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  /* transition: all 0.2s ease-in-out; */
+}
+
+.select-quantity option{
+  color: black;
+}
+
+.select-quantity:hover{
+  cursor: pointer;
+}
+
+.main-cart-item{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 250px;
+  margin-bottom: 30px;
+}
+
+.trash-container{
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  background-color: red;
+  width: 130px;
+  height: 100%;
+  border-radius: 0px 10px 10px 0px;
+}
+
+.trash-icon{
+  width: 30px;
+  height: 45px;
+  align-self: center;
+}
+
+.trash-container{
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  background-color: red;
+  width: 130px;
+  height: 100%;
+  border-radius: 0px 10px 10px 0px;
+  transition: all 0.2s ease-in-out;
+}
+
+.trash-container:hover{
+  cursor: pointer;
+  background-color: rgb(255, 112, 112);
+}

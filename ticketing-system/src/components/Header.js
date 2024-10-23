@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/Header.css'; 
 import ProfileButton from './ProfileButton';
 
+
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
   const [username, setUsername] = useState(null); // State to store the username
