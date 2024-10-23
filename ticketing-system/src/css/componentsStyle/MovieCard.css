@@ -1,52 +1,84 @@
-
-.movie-card-container{
+.movie-card-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   height: 500px;
   width: 400px;
-  background-color: white;
   margin-left: 30px;
-  margin-right: 30px; 
-  background-color: rgba(0, 0, 0, 0);
+  margin-right: 30px;
   margin-top: 80px;
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0);
 }
 
-.card-posters{
-  padding-left: 60px;
+.card-posters {
   padding-right: 60px;
+  padding-left: 60px;
   height: auto;
   max-width: 100%;
   border: none;
   transition: all 0.3s ease-in-out;
-  background-color: rgba(0, 0, 0, 0)
+  background-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
 }
 
-.details{
+.card-posters img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.card-posters:hover img {
+  filter: brightness(50%);
+}
+
+.details {
   margin: 20px;
   font-size: 20px;
   font-weight: bold;
-  font-family: AlteBold ;
+  font-family: AlteBold;
   margin-bottom: 2px;
 }
 
-.deet-date{
+.deet-date {
   color: gray;
   font-size: 18px;
   margin-top: 10px;
   margin-bottom: 5px;
 }
-.deet-venue{
+
+.deet-venue {
   color: rgb(255, 100, 39);
   border: 0.5px solid white;
-  text-wrap: wrap;
-}
-
-.card-posters:hover{
-  border: 1px solid gray;
-  cursor: pointer;
-  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
 
+
+.button-container {
+  position: absolute; /* Position the button container absolutely */
+  top: 40%; /* Center vertically */
+  left: 55%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for element size */
+  display: none; /* Hide button by default */
+  z-index: 1; /* Bring the button to the front */
+}
+
+.movie-card-container:hover .button-container {
+  display: flex; /* Show button on hover */
+  
+}
+.movie-card-container:hover .card-posters img {
+  filter: brightness(50%); /* Apply brightness filter on hover */
+}
+.button-container button {
+  background-color: rgb(255, 100, 39);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.button-container button:hover {
+  background-color: darkorange;
+}
