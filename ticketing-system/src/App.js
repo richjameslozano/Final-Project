@@ -5,6 +5,9 @@ import SignUp from './signup/SignUp';
 
 
 import AppController from './components/AppController';
+import UserProfile from './user/UserProfile';
+import UserTickets from './user/UserTickets';
+import UserAccount from './user/UserAccount';
 
 const App = () => {
   return (
