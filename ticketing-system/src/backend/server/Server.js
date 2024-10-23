@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // const Movie = require('./models/Movie');
 
 const app = express();
-const PORT = process.env.PORT || 8020;
+const PORT = process.env.PORT || 8021;
 app.use('/images', express.static('public/images'));
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -69,6 +69,17 @@ app.get('/movies', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
+
+//RETRIEVE USER INFORMATION
+app.get('/profile', async (req, res)=>{
+    try {
+        const userInfo = await User.find();
+        res.status(200).json(userInfo);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching User Information' });
+    }
+})
 //FEATURED SHOWS
 app.get('/featuredshows', async (req, res) => {
     try {
@@ -80,27 +91,29 @@ app.get('/featuredshows', async (req, res) => {
     }
 });
 // API route for login
+// Update your /login route
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
- 
+
     try {
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
-       
         }
- 
+
         // Check plain-text password (not secure)
         if (password !== user.password) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
- 
-        res.json({ message: 'Login successful' });
+
+        // Return the username in the response
+        res.json({ message: 'Login successful', username: user.username });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
+
  
 // API route for signup
 app.post('/signup', async (req, res) => {
@@ -133,6 +146,12 @@ app.post('/signup', async (req, res) => {
 app.get('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
+
+        // Validate if the userId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
+
         const user = await User.findById(userId).select('-password'); // Exclude password from response
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -143,6 +162,7 @@ app.get('/user/:id', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+
  
 // Start the server
 app.listen(PORT, () => {

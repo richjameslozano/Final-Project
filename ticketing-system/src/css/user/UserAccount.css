@@ -32,6 +32,7 @@ body{
 
 .sidebar {
   width: 400px;
+  height: 100%;
   padding: 20px;
   padding-left: 40px;
   padding-right: 40px;
@@ -42,6 +43,7 @@ body{
 .sidebar ul {
   list-style-type: none;
   margin-top: 50px;
+  align-items: center;
 }
 
 .sidebar ul li {
@@ -50,9 +52,10 @@ body{
   margin-bottom: 20px;
   font-size: 20px;
   padding-left: 10px;
-  height: 40px;
+  height: 50px;
   border-radius: 10px;
   align-items: center;
+  align-content: center;
   transition: all 0.2s ease-in-out;
 }
 
@@ -98,9 +101,10 @@ body{
 
 .input-group input {
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
+
 }
 
 .change-link {
@@ -118,7 +122,6 @@ body{
 .action-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
 }
 
 .cancel-btn, .save-btn {
@@ -134,16 +137,24 @@ body{
 }
 
 .save-btn {
-  background-color: #2cb1ba;
+  background-color: #171717;
+  border: 1px solid #37fd12;
   color: white;
 }
 
 .save-btn:hover {
-  background-color: #239ca7;
+  background-color: #37fd12;
+  color: black;
 }
 
 .profile-title{
   color: white;
   font-family: Akira;
   font-size: 30px ;
+}       
+
+.input-info-profile{
+  color: black;
+  background-color: rgb(245, 245, 245);;
+  border-radius: 30px;
 }
