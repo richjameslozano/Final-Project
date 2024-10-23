@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/SignUp.css';
 import Header from '../components/Header';
-import { Layout } from 'antd';
-
+import { message, Layout } from 'antd';
+ 
 const SignUp = () => {
+    const [loading, setLoading] = useState(false);
+ 
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -14,7 +16,7 @@ const SignUp = () => {
         email: '',
         mobileNumber: ''
     });
-
+ 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -22,31 +24,46 @@ const SignUp = () => {
             [name]: value,
         });
     };
-
+ 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        // Check if passwords match
-        if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match');
+        e.preventDefault(); // Prevent default form submission
+ 
+        const { username, password, confirmPassword } = formData;
+ 
+        // Check if all required fields are filled
+        if (!username || !password || !confirmPassword) {
+            message.warning('Please fill in all fields');
             return;
         }
-
-        // Send the form data to the backend
+ 
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            message.warning('Passwords do not match');
+            return;
+        }
+ 
+        setLoading(true);
         try {
             const response = await axios.post('http://localhost:8020/signup', formData);
             if (response.status === 201) {
-                alert('User registered successfully');
-
-
-            }   
+                message.success('User registered successfully');
+            }
         } catch (error) {
             console.error('There was an error registering the user!', error);
+            if (error.response) {
+                // Log additional details from the server response
+                console.error('Response data:', error.response.data);
+                message.error(`Error: ${error.response?.data?.message || 'Failed to register user'}`);
+            } else {
+                message.error('Failed to register user');
+            }
+        } finally {
+            setLoading(false);
         }
     };
-
+ 
     return (
-        <Layout style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
+         <Layout style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
             <Header/>
             <form className="signup-container" onSubmit={handleSubmit} >
                 <div className='register-title'>Register</div>
@@ -59,6 +76,7 @@ const SignUp = () => {
                             <input
                                 type="text"
                                 name="username"
+                                className='name-input'
                                 value={formData.username}
                                 onChange={handleChange}
                                 required
@@ -69,6 +87,7 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 name="password"
+                                className='name-input'
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
@@ -79,13 +98,14 @@ const SignUp = () => {
                             <input
                                 type="password"
                                 name="confirmPassword"
+                                className='name-input'
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                     </div>
-
+ 
                     <div className="signup-section">
                         <h3>Personal Information</h3>
                         <div className="form-group">
@@ -113,7 +133,7 @@ const SignUp = () => {
                             </div>
                         </div>
                     </div>
-
+ 
                     <div className="signup-section">
                         <h3>Contact Information</h3>
                         <div className="signup-field">
@@ -121,6 +141,7 @@ const SignUp = () => {
                             <input
                                 type="email"
                                 name="email"
+                                className='name-input'
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
@@ -131,13 +152,14 @@ const SignUp = () => {
                             <input
                                 type="tel"
                                 name="mobileNumber"
+                                className='name-input'
                                 value={formData.mobileNumber}
                                 onChange={handleChange}
                                 required
                             />
                         </div>
                     </div>
-
+ 
                     <div className="signup-buttons">
                         <button type="submit" className="register-button">Register</button>
                         <button type="button" className="cancel-button" onClick={() => console.log('Cancel')}>Cancel</button>
@@ -145,11 +167,11 @@ const SignUp = () => {
                 </div>
             </form>
         </Layout>
-
-            
-            
+ 
+           
+           
  
     );
 };
-
+ 
 export default SignUp;

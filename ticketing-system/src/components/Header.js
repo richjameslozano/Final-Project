@@ -48,7 +48,7 @@
           <button  onClick={scrollToBottom}>Ticket Outlets</button>
           <button>News</button>
           <button onClick={scrollToBottom}>Contact Us</button>
-          <input placeholder='Looking for anything?'></input>
+          <input placeholder='Looking for anything?' className='search-bar'></input>
           <img className='search-btn' src='https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png'></img>
           <ShoppingCartOutlined className='cart-icon'/> 
           <ProfileButton />

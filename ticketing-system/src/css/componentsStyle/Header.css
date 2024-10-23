@@ -90,3 +90,7 @@ button:hover{
   cursor: pointer;
 }
 
+.search-bar{
+  color: white;
+  background-color: #101010;
+}

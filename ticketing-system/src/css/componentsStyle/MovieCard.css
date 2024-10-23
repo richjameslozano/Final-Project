@@ -99,7 +99,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.card-posters:hover img{
+  .card-posters:hover img{
   filter: brightness(50%);
 }
  
