@@ -62,7 +62,7 @@ useEffect(() => {
             {fshows.map((featureds) => (
         <MovieCard
             key={featureds._id} // Unique identifier
-            Name={featureds.Name}  // Use movie.Name
+            name={featureds.name}  // Use movie.Name
             date={featureds.date}  // Use movie.date
             place={featureds.place}  // Use movie.place for venue
             price={featureds.price}  // Use movie.price
