@@ -15,6 +15,7 @@ import HomePage from '../home/HomePage';
 import MainEvent from '../events/MainEvent';
 import UserProfile from '../user/UserProfile';
 import UserAccount from '../user/UserAccount';
+import Cart from '../cart/Cart';
 
 
 
@@ -22,7 +23,9 @@ const AppController = () => {
     return (
         <BrowserRouter>
         <Routes>
-        <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/homepage" element={<HomePage />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/user-account" element={<UserAccount />} />
             <Route path="/events" element={<MainEvent />} />
             <Route path='/signup' element={<SignUp/>}> </Route>
