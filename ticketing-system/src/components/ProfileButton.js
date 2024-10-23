@@ -3,12 +3,14 @@ import '../css/componentsStyle/ProfileButton.css';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from 'antd';
 import Login from '../login/Login';
+import axios from 'axios';
 
 function ProfileButton() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  const [userData, setUserData] = useState(null); // State to store user data
   const navigate = useNavigate();
 
   // Check login status on component mount
@@ -16,8 +18,19 @@ function ProfileButton() {
     const loggedInUser = localStorage.getItem('user');
     if (loggedInUser) {
       setIsLoggedIn(true);
+      fetchUserData(); // Fetch user data if logged in
     }
   }, []);
+
+  const fetchUserData = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    try {
+      const response = await axios.get(`http://localhost:8020/user/${user.id}`); // Assuming user object has an 'id' field
+      setUserData(response.data); // Store user data in state
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -44,6 +57,7 @@ function ProfileButton() {
     localStorage.removeItem('user'); // Clear user data on logout
     setIsLoggedIn(false);
     setDropdownVisible(false); // Close dropdown after logout
+    setUserData(null); // Clear user data
   };
 
   // Close dropdown when clicking outside
@@ -64,6 +78,7 @@ function ProfileButton() {
   // Callback function to set login state to true when login is successful
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    fetchUserData(); // Fetch user data on login success
   };
 
   return (

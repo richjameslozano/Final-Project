@@ -38,7 +38,7 @@ const modelSchema = new mongoose.Schema({
 });
 //Concert 
 const featuredShowsSchemas = new mongoose.Schema({
-    Name:  { type: String},
+    name:  { type: String},
     runTime:  { type: String},
     genre:  { type: String},
     price:  { type: String},
@@ -57,7 +57,7 @@ const User = mongoose.model('accounts', userSchema);
 const Movie = mongoose.model('movies', modelSchema);
 
 //Featured Shows model
-const FeaturedShows = mongoose.model('movies', modelSchema);
+const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
 
  //FOR PICTURE RETRIEVE
 app.get('/movies', async (req, res) => {
@@ -72,10 +72,10 @@ app.get('/movies', async (req, res) => {
 //FEATURED SHOWS
 app.get('/featuredshows', async (req, res) => {
     try {
-        const featuredshows = await Movie.find();
+        const featuredshows = await FeaturedShows.find();
         res.status(200).json(featuredshows);
     } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching shows:', error);
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
@@ -126,6 +126,21 @@ app.post('/signup', async (req, res) => {
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering user' });
+    }
+});
+
+// API route to get user data
+app.get('/user/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId).select('-password'); // Exclude password from response
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+    } catch (err) {
+        console.error('Error fetching user data:', err);
+        res.status(500).json({ error: 'Server error' });
     }
 });
  
