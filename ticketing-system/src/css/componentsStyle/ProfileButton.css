@@ -22,8 +22,10 @@
   padding: 8px 12px; /* Padding for the links */
   text-decoration: none; /* Removes underline from links */
   color: rgb(255, 255, 255); /* Text color */
+  transition: all 0.2s;
 }
 
 .dropdown a:hover {
   background-color: #585858; /* Background color on hover */
 }
+

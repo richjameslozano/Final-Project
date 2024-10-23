@@ -61,12 +61,12 @@ function ProfileButton() {
       />
       {dropdownVisible && (
         <div className="dropdown">
-          <Button className="header-button" onClick={showModal}>
+          <a className="header-button" onClick={showModal}>
           Sign In
-          </Button> 
-          <Button className="header-button" onClick={goToSignup}>
+          </a> 
+          <a className="header-button" onClick={goToSignup}>
           Create Account
-          </Button> 
+          </a> 
         </div>
       )}
 

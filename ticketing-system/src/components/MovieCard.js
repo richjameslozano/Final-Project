@@ -5,6 +5,9 @@ import '../css/componentsStyle/MovieCard.css'; // Import the CSS file
 const MovieCard = ({ title, date, price, image, venue }) => (
 
   <div className='movie-card-container'>
+    <div className='button-container'>
+    <Button type='primary'>Buy Tickets</Button>
+      </div>
     <div>
       <img src={image} className='card-posters'></img>
     </div>
@@ -13,6 +16,7 @@ const MovieCard = ({ title, date, price, image, venue }) => (
       <div className='deet-date'>{date}</div>
       <div className='deet-venue'>{venue}</div>
     </div>
+
     
   </div>
 );
