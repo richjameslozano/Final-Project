@@ -69,6 +69,17 @@ app.get('/movies', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
+
+//RETRIEVE USER INFORMATION
+app.get('/profile', async (req, res)=>{
+    try {
+        const userInfo = await User.find();
+        res.status(200).json(userInfo);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching User Information' });
+    }
+})
 //FEATURED SHOWS
 app.get('/featuredshows', async (req, res) => {
     try {

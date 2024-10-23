@@ -1,16 +1,30 @@
 import Header from '../components/Header';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/user/UserAccount.css';
 import { Layout } from 'antd';
+import axios from 'axios'
 
 const UserAccount = () => {
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate(); 
+    const[userInfo, setUserInfo] = useState();
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+    useEffect(() =>{
+      const fetchUsers = async () => {
+        try{
+          const response = await axios.get('http://localhost:8020/movies');
+        console.log(response.data);
+        setUserInfo(response.data)
+        }
+        catch (error) {
+          console.error('Error fetching movies:', error);
+      }
+      }
+      
+      fetchUsers()
+    }, [])
+   
+
+
 
   return (
     <Layout className='main-container-user-account' style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
