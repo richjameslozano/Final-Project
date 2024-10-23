@@ -12,6 +12,7 @@
   height: 120px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   border-bottom: 0.5px solid #37FD12;
+  color: white;
 }
 
 .header-logo {
@@ -48,11 +49,12 @@ input{
   width: 250px;
   border-radius: 50px 0px 0px 50px;
   padding: 1px 20px;
-  background-color: #090909;
+  background-color: #1b1010;
   border: none;
   color: white;
   font-size: 15px;
   outline: none;
+  
 }
 
 .search-btn{
@@ -63,6 +65,7 @@ input{
   border-left: 1px solid #171717;
   padding: 12px 12px;
   cursor: pointer;
+  color: white;
 }
 
 .cart-icon{

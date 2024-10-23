@@ -73,8 +73,12 @@
 .button-container button:hover{
   background-color: darkorange;
 }
-.movie-card-container:hover .card-posters img{
+.movie-card-container:hover .card-posters {
   filter: brightness(50%);
+  border: 1px solid gray;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .card-posters:hover img{
