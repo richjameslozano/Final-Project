@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'; 
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import ClipLoader from 'react-spinners/ClipLoader'; // Spinner component
 import '../css/componentsStyle/Header.css'; 
 import ProfileButton from './ProfileButton';
 
+
+
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
-  const [username, setUsername] = useState(null); // State to store the username
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [username, setUsername] = useState(null); // Store the username
+  const [loading, setLoading] = useState(false); // Track loading state
+  const [fadeOut, setFadeOut] = useState(false); // Trigger fade-out for loading overlay
   const navigate = useNavigate(); 
 
   // On component mount, check if the user is logged in
@@ -14,22 +19,30 @@ const Header = () => {
     const loggedInUser = localStorage.getItem('user');
     if (loggedInUser) {
         const user = JSON.parse(loggedInUser);
-        setUsername(user.username); // This should set the username
-        setIsLoggedIn(true); // Set logged-in status
-        console.log('Username set in Header:', user.username); // Log what you're getting
+        setUsername(user.username);
+        setIsLoggedIn(true);
     } else {
-        setUsername(null); // Reset if not logged in
-        setIsLoggedIn(false); // Reset if not logged in
+        setUsername(null);
+        setIsLoggedIn(false);
     }
-}, []);
+  }, []);
 
-
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: 'smooth',
-    });
-  };
+  // Handle navigation with smooth loading effect
+  const handleNavigation = (route) => {
+    setLoading(true); // Show loading spinner
+    setFadeOut(false); // Reset fade-out for new loading
+  
+    // Start the fade-out effect after a short delay
+    setTimeout(() => {
+      setFadeOut(true); // Trigger fade-out effect for the loading overlay
+    }, 400); // Initial delay before starting fade-out
+  
+    // Hide loading spinner and navigate after the fade-out completes
+    setTimeout(() => {
+      setLoading(false); // Hide spinner after fade-out duration
+      navigate(route); // Navigate to the new route
+    }, 1000); // Total time is the initial delay (1200ms) plus fade-out duration (600ms)
+  };  
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -38,32 +51,54 @@ const Header = () => {
     });
   };
 
-  const goToHome = () => {
-    navigate('/');
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
   };
 
   const handleHomeClick = () => {
-    goToHome();
     scrollToTop();
+    handleNavigation('/');
   };
 
-  const goToEvent = () => {
-    navigate('/events');
+  const handleNewsClick = () => {
+    scrollToTop();
+    handleNavigation('/news');
+  };
+
+  const handleEventClick = () => {
+    scrollToTop();
+    handleNavigation('/events');
+  };
+
+  const handleCartClick = () => {
+    scrollToTop();
+    handleNavigation('/cart');
   };
 
   return (
     <div className="header-container">
+      {loading && (
+        <div className={`loading-overlay ${fadeOut ? 'fade-out' : ''}`}>
+          <div className="loading-spinner">
+            <ClipLoader color="#ffffff" loading={loading} size={50} />
+            <div className="loading-text">Loading...</div>
+          </div>
+        </div>
+      )}
       <div className="header-logo">ONEPIXEL.<span className="ticket-logo">Ticket</span></div>
 
       <div className="btn-container">
         <button onClick={handleHomeClick}>Home</button>
-        <button onClick={goToEvent}>Events</button>
+        <button onClick={handleEventClick}>Events</button>
         <button onClick={scrollToBottom}>Ticket Outlets</button>
-        <button>News</button>
+        <button onClick={handleNewsClick}>News</button>
         <button onClick={scrollToBottom}>Contact Us</button>
         <input placeholder="Looking for anything?" className="search-bar" />
         <img className="search-btn" src="https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png" alt="search-btn" />
-        <ShoppingCartOutlined className="cart-icon" />
+        <ShoppingCartOutlined className="cart-icon" onClick={handleCartClick} />
         
         <ProfileButton 
           isLoggedIn={isLoggedIn} 
@@ -73,7 +108,7 @@ const Header = () => {
         />
 
         {/* Show the username if logged in */}
-        {isLoggedIn && <div type ="primary" className="username-display" style={{display:"flex"}}>{username}</div>}
+        {isLoggedIn && <div className="username-display" style={{display:"flex"}}>Hi, {username}!</div>}
       </div>
     </div>
   );

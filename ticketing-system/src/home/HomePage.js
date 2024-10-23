@@ -27,7 +27,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
         try {
-            const response = await axios.get('http://localhost:8021/movies');
+            const response = await axios.get('http://localhost:8023/movies');
             console.log(response.data);
             setMovies(response.data); // Set the movie data into state
         } catch (error) {
@@ -70,7 +70,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchFshows = async () => {
       try {
-          const response = await axios.get('http://localhost:8021/featuredshows');
+          const response = await axios.get('http://localhost:8023/featuredshows');
           console.log(response.data);
           setFshows(response.data); // Set the movie data into state
       } catch (error) {
@@ -84,6 +84,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchSports = async () => {
       try {
+          const response = await axios.get('http://localhost:8023/sports');
           const response = await axios.get('http://localhost:8021/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
@@ -128,11 +129,11 @@ const handleCategoryClick = (category) => {
       <Layout className="home-page-layout">
         <Header />
      
-          <div className='slider-container'>
+        <div className='slider-container'>
             <HomeSlider />
             <div className='black-fade'/>
             <img src='/images/HomeImages/slider-bg.jpg' className='slider-bg'></img>
-            </div>
+          </div>
 
           <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
             <h1 className='title-one'>FEATURED SHOWS</h1>
@@ -140,19 +141,18 @@ const handleCategoryClick = (category) => {
         
             <div className="movie-card-container-main">
             {fshows.map((featureds) => (
-        <MovieCard
+            <MovieCard
             key={featureds._id} // Unique identifier
             name={featureds.name}  // Use movie.Name
             date={featureds.date}  // Use movie.date
             place={featureds.place}  // Use movie.place for venue
             price={featureds.price}  // Use movie.price
-            image={featureds.image}  // Use movie.image (make sure the path is correct)
-            
-        />
-    ))}
+            image={featureds.image}  // Use movie.image (make sure the path is correct)  
+            />
+            ))}
 
 
-</div>
+        </div>
 
                 {/* <div className="movie-card-container-main">
               <MovieCard title="movie.title" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
@@ -183,17 +183,17 @@ const handleCategoryClick = (category) => {
                 <h1 className = "neven">NO EVENTS YET</h1>  // Display this message if no events are found
               ) :
   
-  (getFilteredData().map((item) => (
-    <MovieCard2
-      key={item._id}
-      Name={item.Name || item.name} // Adjust based on movie or show
-      date={item.date}
-      place={item.place}
-      price={item.price}
-      image={item.image}
-    />
-  )))}
-</div>
+              (getFilteredData().map((item) => (
+                <MovieCard2
+                  key={item._id}
+                  Name={item.Name || item.name} // Adjust based on movie or show
+                  date={item.date}
+                  place={item.place}
+                  price={item.price}
+                  image={item.image}
+                />
+              )))}
+            </div>
 
 {/* <div className="other-card-container">
                   {movies.map((movie) => (

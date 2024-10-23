@@ -8,7 +8,7 @@ import ConcertDetails from '../events/concerts/ConcertDetails';
 import MovieList from '../events/movies/MovieList';
 import UpcomingMovies from '../news/UpcomingMovies';
 import UpcomingMovieTrailer from '../news/UpcomingMoviesTrailer';
-import UpcomingEvents from '../news/UpcomingEvents';
+import News from '../news/News';
 import MovieDetails from '../events/movies/MovieDetails';
 import MovieSeats from '../events/movies/MovieSeats';
 import HomePage from '../home/HomePage'; 
@@ -37,10 +37,10 @@ const AppController = () => {
             <Route path="/movies" element={<MovieList />} />
             <Route path="/movie-details" element={<MovieDetails />} />
             <Route path="/movie-seats" element={<MovieSeats />} />
-            <Route path="/upcoming-events" element={<UpcomingEvents />} />
+            <Route path="/news" element={<News/>} />
             <Route path="/upcoming-movies" element={<UpcomingMovies />} />
             <Route path="/trailer" element={<UpcomingMovieTrailer />} />
- 
+
         </Routes>
         </BrowserRouter>
     )

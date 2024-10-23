@@ -73,7 +73,20 @@ input{
   font-size: 30px;
   margin-left: 40px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding-left: 9px;
+  
+  height: 50px;
+  width: 50px;
+  border-radius: 40px;
 }
+.cart-icon:hover{
+  background-color: #313131;
+  height: 50px;
+  width: 50px;
+  border-radius: 40px;
+}
+
 
 .profile-btn{
   height: 35px;
@@ -98,6 +111,39 @@ button:hover{
 .username-display {
   margin-left: 10px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   color: white; /* Adjust this color as needed */
+  margin-top: 12px;
+  margin-left: 20px;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center spinner and text */
+}
+
+.loading-text {
+  color: #ffffff; /* White text for contrast */
+  font-size: 1.5rem; /* Larger font size for better visibility */
+  margin-top: 15px; /* Space between spinner and text */
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 1); /* Pure black background */
+  z-index: 1000; /* Ensure it's on top of everything */
+  opacity: 1; /* Fully visible */
+  transition: opacity 0.6s ease; /* Match this duration with JavaScript */
+}
+
+.fade-out {
+  opacity: 0; /* Invisible when fading out */
 }
