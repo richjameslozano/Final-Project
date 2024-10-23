@@ -128,6 +128,21 @@ app.post('/signup', async (req, res) => {
         res.status(500).json({ message: 'Error registering user' });
     }
 });
+
+// API route to get user data
+app.get('/user/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId).select('-password'); // Exclude password from response
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+    } catch (err) {
+        console.error('Error fetching user data:', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
  
 // Start the server
 app.listen(PORT, () => {

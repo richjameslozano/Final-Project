@@ -14,7 +14,8 @@ const Login = ({ onCancel, onLoginSuccess }) => {
       console.log('Login Success:', response.data);
 
       // Save the login status to local storage
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('user', JSON.stringify({ id: response.data.id, username: response.data.username }));
+
 
       // Trigger login success callback to update the parent component state
       onLoginSuccess();

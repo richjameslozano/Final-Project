@@ -1,46 +1,14 @@
-@font-face {
-    font-family: 'Evers';
-    src: url('./text-fonts/Evers.ttf');
-  }
-  
-  @font-face {
-    font-family: 'Akira';
-    src: url('./text-fonts/Akira\ Expanded\ Demo.otf');
-  }
-  
-  @font-face {
-    font-family: 'Coffee';
-    src: url('./text-fonts/kenyan\ coffee\ bd.otf');
-  }
-  
-  @font-face {
-    font-family: 'theBold';
-    src: url('./text-fonts/THE\ BOLD\ FONT\ -\ FREE\ VERSION\ -\ 2023.ttf');
-  }
-  
-  @font-face {
-    font-family: 'AlteBold';
-    src: url('./text-fonts/AlteHaasGroteskBold.ttf');
-  }
-  
-  @font-face {
-    font-family: 'Alte';
-    src: url('./text-fonts/AlteHaasGroteskRegular.ttf');
-  }
-  
-  body{
+ body{
     overflow-x: hidden;
   }
-  
   /* Main layout styles */
-  .home-page-layout {
+  .cart-page-layout {
       min-height: 100vh;
       overflow-x: hidden;
       overflow: hidden;
   }
-    
   
-  .main-content-container{
+  .main-content-container-cart{
     margin-top: -5px;
     display: flex;
     flex-direction: column;
@@ -54,90 +22,35 @@
     color: white;
   }
     /* Movie card container styles */
-  .movie-card-container-main {
+  .movie-cart-container-main {
     display: flex;
-    flex-direction: row;
-      justify-content: center;
-      width: 1500px;  
+    flex-direction: column;
+ 
+    width: 1500px;  
     height: 1100px;
     margin-bottom: 100px;
     flex-wrap: wrap;
+    background-color: white;
   }
   
-  .slider-container{
-    height: 1000px;
+  .ticket-lists{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
-  
-  .slider-bg{
-      height: 960px;
-      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
-      z-index: -4;
-  }
+
+ 
   
   
-  .title-one{
+  .title-one-cart{
     font-size: 50px;
     color: white;
     font-family: Akira;
+    margin-top: 70px;
   }
   
-  .sub-title{
+  .sub-title-cart{
     color: #37FD12;
     margin-top: -20px;
     font-family: theBold;
-  }
-  
-  .other-events-container{
-    margin-top: 150px;
-    display: flex;
-    flex-direction: column;
-    width: 1600px;  
-    height: 5000px;
-    margin-bottom: 100px;
-    padding: 50px;
-  }
-  
-  .category-poster-container{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-  
-  }
-  
-  .category-container{
-    margin-top: 50px;
-    margin-right: 60px;
-    display: flex;
-    flex-direction: column;
-    width: 310px;
-  }
-  
-  
-  .category-container li{
-    color: white;
-    font-size: 20px;
-    list-style-type: none;
-    font-family: theBold;
-    transition: all 0.2s;
-  }
-  
-  .category-container li:hover{
-    color: #37FD12;
-    cursor: pointer;
-    font-family: theBold;
-    font-size: 23px;
-  }
-  
-  .categories{
-    padding-left: 0;
-    margin-left: 0;
-  }
-  
-  .other-card-container{
-    margin-right: -50px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
   }
