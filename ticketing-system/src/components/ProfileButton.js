@@ -31,6 +31,7 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
     navigate('/profile');
   };
 
+
   const handleLogout = () => {
     localStorage.removeItem('user'); // Clear user data on logout
     setIsLoggedIn(false);

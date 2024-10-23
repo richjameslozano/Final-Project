@@ -4,7 +4,8 @@
   "main": "Server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start": "node --max-old-space-size=4096 node_modules/.bin/react-scripts start"
   },
   "author": "",
   "license": "ISC",
