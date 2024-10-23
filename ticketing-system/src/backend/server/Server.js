@@ -58,6 +58,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('accounts', userSchema);
 
+
 // API route for registration
 app.post('/signup', async (req, res) => {
     const { username, password, firstName, lastName, email, mobileNumber } = req.body;
@@ -68,6 +69,16 @@ app.post('/signup', async (req, res) => {
         res.status(201).send('User registered successfully');
     } catch (error) {
         res.status(500).send('Error registering user');
+    }
+});
+
+app.get('/signup', async (req, res) => {
+    try {
+        const officers = await User.find();
+        res.json(officers);
+    } catch (err) {
+        console.error('Error fetching:', err);
+        res.status(500).json({ message: 'Failed to fetch' });
     }
 });
 
