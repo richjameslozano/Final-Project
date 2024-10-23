@@ -11,11 +11,18 @@ import React, { useEffect, useState } from 'react';
 
 const { Sider, Content } = Layout;
 
+
 const HomePage = () => {
 
   const [movies, setMovies] = useState([]);
   const [fshows, setFshows] = useState([]);
+  const [sports, setSports] = useState([]);
+  const [Tours, setTours] = useState([]);
+  const [family, setFamily] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('Movies');
 
+  
+  
   useEffect(() => {
     const fetchMovies = async () => {
         try {
@@ -43,6 +50,49 @@ useEffect(() => {
 
   fetchFshows();
 }, []);
+
+useEffect(() => {
+  const fetchSports = async () => {
+      try {
+          const response = await axios.get('http://localhost:8020/sports');
+          console.log(response.data);
+          setSports(response.data); // Set the movie data into state
+      } catch (error) {
+          console.error('Error fetching movies:', error);
+      }
+  };
+
+  fetchSports();
+}, []);
+
+
+const handleCategoryClick = (category) => {
+  setSelectedCategory(category);
+};
+  const getFilteredData = () => {
+    switch (selectedCategory) {
+      case 'Movies':
+        return movies;
+      case 'Concerts & Shows':
+        return fshows;
+
+        case 'Sports':
+        return sports;
+        
+        case 'Tours & Attractions':
+          return Tours;
+
+          case 'Family':
+          return family;
+
+
+          
+      // Add cases for other categories as needed
+      default:
+        return movies; // Default to movies
+    }
+  
+};
 
     return (
       <Layout className="home-page-layout">
@@ -88,15 +138,34 @@ useEffect(() => {
               <div className='category-poster-container'>
                 <div className='category-container'>
                   <ul className='categories'>
-                    <li>Movies</li>
-                    <li>Concerts & Shows</li>
-                    <li>Sports </li>
-                    <li>Tours & Attractions</li>
-                    <li>Family</li>
-                    <li>Promos</li>
+                    <li onClick={() => handleCategoryClick('Movies')}>Movies</li>
+                    <li onClick={() => handleCategoryClick('Concerts & Shows')}>Concerts & Shows</li>
+                    <li onClick={() => handleCategoryClick('Sports')}>Sports </li>
+                    <li onClick={() => handleCategoryClick('Tours & Attractions')}>Tours & Attractions</li>
+                    <li onClick={() => handleCategoryClick('Family')}>Family</li>
+                    
                   </ul>
                 </div>
+                
+
                   <div className="other-card-container">
+                  {getFilteredData().length === 0 ? (
+                <h1>NO EVENTS YET</h1>  // Display this message if no events are found
+              ) :
+  
+  (getFilteredData().map((item) => (
+    <MovieCard2
+      key={item._id}
+      Name={item.Name || item.name} // Adjust based on movie or show
+      date={item.date}
+      place={item.place}
+      price={item.price}
+      image={item.image}
+    />
+  )))}
+</div>
+
+{/* <div className="other-card-container">
                   {movies.map((movie) => (
         <MovieCard2
             key={movie._id} // Unique identifier
@@ -108,7 +177,7 @@ useEffect(() => {
             
         />
     ))}
-                  </div>
+                  </div> */}
               </div>
             </div>
 
