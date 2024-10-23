@@ -26,7 +26,7 @@ const AppController = () => {
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/user-account" element={<UserAccount />} />
+            <Route path="/profile" element={<UserAccount />} />
             <Route path="/events" element={<MainEvent />} />
             <Route path='/signup' element={<SignUp/>}> </Route>
             <Route path="/" element={<HomePage />} />   

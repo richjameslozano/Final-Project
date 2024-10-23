@@ -39,6 +39,7 @@ function ProfileButton() {
     navigate('/profile');
   };
 
+
   const handleLogout = () => {
     localStorage.removeItem('user'); // Clear user data on logout
     setIsLoggedIn(false);
