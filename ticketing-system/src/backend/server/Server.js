@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // const Movie = require('./models/Movie');
 
 const app = express();
-const PORT = process.env.PORT || 8022;
+const PORT = process.env.PORT || 8023;
 app.use('/images', express.static('public/images'));
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, useUnifiedTopology: true })

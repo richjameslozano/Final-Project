@@ -5,6 +5,8 @@ import ClipLoader from 'react-spinners/ClipLoader'; // Spinner component
 import '../css/componentsStyle/Header.css'; 
 import ProfileButton from './ProfileButton';
 
+
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const [username, setUsername] = useState(null); // Store the username
