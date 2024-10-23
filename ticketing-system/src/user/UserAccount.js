@@ -2,6 +2,8 @@ import Header from '../components/Header';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/user/UserAccount.css';
+import { Layout } from 'antd';
+import Footer from '../components/Footer';
 
 const UserAccount = () => {
     const [password, setPassword] = useState('');
@@ -44,30 +46,18 @@ const UserAccount = () => {
     };
 
   return (
-    <div className="user-profile">
-        <Header />
+    <Layout className='main-container-user-account' style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
+          <Header />
+          
+          <div className="user-profile-container">
         <div className="sidebar">
-        <ul>
-            <li>
-                <button
-                className={activeTab === 'My Profile' ? 'active' : ''}
-                onClick={goToProfile}
-                >
-                My Profile
-                </button>
-            </li>
+          <h1 className='profile-title'>Profile Settings</h1>
+          <ul className='sidebar-button-list'>
+            <li style={{listStyleType: 'none'}}>My Account</li>
+            <li style={{listStyleType: 'none'}}>Tickets Purchased</li>
+          </ul>
 
-            <li>
-                <button
-                className={activeTab === 'My Tickets' ? 'active' : ''}
-                onClick={goToTickets}
-                >
-                My Tickets
-                </button>
-            </li>
-        
-        </ul>
-      </div>
+        </div>
 
       <div className="profile-details">
         <h2>My Account</h2>
@@ -145,6 +135,9 @@ const UserAccount = () => {
         </div>
       </div>
     </div>
+   
+    </Layout>
+    
   );
 };
 
