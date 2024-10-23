@@ -85,7 +85,6 @@ useEffect(() => {
   const fetchSports = async () => {
       try {
           const response = await axios.get('http://localhost:8023/sports');
-          const response = await axios.get('http://localhost:8021/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
       } catch (error) {
