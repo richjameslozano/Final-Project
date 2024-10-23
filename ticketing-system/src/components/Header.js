@@ -9,12 +9,28 @@
   const { SubMenu } = Menu;
 
   const Header = () => {
-
+    const scrollToBottom = () => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    };
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    };
     const navigate = useNavigate(); 
 
     const goToHome = () => {
       navigate('/')
+
     }
+    const handleHomeClick = () => {
+      goToHome();
+      scrollToTop();
+    };
 
     return (
       <div className="header-container">
@@ -22,11 +38,11 @@
 
 
         <div className='btn-container'>
-          <button onClick={goToHome}>Home</button>
-          <button>Events</button>
-          <button>Ticket Outlets</button>
+          <button onClick={handleHomeClick}>Home</button>
+          <button >Events</button>
+          <button  onClick={scrollToBottom}>Ticket Outlets</button>
           <button>News</button>
-          <button>Contact Us</button>
+          <button onClick={scrollToBottom}>Contact Us</button>
           <input placeholder='Looking for anything?'></input>
           <img className='search-btn' src='https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png'></img>
           <ShoppingCartOutlined className='cart-icon'/> 

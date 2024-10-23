@@ -10,6 +10,9 @@ import Footer from '../components/Footer';
 const { Sider, Content } = Layout;
 
 const HomePage = () => {
+
+
+  
     return (
       <Layout className="home-page-layout">
         <Header />
