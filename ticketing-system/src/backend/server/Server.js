@@ -1,42 +1,12 @@
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const cors = require('cors');
-// const getRoutes = require('../routes/Routes'); // Adjust the path if necessary
- 
-// const app = express();
-// app.use('/signup', getRoutes);
-// // Middleware
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cors({
-//     origin: 'http://localhost:3000',
-// }));
- 
-// // Connect to MongoDB (make sure to specify your database)
-// mongoose.connect('mongodb://localhost:27017/', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// }).then(() => {
-//     console.log("Connected to MongoDB");
-//   })
-//   .catch((error) => {
-//     console.error("MongoDB connection error:", error);
-//   });
- 
- 
-// // Start the server
-// app.listen(8015, () => {
-//     console.log("Server is up and running on port 8011");
-// });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
- 
- 
+// const Movie = require('./models/Movie');
+
 const app = express();
 const PORT = process.env.PORT || 8020;
- 
+app.use('/images', express.static('public/images'));
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
@@ -55,10 +25,60 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     mobileNumber: { type: String, required: true }
 });
+// Movie Schema
+const modelSchema = new mongoose.Schema({
+    Name:  { type: String},
+    runTime:  { type: String},
+    genre:  { type: String},
+    price:  { type: String},
+    time:  { type: String},
+    place: { type: String},
+    date: { type: String},
+    image: { type: String }
+});
+//Concert 
+const featuredShowsSchemas = new mongoose.Schema({
+    Name:  { type: String},
+    runTime:  { type: String},
+    genre:  { type: String},
+    price:  { type: String},
+    time:  { type: String},
+    place: { type: String},
+    date: { type: String},
+    image: { type: String }
+});
+
  
+
 // User model
 const User = mongoose.model('accounts', userSchema);
- 
+
+//Movies model
+const Movie = mongoose.model('movies', modelSchema);
+
+//Featured Shows model
+const FeaturedShows = mongoose.model('movies', modelSchema);
+
+ //FOR PICTURE RETRIEVE
+app.get('/movies', async (req, res) => {
+    try {
+        const movies = await Movie.find();
+        res.status(200).json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
+    }
+});
+//FEATURED SHOWS
+app.get('/featuredshows', async (req, res) => {
+    try {
+        const featuredshows = await Movie.find();
+        res.status(200).json(featuredshows);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
+    }
+});
 // API route for login
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;

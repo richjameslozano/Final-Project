@@ -3,7 +3,7 @@ import { Card, Button } from 'antd';
 import '../css/componentsStyle/MovieCard.css'; // Import the CSS file
 
 
-const MovieCard = ({ title, date, price, image, venue }) => (
+const MovieCard = ({ Name, date, image, place }) => (
 
   <div className='movie-card-container'>
     <div className='button-container'>
@@ -13,9 +13,9 @@ const MovieCard = ({ title, date, price, image, venue }) => (
       <img src={image} className='card-posters'></img>
     </div>
     <div className='details'>
-      <div className='deet-title'>{title}</div>
+      <div className='deet-title'>{Name}</div>
       <div className='deet-date'>{date}</div>
-      <div className='deet-venue'>{venue}</div>
+      <div className='deet-venue'>{place}</div>
     </div>
 
     
