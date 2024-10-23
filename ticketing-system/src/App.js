@@ -14,6 +14,9 @@ import UpcomingEvents from './news/UpcomingEvents';
 import MovieDetails from './events/movies/MovieDetails';
 import MovieSeats from './events/movies/MovieSeats';
 import AppController from './components/AppController';
+import UserProfile from './user/UserProfile';
+import UserTickets from './user/UserTickets';
+import UserAccount from './user/UserAccount';
 
 const App = () => {
   return (
@@ -33,6 +36,9 @@ const App = () => {
         <Route path="/trailer" element={<UpcomingMovieTrailer />} />
         <Route path="/ticket-outlets" element={<TicketOutlets />} />
         <Route path="/controller" element={<AppController />} />
+        <Route path="/account" element={<UserAccount />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/my-tickets" element={<UserTickets />} />
       </Routes>
     </Router>
   );
