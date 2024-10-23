@@ -19,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
         try {
-            const response = await axios.get('http://localhost:8020/movies');
+            const response = await axios.get('http://localhost:8021/movies');
             console.log(response.data);
             setMovies(response.data); // Set the movie data into state
         } catch (error) {
@@ -33,7 +33,7 @@ const HomePage = () => {
 useEffect(() => {
   const fetchFshows = async () => {
       try {
-          const response = await axios.get('http://localhost:8020/featuredshows');
+          const response = await axios.get('http://localhost:8021/featuredshows');
           console.log(response.data);
           setFshows(response.data); // Set the movie data into state
       } catch (error) {

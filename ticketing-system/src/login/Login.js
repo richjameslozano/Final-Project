@@ -10,15 +10,15 @@ const Login = ({ onCancel, onLoginSuccess }) => {
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post('http://localhost:8020/login', values);
+      const response = await axios.post('http://localhost:8021/login', values);
       console.log('Login Success:', response.data);
 
       // Save the login status to local storage
-      localStorage.setItem('user', JSON.stringify({ id: response.data.id, username: response.data.username }));
-
+      const { id, username } = response.data; // Destructure to get username
+      localStorage.setItem('user', JSON.stringify({ id, username }));
 
       // Trigger login success callback to update the parent component state
-      onLoginSuccess();
+      onLoginSuccess(username); // Pass username here
 
       // Close the modal using the parent-provided onCancel function
       onCancel();
@@ -29,6 +29,7 @@ const Login = ({ onCancel, onLoginSuccess }) => {
       console.error('Login Failed:', error.response?.data?.message || error.message);
     }
   };
+  
 
   const goToSignup = () => {
     navigate('/signup');
