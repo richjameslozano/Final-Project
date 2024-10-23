@@ -12,12 +12,14 @@ import UpcomingEvents from '../news/UpcomingEvents';
 import MovieDetails from '../events/movies/MovieDetails';
 import MovieSeats from '../events/movies/MovieSeats';
 import HomePage from '../home/HomePage'; 
+import MainEvent from '../events/MainEvent';
+
 
 const AppController = () => {
     return (
         <BrowserRouter>
         <Routes>
-       
+            <Route path="/events" element={<MainEvent />} />
             <Route path='/signup' element={<SignUp/>}> </Route>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />

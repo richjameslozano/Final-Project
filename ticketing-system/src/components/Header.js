@@ -32,6 +32,11 @@
       scrollToTop();
     };
 
+    const goToEvent = () => {
+      navigate('/events')
+
+    }
+
     return (
       <div className="header-container">
         <div className="header-logo">ONEPIXEL.<span className='ticket-logo'>Ticket</span></div>
@@ -39,7 +44,7 @@
 
         <div className='btn-container'>
           <button onClick={handleHomeClick}>Home</button>
-          <button >Events</button>
+          <button onClick={goToEvent}>Events</button>
           <button  onClick={scrollToBottom}>Ticket Outlets</button>
           <button>News</button>
           <button onClick={scrollToBottom}>Contact Us</button>
