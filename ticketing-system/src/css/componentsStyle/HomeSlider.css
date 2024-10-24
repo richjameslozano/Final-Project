@@ -126,7 +126,7 @@
 /* Size and shape of the dots */
 .slider-wrapper .slick-dots li {
   width: 25px; /* Adjust the width for the dots */
-  height: 25px; /* Adjust the height for the dots */
+  height: 5px; /* Adjust the height for the dots */
   margin: 0 15px; /* Space between dots */
 }
 
@@ -134,7 +134,7 @@
 .slider-wrapper .slick-dots li button {
   width: 100%; /* Ensure the button takes the full size of the li */
   height: 100%; /* Ensure the button takes the full size of the li */
-  border-radius: 100%; /* Make the dots circular */
+   /* Make the dots circular */
   background-color: rgba(255, 255, 255, 0.5); /* Change color and transparency */
   transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
   border: none; /* Remove default button border */

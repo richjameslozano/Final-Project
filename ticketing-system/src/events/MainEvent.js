@@ -20,7 +20,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchMovies = async () => {
           try {
-              const response = await axios.get('http://localhost:8027/movies');
+              const response = await axios.get('http://localhost:8030/movies');
               console.log(response.data);
               setMovies(response.data); // Set the movie data into state
           } catch (error) {
@@ -34,7 +34,7 @@ const MainEvent = () => {
   useEffect(() => {
     const fetchConcerts = async () => {
         try {
-            const response = await axios.get('http://localhost:8027/concerts');
+            const response = await axios.get('http://localhost:8030/concerts');
             console.log(response.data);
             setConcerts(response.data); // Set the movie data into state
         } catch (error) {
@@ -48,7 +48,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchFshows = async () => {
           try {
-              const response = await axios.get('http://localhost:8023/featuredshows');
+              const response = await axios.get('http://localhost:8030/featuredshows');
               setFshows(response.data);
           } catch (error) {
               console.error('Error fetching featured shows:', error);
@@ -60,7 +60,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchSports = async () => {
           try {
-              const response = await axios.get('http://localhost:8023/sports');
+              const response = await axios.get('http://localhost:8030/sports');
               setSports(response.data);
           } catch (error) {
               console.error('Error fetching sports:', error);

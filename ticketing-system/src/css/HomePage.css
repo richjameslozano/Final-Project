@@ -95,9 +95,9 @@ body{
   display: flex;
   flex-direction: column;
   width: 1600px;  
-  height: 5000px;
-  margin-bottom: 100px;
-  padding: 50px;
+  height: auto;
+  flex-wrap: wrap;
+
 }
 
 .category-poster-container{
@@ -144,13 +144,69 @@ body{
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  max-height: 300px;
+
   height: 100%;
 }
 
 .neven{
-
   margin-top:170px;
   font-size: 50px;
   color: rgb(163, 175, 185);
+}
+
+.main-about-us-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
+  padding-top: 50px;
+  background-color: #313131;
+  border-radius: 10px;
+  margin-top: 100px;
+  align-items: center;
+  padding-bottom: 60px;
+}
+.about-us-title{
+font-family: 'Courier New', Courier, monospace;
+font-size: 50px;
+}
+.dev-card-container{
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  background-color: rgb(147, 147, 150);
+  border-radius: 10px;
+
+
+
+}
+.dev-cards{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  width:  100%;
+  height: auto;
+  flex-wrap: wrap;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+ 
+}
+.dev-image{
+  width: 100%;
+  height: auto;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px 10px 0 0;
+}
+.card-contents{
+  display: flex;
+    flex-direction:column;
+    height: auto;
+    width: 100%;
+    background-color: #313131;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
+    border-radius: 0 0 10px 10px;
+
 }

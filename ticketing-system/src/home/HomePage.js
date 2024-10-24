@@ -28,7 +28,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
         try {
-            const response = await axios.get('http://localhost:8025/movies');
+            const response = await axios.get('http://localhost:8030/movies');
             console.log(response.data);
             setMovies(response.data); // Set the movie data into state
         } catch (error) {
@@ -42,7 +42,7 @@ const HomePage = () => {
 useEffect(() => {
   const fetchTours = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/tours');
+          const response = await axios.get('http://localhost:8030/tours');
           console.log(response.data);
           setTours(response.data); // Set the movie data into state
       } catch (error) {
@@ -57,7 +57,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchConcerts = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/concerts');
+          const response = await axios.get('http://localhost:8030/concerts');
           console.log(response.data);
           setConcerts(response.data); // Set the movie data into state
       } catch (error) {
@@ -71,7 +71,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchFshows = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/featuredshows');
+          const response = await axios.get('http://localhost:8030/featuredshows');
           console.log(response.data);
           setFshows(response.data); // Set the movie data into state
       } catch (error) {
@@ -85,7 +85,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchSports = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/sports');
+          const response = await axios.get('http://localhost:8030/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
       } catch (error) {
@@ -155,15 +155,6 @@ const handleCategoryClick = (category) => {
 
         </div>
 
-                {/* <div className="movie-card-container-main">
-              <MovieCard title="movie.title" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15} image="/images/HomeImages/hardstuck-poster.png" />
-              <MovieCard title="HARD STUCK" date="November 6, 2024" venue="CASE ROOM - NU MOA" price={15}  image="/images/HomeImages/hardstuck-poster.png" />
-              
-            </div> */}
-            
             <div className='other-events-container'>
               <h1 className='title-one'>Other Events</h1>
               <div className='category-poster-container'>
@@ -182,38 +173,70 @@ const handleCategoryClick = (category) => {
                   <div className="other-card-container">
                   {getFilteredData().length === 0 ? (
                 <h1 className = "neven">NO EVENTS YET</h1>  // Display this message if no events are found
-              ) :
-  
-              (getFilteredData().map((item) => (
-                <MovieCard2
-                  key={item._id}
-                  Name={item.Name || item.name} // Adjust based on movie or show
-                  date={item.date}
-                  place={item.place}
-                  price={item.price}
-                  image={item.image}
-                  time ={item.time}
-                />
-              )))}
-            </div>
+                ) :
+    
+                    (getFilteredData().map((item) => (
+                    <MovieCard2
+                    key={item._id}
+                    Name={item.Name || item.name} // Adjust based on movie or show
+                    date={item.date}
+                    place={item.place}
+                    price={item.price}
+                    image={item.image}
+                    time ={item.time}
+                   />
+                    )))}    
+                  </div>
 
-{/* <div className="other-card-container">
-                  {movies.map((movie) => (
-        <MovieCard2
-            key={movie._id} // Unique identifier
-            Name={movie.Name}  // Use movie.Name
-            date={movie.date}  // Use movie.date
-            place={movie.place}  // Use movie.place for venue
-            price={movie.price}  // Use movie.price
-            image={movie.image}  // Use movie.image (make sure the path is correct)
-            
-        />
-    ))}
-                  </div> */}
+
               </div>
             </div>
+                  <div className='main-about-us-container'>
+                    <div className='about-us-title'> ABOUT US </div>
+                      <div className='dev-card-container'>
+                            <div className='dev-cards'>
+                            <img src='/images/tristan.jpg' className='dev-image' alt="dev-photo"></img>
 
+                              <div className='card-contents'>
+                             <div>Aquino, Tristan Jay</div>
+                              Backend Developer 
+                              facebook ni tj
+                              </div>
+                           </div>
+                           
+                           <div className='dev-cards'>
+                            <img src='/images/hen.jpg' className='dev-image' alt="dev-photo"></img>
+
+                              <div className='card-contents'>
+                             <div>Aruta, Henreizh Nathan</div>
+                              Backend Developer 
+                              facebook ni hen
+                              </div>
+                           </div>
+
+                           <div className='dev-cards'>
+                            <img src='/images/berlene.jpg' className='dev-image' alt="dev-photo"></img>
+
+                              <div className='card-contents'>
+                             <div>Bernabe, Berlene</div>
+                              Backend Developer
+                              facebook ni berlene
+                              </div>
+
+                           </div>
+                           <div className='dev-cards'>
+                            <img src='/images/rj.jpg' className='dev-image' alt="dev-photo"></img>
+
+                              <div className='card-contents'>
+                             <div>Lozano, Rich James</div>
+                              Backend Developer
+                              facebook ni rich
+                              </div>
+                           </div>
+                      </div>
+                </div>  
           </div>
+          
             
 
           <Footer/>
