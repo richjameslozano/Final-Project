@@ -146,6 +146,7 @@ const handleCategoryClick = (category) => {
             name={featureds.name}  // Use movie.Name
             date={featureds.date}  // Use movie.date
             place={featureds.place}  // Use movie.place for venue
+            time ={featureds.time}
             price={featureds.price}  // Use movie.price
             image={featureds.image}  // Use movie.image (make sure the path is correct)  
             />
@@ -191,6 +192,7 @@ const handleCategoryClick = (category) => {
                   place={item.place}
                   price={item.price}
                   image={item.image}
+                  time ={item.time}
                 />
               )))}
             </div>

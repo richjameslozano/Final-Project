@@ -10,6 +10,7 @@ const { Meta } = Card;
 const MainEvent = () => { 
     const [allShows, setAllShows] = useState([]);
     const [movies, setMovies] = useState([]);
+    const [concerts, setConcerts] = useState([]);
     const [fshows, setFshows] = useState([]);
     const [sports, setSports] = useState([]);
     const [Tours, setTours] = useState([]);
@@ -17,9 +18,37 @@ const MainEvent = () => {
     const [selectedCategory, setSelectedCategory] = useState('Shows & Concerts');
 
     useEffect(() => {
+      const fetchMovies = async () => {
+          try {
+              const response = await axios.get('http://localhost:8027/movies');
+              console.log(response.data);
+              setMovies(response.data); // Set the movie data into state
+          } catch (error) {
+              console.error('Error fetching movies:', error);
+          }
+      };
+  
+      fetchMovies();
+  }, []);
+
+  useEffect(() => {
+    const fetchConcerts = async () => {
+        try {
+            const response = await axios.get('http://localhost:8027/concerts');
+            console.log(response.data);
+            setConcerts(response.data); // Set the movie data into state
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+        }
+    };
+  
+    fetchConcerts();
+  }, []);
+
+    useEffect(() => {
       const fetchFshows = async () => {
           try {
-              const response = await axios.get('http://localhost:8025/featuredshows');
+              const response = await axios.get('http://localhost:8023/featuredshows');
               setFshows(response.data);
           } catch (error) {
               console.error('Error fetching featured shows:', error);
@@ -31,7 +60,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchSports = async () => {
           try {
-              const response = await axios.get('http://localhost:8025/sports');
+              const response = await axios.get('http://localhost:8023/sports');
               setSports(response.data);
           } catch (error) {
               console.error('Error fetching sports:', error);
@@ -50,12 +79,12 @@ const MainEvent = () => {
             return allShows;
           case 'Movies':
             return movies;
-          case 'Shows & Concerts':  
+          case 'Concerts':  
+            return concerts;
+          case 'Featured Shows':
             return fshows;
           case 'Sports':
             return sports;
-          case 'Family':
-            return family;
           default:
             return movies;
         }
@@ -76,10 +105,9 @@ const MainEvent = () => {
           <div className='categories-container-main'>
           <Button onClick={() => handleCategoryClick('All Shows')} className={selectedCategory === 'All Shows' ? 'active' : ''}>All Shows</Button>
           <Button onClick={() => handleCategoryClick('Movies')} className={selectedCategory === 'Movies' ? 'active' : ''}>Movies</Button>
-          <Button onClick={() => handleCategoryClick('Shows & Concerts')} className={selectedCategory === 'Shows & Concerts' ? 'active' : ''}>Shows & Concerts</Button>
+          <Button onClick={() => handleCategoryClick('Concerts')} className={selectedCategory === 'Concerts' ? 'active' : ''}>Concerts</Button>
+          <Button onClick={() => handleCategoryClick('Featured Shows')} className={selectedCategory === 'Featured Shows' ? 'active' : ''}>Featured Shows</Button>
           <Button onClick={() => handleCategoryClick('Sports')} className={selectedCategory === 'Sports' ? 'active' : ''}>Sports</Button>
-          <Button onClick={() => handleCategoryClick('Tours & Attractions')} className={selectedCategory === 'Tours & Attractions' ? 'active' : ''}>Tours & Attractions</Button>
-          <Button onClick={() => handleCategoryClick('Family')} className={selectedCategory === 'Family' ? 'active' : ''}>Family</Button>
         </div>
 
           <div className='events-grid'>
@@ -87,7 +115,7 @@ const MainEvent = () => {
               <Card
                 key={index}
                 hoverable
-                className='event-card'
+                className='event-card'  
                 cover={<img alt={event.name} src={event.image} />}
               >
                 <Meta title={event.name} description={event.date} />
@@ -101,6 +129,11 @@ const MainEvent = () => {
         <Footer />
       </Layout>
     );
+
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    // gap: 20px;
+    // padding: 20px;
 };
 
 export default MainEvent;

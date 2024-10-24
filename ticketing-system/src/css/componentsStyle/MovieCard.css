@@ -99,7 +99,63 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-  .card-posters:hover img{
+.card-posters:hover img{
   filter: brightness(50%);
 }
- 
+
+/* Force the close button (X) to the top-right corner of the modal */
+.custom-modal .ant-modal-close {
+  position: absolute;
+  top: 10px; /* Move it higher */
+  right: -30px; /* Move it to the far right */
+  z-index: 1000; /* Ensure it is on top */
+}
+
+.custom-modal .ant-modal-body {
+  height: 500px; /* Set the desired height */
+  overflow-y: auto; /* Make content scrollable if it's too tall */
+}
+
+/* Optional: Change the modal header background color */
+.custom-modal .ant-modal-header {
+  background-color: #212121;
+
+}
+
+.custom-modal .ant-modal-close-x {
+  font-size: 18px;
+  color: #000;
+}
+
+.custom-modal .ant-modal-content {
+  background-color: #212121;
+  max-height: 90vh; 
+}
+
+/* Change the modal title color */
+.custom-modal .ant-modal-title {
+  color: #ffffff; /* White color, replace with any color you want */
+  font-weight: bold; /* Optional: make the title bold */
+}
+
+.modal-content-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.modal-image-container img {
+  width: 2000px;
+  max-width: 300px;
+  height: auto;
+}
+
+.modal-details-container {
+  flex: 1;
+}
+
+.modal-details-container p {
+  margin: 10px 0;
+  color: white;
+  font-size: 20px;
+}

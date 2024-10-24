@@ -5,6 +5,9 @@ import '../css/componentsStyle/MovieCard2.css'; // Import the CSS file
 const MovieCard2 = ({ Name, date, image, place }) => (
 
   <div className='movie-card-container2'>
+    <div className='button-container2'>
+    <Button type='primary'>Buy Tickets</Button>
+      </div>
     <div>
       <img src={image} className='card-posters2'></img>
     </div>

@@ -57,8 +57,8 @@ body{
 .movie-card-container-main {
   display: flex;
   flex-direction: row;
-    justify-content: center;
-    width: 1500px;  
+  justify-content: center;
+   width: 1500px;  
   height: 1100px;
   margin-bottom: 100px;
   flex-wrap: wrap;
@@ -66,6 +66,9 @@ body{
 
 .slider-container{
   height: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .slider-bg{

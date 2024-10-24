@@ -11,7 +11,7 @@ const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
     const [username, setUsername] = useState(null); // Store the username
   const [loading, setLoading] = useState(false); // Track loading state
-  const [fadeOut, setFadeOut] = useState(false); // Trigger fade-out for loading overlay
+  
   const navigate = useNavigate(); 
 
   // On component mount, check if the user is logged in
@@ -30,12 +30,9 @@ const Header = () => {
   // Handle navigation with smooth loading effect
   const handleNavigation = (route) => {
     setLoading(true); // Show loading spinner
-    setFadeOut(false); // Reset fade-out for new loading
   
     // Start the fade-out effect after a short delay
-    setTimeout(() => {
-      setFadeOut(true); // Trigger fade-out effect for the loading overlay
-    }, 400); // Initial delay before starting fade-out
+
   
     // Hide loading spinner and navigate after the fade-out completes
     setTimeout(() => {
@@ -81,7 +78,7 @@ const Header = () => {
   return (
     <div className="header-container">
       {loading && (
-        <div className={`loading-overlay ${fadeOut ? 'fade-out' : ''}`}>
+        <div className= 'loading-overlay'>
           <div className="loading-spinner">
             <ClipLoader color="#ffffff" loading={loading} size={50} />
             <div className="loading-text">Loading...</div>
