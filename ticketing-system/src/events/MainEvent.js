@@ -17,6 +17,8 @@ const MainEvent = ({ movie, isVisible }) => {
   const [family, setFamily] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('Shows & Concerts');
 
+  const [isAnimating, setIsAnimating] = useState(false);
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -80,6 +82,12 @@ const MainEvent = ({ movie, isVisible }) => {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    setIsAnimating(true);
+
+    setTimeout(() => {
+      setSelectedCategory(category);
+      setIsAnimating(false); // Start fade-in animation
+    }, 500);
   };
 
   const getFilteredData = () => {
@@ -148,7 +156,7 @@ const MainEvent = ({ movie, isVisible }) => {
           </button>
         </div>
 
-        <div className='other-card-container2'>
+        <div className={`other-card-container2 ${isAnimating ? 'fade-out' : 'fade-in'}`}>
           {getFilteredData().length === 0 ? (
             <h1 className='neven2'>NO EVENTS YET</h1>
           ) : (
@@ -156,7 +164,7 @@ const MainEvent = ({ movie, isVisible }) => {
               <div key={item._id}>
                 <MovieCard3
                   key={item._id}
-                  Name={item.Name || item.name}
+                  name={item.Name || item.name}
                   date={item.date}
                   place={item.place}
                   price={item.price}

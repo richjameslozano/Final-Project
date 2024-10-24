@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, 
 app.use(cors());
 app.use(bodyParser.json());
  
+
 // User Schema
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -28,9 +29,10 @@ const userSchema = new mongoose.Schema({
 });
  
  
+
 // Movie Schema
 const modelSchema = new mongoose.Schema({
-    Name:  { type: String},
+    name:  { type: String},
     runTime:  { type: String},
     genre:  { type: String},
     price:  { type: String},
@@ -221,6 +223,25 @@ app.post('/login', async (req, res) => {
     }
 });
  
+app.get('/AllShows', async (req, res) => {
+    try {
+        // Fetch data from each collection
+        
+        const concerts = await Concert.find();
+        const movies = await Movie.find();
+        const sports = await Sports.find();
+        const tours = await Tours.find();
+        
+        // Combine all the shows into a single array
+        const allShows = [...movies, ...concerts, ...sports, ...tours];
+
+        res.status(200).json(allShows);
+    } catch (error) {
+        console.error('Error fetching all shows:', error);
+        res.status(500).json({ message: 'Error fetching all shows' });
+    }
+});
+
 // API route for signup
 app.post('/signup', async (req, res) => {
     console.log('Request Body:', req.body); // Log the incoming data
