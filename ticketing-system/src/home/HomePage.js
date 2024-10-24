@@ -28,7 +28,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
         try {
-            const response = await axios.get('http://localhost:8030/movies');
+            const response = await axios.get('http://localhost:8025/movies');
             console.log(response.data);
             setMovies(response.data); // Set the movie data into state
         } catch (error) {
@@ -42,7 +42,7 @@ const HomePage = () => {
 useEffect(() => {
   const fetchTours = async () => {
       try {
-          const response = await axios.get('http://localhost:8030/tours');
+          const response = await axios.get('http://localhost:8025/tours');
           console.log(response.data);
           setTours(response.data); // Set the movie data into state
       } catch (error) {
@@ -57,7 +57,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchConcerts = async () => {
       try {
-          const response = await axios.get('http://localhost:8030/concerts');
+          const response = await axios.get('http://localhost:8025/concerts');
           console.log(response.data);
           setConcerts(response.data); // Set the movie data into state
       } catch (error) {
@@ -71,7 +71,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchFshows = async () => {
       try {
-          const response = await axios.get('http://localhost:8030/featuredshows');
+          const response = await axios.get('http://localhost:8025/featuredshows');
           console.log(response.data);
           setFshows(response.data); // Set the movie data into state
       } catch (error) {
@@ -85,7 +85,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchSports = async () => {
       try {
-          const response = await axios.get('http://localhost:8030/sports');
+          const response = await axios.get('http://localhost:8025/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
       } catch (error) {
@@ -198,9 +198,17 @@ const handleCategoryClick = (category) => {
                             <img src='/images/tristan.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Aquino, Tristan Jay</div>
-                              Backend Developer 
-                              facebook ni tj
+                             <div className='dev-name'>Aquino, Tristan Jay</div>
+                             <div className='description'>DIV MASTER</div>
+
+                             <div className='social-container'>
+
+                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
+                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                             </div>
+                             
+                              
                               </div>
                            </div>
                            
@@ -208,9 +216,15 @@ const handleCategoryClick = (category) => {
                             <img src='/images/hen.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Aruta, Henreizh Nathan</div>
-                              Backend Developer 
-                              facebook ni hen
+                             <div className='dev-name'>Aruta, Henreizh Nathan</div>
+                             <div className='description'>POGI LANG</div>
+                             <div className='social-container'>
+
+                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
+                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                             </div>
+                              
                               </div>
                            </div>
 
@@ -218,9 +232,15 @@ const handleCategoryClick = (category) => {
                             <img src='/images/berlene.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Bernabe, Berlene</div>
-                              Backend Developer
-                              facebook ni berlene
+                             <div className='dev-name'>Bernabe, Berlene</div>
+                             <div className='description'>MIKMIK'S OWNER</div>
+                             <div className='social-container'>
+
+                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
+                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                             </div>
+                              
                               </div>
 
                            </div>
@@ -228,9 +248,15 @@ const handleCategoryClick = (category) => {
                             <img src='/images/rj.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Lozano, Rich James</div>
-                              Backend Developer
-                              facebook ni rich
+                             <div className='dev-name'>Lozano, Rich James</div>
+                             <div className='description'>GIT GADZZ</div>
+                             <div className='social-container'>
+
+                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
+                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                             </div>
+                              
                               </div>
                            </div>
                       </div>
