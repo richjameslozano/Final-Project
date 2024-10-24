@@ -114,3 +114,39 @@
 .prev-btn:hover, .next-btn:hover {
   background-color: rgba(0, 0, 0, 0.8); /* Darker shade on hover */
 }
+
+.sli.slider-wrapper .slick-dots,
+.slider-wrapper .slick-dots-bottom {
+  top: 520px; /* Adjusts the vertical position of the dots */
+  display: flex; /* Ensures the dots are displayed as a flex container */
+  justify-content: center; /* Centers the dots horizontally */
+  margin: 0; /* Remove any default margins */
+}
+
+/* Size and shape of the dots */
+.slider-wrapper .slick-dots li {
+  width: 25px; /* Adjust the width for the dots */
+  height: 25px; /* Adjust the height for the dots */
+  margin: 0 15px; /* Space between dots */
+}
+
+/* Button styles for each dot */
+.slider-wrapper .slick-dots li button {
+  width: 100%; /* Ensure the button takes the full size of the li */
+  height: 100%; /* Ensure the button takes the full size of the li */
+  border-radius: 100%; /* Make the dots circular */
+  background-color: rgba(255, 255, 255, 0.5); /* Change color and transparency */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+  border: none; /* Remove default button border */
+}
+
+/* Active dot styles */
+.slider-wrapper .slick-dots li.slick-active button {
+  background-color: rgba(255, 255, 255, 1); /* Fully opaque for the active dot */
+  transform: scale(1.5); /* Slightly enlarge the active dot */
+}
+
+/* Optional: Add hover effect */
+.slider-wrapper .slick-dots li button:hover {
+  background-color: rgba(255, 255, 255, 1); /* Change color on hover */
+}

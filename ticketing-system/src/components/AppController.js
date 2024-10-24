@@ -16,6 +16,7 @@ import MainEvent from '../events/MainEvent';
 import UserProfile from '../user/UserProfile';
 import UserAccount from '../user/UserAccount';
 import Cart from '../cart/Cart';
+import CustomerCare from '../contact/CustomerCare';
 
 
 
@@ -34,6 +35,7 @@ const AppController = () => {
             <Route path="/" element={<HomePage />} />   
             <Route path="/login" element={<Login />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/customer-care" element={<CustomerCare />} />
             <Route path="/concerts" element={<ConcertList />} />
             <Route path="/concert-details" element={<ConcertDetails />} />
             <Route path="/movies" element={<MovieList />} />
