@@ -19,7 +19,7 @@
 }
 
 .about-us-container{
-    width: 250px;
+    width: 200px;
     margin-right: 20px;
     margin-left: 20px;
     display: flex;
@@ -78,4 +78,18 @@
 
 .ticket-outlets-container div{
     padding-top: 10px;
+}
+
+.links {
+    color: rgb(167, 164, 164);
+}
+
+.customer-care-title {
+    font-family: Akira;
+    color: white;
+    font-size: 18px;
+}
+
+.customer-care-title:hover {
+    color: #5fa0e6; /* Change this to the desired hover color */
 }

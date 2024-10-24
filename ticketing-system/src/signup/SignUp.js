@@ -44,7 +44,7 @@ const SignUp = () => {
  
         setLoading(true);
         try {
-            const response = await axios.post('http://localhost:8023/signup', formData);
+            const response = await axios.post('http://localhost:8027/signup', formData);
             if (response.status === 201) {
                 message.success('User registered successfully');
             }

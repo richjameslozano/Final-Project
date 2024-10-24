@@ -31,12 +31,12 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
     navigate('/profile');
   };
 
-
   const handleLogout = () => {
     localStorage.removeItem('user'); // Clear user data on logout
     setIsLoggedIn(false);
     setUsername(''); // Clear username on logout
     setDropdownVisible(false); // Close dropdown after logout
+    navigate('/'); // Redirect to homepage
   };
 
   // Close dropdown when clicking outside
@@ -100,7 +100,6 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
           }} 
         />
       </Modal>
-
     </div>
   );
 }
