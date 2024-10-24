@@ -178,7 +178,7 @@ const handleCategoryClick = (category) => {
                     (getFilteredData().map((item) => (
                     <MovieCard2
                     key={item._id}
-                    Name={item.Name || item.name} // Adjust based on movie or show
+                    name={item.Name || item.name} // Adjust based on movie or show
                     date={item.date}
                     place={item.place}
                     price={item.price}

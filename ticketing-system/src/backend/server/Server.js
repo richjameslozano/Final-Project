@@ -51,6 +51,7 @@ const featuredShowsSchemas = new mongoose.Schema({
     image: { type: String }
 });
  
+
 //Concerts
 const featureConcert = new mongoose.Schema({
     name:  { type: String},
@@ -78,6 +79,17 @@ const featureTour = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
+
+const cartModel = new mongoose.Schema({
+    name:  { type: String},
+    runTime:  { type: String},
+    genre:  { type: String},
+    price: { type: String},
+    time: { type: String},
+    place: { type: String },
+    date: { type: String },
+    image: { type: String }
+});
  
 //Concert model
 const Concert = mongoose.model('concerts', featureConcert);
@@ -93,10 +105,12 @@ const Movie = mongoose.model('movies', modelSchema);
  
 //Movies model
 const Tours = mongoose.model('tours', featureTour);
-
  
 //Featured Shows model
 const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
+
+//Cart Model
+const cartItems = mongoose.model('carts', cartModel);
  
  //FOR PICTURE RETRIEVE
 app.get('/movies', async (req, res) => {
@@ -109,26 +123,15 @@ app.get('/movies', async (req, res) => {
     }
 });
 
-// Fetch All Shows
-app.get('/AllShows', async (req, res) => {
+app.get('/cart', async (req, res) => {
     try {
-        // Fetch data from each collection
-        
-        const concerts = await Concert.find();
-        const movies = await Movie.find();
-        const sports = await Sports.find();
-        const tours = await Tours.find();
-        
-        // Combine all the shows into a single array
-        const allShows = [...movies, ...concerts, ...sports, ...tours];
-
-        res.status(200).json(allShows);
+        const cartlist = await cartItems.find();
+        res.status(200).json(cartlist);
     } catch (error) {
-        console.error('Error fetching all shows:', error);
-        res.status(500).json({ message: 'Error fetching all shows' });
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
     }
 });
-
  
  //FOR PICTURE TOURS RETRIEVE
  app.get('/tours', async (req, res) => {
@@ -174,7 +177,6 @@ app.get('/AllShows', async (req, res) => {
 //     }
 // })
  
- 
 //FEATURED SHOWS
 app.get('/featuredshows', async (req, res) => {
     try {
@@ -201,8 +203,9 @@ app.post('/login', async (req, res) => {
         if (password !== user.password) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
- 
-        // Return the user details (excluding the password)
+        
+
+        // Return the user details including the password
         res.json({
             message: 'Login successful',
             id: user._id,
@@ -210,15 +213,13 @@ app.post('/login', async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            password: user.password
+            password: user.password // Include password in the response
         });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
- 
- 
  
 // API route for signup
 app.post('/signup', async (req, res) => {
@@ -247,7 +248,6 @@ app.post('/signup', async (req, res) => {
     }
 });
  
-// API route to get user data
 // API route to update user data
 app.put('/user/:id', async (req, res) => {
     try {
@@ -300,11 +300,68 @@ app.get('/user/:id', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
- 
- 
- 
+
+
+app.delete('/cart/:id', async (req, res) => {
+    try {
+      const deletedItem = await cartItems.findByIdAndDelete(req.params.id); // Use req.params.id
+      if (!deletedItem) {
+        return res.status(404).json({ message: 'Item not found' });
+      }
+      res.status(200).json({ message: 'Item deleted successfully' });
+    } catch (err) {
+      console.error('Error deleting item:', err);
+      res.status(500).json({ message: 'Failed to delete item' });
+    }
+  });
+
+  app.post('/cart', async (req, res) => {
+    try {
+        const { name, runTime, genre, price, time, place, date, image } = req.body;
+
+        // Create a new cart item based on the request data
+        const newCartItem = new cartItems({
+            name,
+            runTime,
+            genre,
+            price,
+            time,
+            place,
+            date,
+            image
+        });
+
+        // Save the cart item to the database
+        await newCartItem.save();
+
+        res.status(201).json({ message: 'Item added to cart', item: newCartItem });
+    } catch (error) {
+        console.error('Failed to add item to cart:', error);
+        res.status(500).json({ message: 'Failed to add item to cart', error });
+    }
+});
+
+// Search endpoint
+// Search route
+app.get('/search', async (req, res) => {
+    const { query } = req.query;
+
+    try {
+        const results = await Movie.find({
+            $or: [
+                { Name: { $regex: query, $options: 'i' } },
+                { genre: { $regex: query, $options: 'i' } }
+            ]
+        });
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error searching movies:', error);
+        res.status(500).json({ message: 'Error searching movies' });
+    }
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
- 

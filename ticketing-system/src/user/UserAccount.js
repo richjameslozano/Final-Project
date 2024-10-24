@@ -15,31 +15,32 @@ const UserAccount = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
- 
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setUserId(user.id || user._id); // Store the user ID
-       
-        // Fetch user data from the server
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8031/user/${user.id}`);
-                setUserInfo(response.data);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
- 
-        fetchUserData(); // Call the fetch function
-        setIsLoggedIn(true);
+      const user = JSON.parse(storedUser);
+      setUserId(user.id || user._id); // Store the user ID
+
+      // Fetch user data from the server
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8031/user/${user.id || user._id}`);
+          console.log('Fetched user data:', response.data); // Log the response
+          setUserInfo(response.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchUserData(); // Call the fetch function
+      setIsLoggedIn(true);
     } else {
-        setIsLoggedIn(false);
+      setIsLoggedIn(false);
     }
-}, []);
- 
- 
+  }, []);
+
   const handleEditClick = () => {
     if (isEditing) {
       saveUserInfo(); // Call function to save updated user info
@@ -69,7 +70,11 @@ const UserAccount = () => {
       alert('Failed to update profile');
     }
   };
- 
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
+  };
+
   return (
     <Layout className='main-container-user-account' style={{ backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020' }}>
       <Header />
@@ -147,19 +152,21 @@ const UserAccount = () => {
               <label>Password</label>
               <input
                 className='input-info-profile'
-                type="password"
+                type={showPassword ? "text" : "password"} // Toggle between text and password type
                 name="password"
                 value={userInfo.password}
                 readOnly={!isEditing}
                 onChange={handleInputChange}
               />
-              <span className="change-link">Change Password</span>
+              <span className="change-link" onClick={togglePasswordVisibility}>
+                {showPassword ? "Hide" : "Show"} Password
+              </span>
             </div>
           </div>
  
           <div className="action-buttons">
             <button className="cancel-btn" onClick={handleEditClick}>
-              {isEditing ? "Cancel" : "Update"}
+              {isEditing ? "Cancel" : "Edit"}
             </button>
             <button className="save-btn" onClick={isEditing ? saveUserInfo : handleEditClick}>
               {isEditing ? "Save Changes" : "Update"}
@@ -170,6 +177,5 @@ const UserAccount = () => {
     </Layout>
   );
 };
- 
+
 export default UserAccount;
- 

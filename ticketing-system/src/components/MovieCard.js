@@ -2,35 +2,37 @@ import React, { useState } from 'react';
 import { Card, Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard.css'; // Import the CSS file
+import axios from 'axios';
 
-const MovieCard = ({ name, date, image, place, time }) => {
+const MovieCard = ({ name, date, image, place, time, price }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigate = useNavigate(); 
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-  
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setIsModalVisible(false);
-    // Add logic for proceeding to purchase if needed
-    handleCartClick();
+
+    // Add the movie to the cart by making a POST request to the backend
+    try {
+      const response = await axios.post('http://localhost:8031/cart', {
+        name,
+        date,
+        place,
+        time,
+        price,
+        image,
+      });
+
+      console.log('Item added to cart:', response.data);
+    } catch (error) {
+      console.error('Failed to add item to cart:', error);
+    }
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-  };
-
-  const handleCartClick = () => {
-    scrollToTop();
-    navigate('/cart');
   };
 
   return (
@@ -52,7 +54,7 @@ const MovieCard = ({ name, date, image, place, time }) => {
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-        okText="Proceed to Purchase"
+        okText="Add to Cart"
         cancelText="Cancel"
         className="custom-modal"
         width={800} // Set the width (in pixels)
@@ -66,6 +68,7 @@ const MovieCard = ({ name, date, image, place, time }) => {
             <p><strong>Date:</strong> {date}</p>
             <p><strong>Venue:</strong> {place}</p>
             <p><strong>Time:</strong> {time}</p>
+            <p><strong>Price:</strong> {price}</p>
           </div>
         </div>
       </Modal>
