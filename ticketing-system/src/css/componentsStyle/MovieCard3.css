@@ -1,87 +1,160 @@
+.movie-card-container3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 600px;
+  width: 400px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 80px;
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0);
+  margin-top: 80px;
+  position: relative;
+}
 
-.movie-card-container3{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 450px;
-    width: 350px;
-    background-color: white;
-    margin-left: 30px;
-    margin-right: 30px;     
-    background-color: rgba(0, 0, 0, 0);
-    margin-top: 80px;
-  }
+.card-posters3 {
+  padding-right: 60px;
+  padding-left: 60px;
+  height: auto;
+  max-width: 100%;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+}
 
-  .movie-card-container3:hover .card-posters3 {
-    filter: brightness(50%);
-    border: 1px solid gray;
-    cursor: pointer;
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .button-container3 {
-    position: absolute; /* Position the button container absolutely */
-    padding-left: 20%;
-    margin-top: -60px;
-    transform: translate(-50%, -50%); /* Adjust for element size */
-    display: none; /* Hide button by default */
-    z-index: 1; /* Bring the button to the front */
-  }
+.card-posters3:hover img {
+  filter: brightness(50%);
+}
 
-  .movie-card-container3:hover .button-container3 {
-    display: flex; /* Show button on hover */
-  }
+.details3 {
+  margin: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: AlteBold;
+  margin-bottom: 2px;
+}
 
-  .button-container3 button {
-    background-color: rgb(255, 100, 39);
-    color: white;
-    border: none;
-    transition: all 0.3s ease;
-  }
-   
-  .button-container3 button:hover{
-    background-color: darkorange;
-  }
+.deet-date3 {
+  color: gray;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
 
-  .card-posters3{
-    padding-left: 60px;
-    padding-right: 60px;
-    height: auto;
-    max-width: 100%;
-    border: none;
-    transition: all 0.3s ease-in-out;
-    background-color: rgba(0, 0, 0, 0)
-  }
-  
-  .details3{
-    margin: 20px;
-    font-size: 20px;
-    font-weight: bold;  
-    font-family: AlteBold ;
-    margin-bottom: 2px;
-  }
-  
-  .deet-date3{
-    color: gray;
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
-  .deet-venue3{
-    color: rgb(255, 100, 39);
-    border: 0.5px solid white;
-    text-wrap: wrap;
-  }
-  
-  .card-posters3:hover{
-    border: 1px solid gray;
-    cursor: pointer;
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
+.deet-venue3 {
+  color: rgb(255, 100, 39);
+  border: 0.5px solid white;
+}
 
-  
-  
-  
+.button-container3 {
+  position: absolute; /* Position the button container absolutely */
+  top: 40%; /* Center vertically */
+  left: 55%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for element size */
+  display: none; /* Hide button by default */
+  z-index: 1; /* Bring the button to the front */
+}
+
+.card-posters3:hover{
+  border: 1px solid gray;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+  background-color: rgba(0, 0, 0, 0.5);
+  filter: brightness(50%);
+}
+
+.button-container3 { 
+  position: absolute; /* Position the button container absolutely */
+  transform: translate(-50%, -50%); /* Adjust for element size */
+  top: 40%;
+  left: 55%;
+  display: none;
+  z-index: 1; /* Bring the button to the front */
+}
+ 
+.movie-card-container3:hover .button-container3 {
+  display: flex; /* Show button on hover */
+}
+ 
+.button-container3 button {
+  background-color: rgb(255, 100, 39);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+ 
+.button-container3 button:hover{
+  background-color: darkorange;
+}
+.movie-card-container3:hover .card-posters3 {
+  filter: brightness(50%);
+  border: 1px solid gray;
+  cursor: pointer;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card-posters3:hover img{
+  filter: brightness(50%);
+}
+
+/* Force the close button (X) to the top-right corner of the modal */
+.custom-modal .ant-modal-close {
+  position: absolute;
+  top: 10px; /* Move it higher */
+  right: -30px; /* Move it to the far right */
+  z-index: 1000; /* Ensure it is on top */
+}
+
+.custom-modal .ant-modal-body {
+  height: 500px; /* Set the desired height */
+  overflow-y: auto; /* Make content scrollable if it's too tall */
+}
+
+/* Optional: Change the modal header background color */
+.custom-modal .ant-modal-header {
+  background-color: #212121;
+
+}
+
+.custom-modal .ant-modal-close-x {
+  font-size: 18px;
+  color: #000;
+}
+
+.custom-modal .ant-modal-content {
+  background-color: #212121;
+  max-height: 90vh; 
+}
+
+/* Change the modal title color */
+.custom-modal .ant-modal-title {
+  color: #ffffff; /* White color, replace with any color you want */
+  font-weight: bold; /* Optional: make the title bold */
+}
+
+.modal-content-container3 {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.modal-image-container3 img {
+  width: 2000px;
+  max-width: 300px;
+  height: auto;
+}
+
+.modal-details-container3 {
+  flex: 1;
+}
+
+.modal-details-container3 p {
+  margin: 10px 0;
+  color: white;
+  font-size: 20px;
+}
+

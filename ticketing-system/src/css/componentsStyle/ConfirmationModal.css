@@ -1,0 +1,67 @@
+/* ConfirmationModal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7); /* Darker overlay for better visibility */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it appears above other content */
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px; /* Set a fixed width */
+    max-width: 90%; /* Responsive max width */
+  }
+  
+  h2 {
+    color: #333; /* Darker title color */
+    margin-bottom: 20px;
+  }
+  
+  p {
+    color: #666; /* Lighter text for the message */
+    margin-bottom: 30px;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    gap: 20px; /* Space between buttons */
+  }
+  
+  .modal-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  }
+  
+  .modal-buttons button:first-child {
+    background-color: #e74c3c; /* Red background for Delete */
+    color: white;
+  }
+  
+  .modal-buttons button:first-child:hover {
+    background-color: #c0392b; /* Darker red on hover */
+  }
+  
+  .modal-buttons button:last-child {
+    background-color: #3498db; /* Blue background for Cancel */
+    color: white;
+  }
+  
+  .modal-buttons button:last-child:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+  }
+  

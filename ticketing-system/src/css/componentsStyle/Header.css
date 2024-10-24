@@ -66,6 +66,12 @@ input{
   padding: 12px 12px;
   cursor: pointer;
   color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-btn:hover{
+  background-color: #34a534;
+  cursor: pointer;
 }
 
 .cart-icon{

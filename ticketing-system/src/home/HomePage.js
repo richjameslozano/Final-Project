@@ -28,7 +28,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
         try {
-            const response = await axios.get('http://localhost:8025/movies');
+            const response = await axios.get('http://localhost:8031/movies');
             console.log(response.data);
             setMovies(response.data); // Set the movie data into state
         } catch (error) {
@@ -42,7 +42,7 @@ const HomePage = () => {
 useEffect(() => {
   const fetchTours = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/tours');
+          const response = await axios.get('http://localhost:8031/tours');
           console.log(response.data);
           setTours(response.data); // Set the movie data into state
       } catch (error) {
@@ -57,7 +57,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchConcerts = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/concerts');
+          const response = await axios.get('http://localhost:8031/concerts');
           console.log(response.data);
           setConcerts(response.data); // Set the movie data into state
       } catch (error) {
@@ -71,7 +71,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchFshows = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/featuredshows');
+          const response = await axios.get('http://localhost:8031/featuredshows');
           console.log(response.data);
           setFshows(response.data); // Set the movie data into state
       } catch (error) {
@@ -85,7 +85,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchSports = async () => {
       try {
-          const response = await axios.get('http://localhost:8025/sports');
+          const response = await axios.get('http://localhost:8031/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
       } catch (error) {
@@ -178,7 +178,7 @@ const handleCategoryClick = (category) => {
                     (getFilteredData().map((item) => (
                     <MovieCard2
                     key={item._id}
-                    Name={item.Name || item.name} // Adjust based on movie or show
+                    name={item.Name || item.name} // Adjust based on movie or show
                     date={item.date}
                     place={item.place}
                     price={item.price}
