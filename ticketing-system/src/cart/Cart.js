@@ -3,9 +3,27 @@ import { Layout } from 'antd';
 import Header from '../components/Header';
 import '../css/cart/Cart.css';
 import Footer from '../components/Footer';
+import CartItem from '../components/CartItem';
+import { useState, useEffect } from 'react';
+import axios from 'axios'
 
 const Cart = () => {
 
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+        try {
+            const response = await axios.get('http://localhost:8025/movies');
+            console.log(response.data);
+            setMovies(response.data); // Set the movie data into state
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+        }
+    };
+
+    fetchMovies();
+}, []);
 
   
     return (
@@ -16,66 +34,20 @@ const Cart = () => {
             <h2 className='sub-title-cart'>TICKET LIST</h2>
         
             <div className="movie-cart-container-main">
-                <div className='main-cart-item'>
-                <div className='cart-item-container'>
-                        <img className='item-image'></img>
-                          <div className='main-item-details'>
-                            <div className='ticket-title'>Name</div>
-                            <hr className='hr'></hr>
-                                    <div className='ticket-details'>
-                                          <div className='detail-one'>
-                                            <div>September 28, 2003</div>
-                                            <div>Mall of Asia Arena</div>
-                                            <div>3:00pm-5:00pm</div>
-                                          </div>
-                                          <div className='detail-two'>
-                                            <div style={{marginBottom: '10px'}}>Quantity:</div>
-                                              <select className='select-quantity'>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                              </select>
-                                            <div style={{paddingTop: '10px', fontWeight: 700, fontSize: '22px', color: 'orange'}}>PHP 800</div>
-                                          </div>
-                                    </div>     
-                          </div>   
-                      </div>
-
-                      <div className='trash-container'>
-                        <img className='trash-icon' src='/images/trash.png'></img>
-                      </div>
-                </div>
-
                 
-                <div className='main-cart-item'>
-                <div className='cart-item-container'>
-                        <img className='item-image'></img>
-                          <div className='main-item-details'>
-                            <div className='ticket-title'>Name</div>
-                            <hr className='hr'></hr>
-                                    <div className='ticket-details'>
-                                          <div className='detail-one'>
-                                            <div>September 28, 2003</div>
-                                            <div>Mall of Asia Arena</div>
-                                            <div>3:00pm-5:00pm</div>
-                                          </div>
-                                          <div className='detail-two'>
-                                            <div style={{marginBottom: '10px'}}>Quantity:</div>
-                                              <select className='select-quantity'>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                              </select>
-                                            <div style={{paddingTop: '10px', fontWeight: 700, fontSize: '22px', color: 'orange'}}>PHP 800</div>
-                                          </div>
-                                    </div>     
-                          </div>   
-                      </div>
-
-                      <div className='trash-container'>
-                        <img className='trash-icon' src='/images/trash.png'></img>
-                      </div>
-                </div>
+              {movies.map((ticket) =>(
+                <CartItem
+                  key={ticket._id}
+                  ticketname={ticket.name}
+                  date={ticket.date}
+                  place={ticket.place}
+                  image={ticket.image}
+                  time={ticket.time}
+                  price={ticket.price}
+                />
+              ))}
+                
+             
              </div>
 
              

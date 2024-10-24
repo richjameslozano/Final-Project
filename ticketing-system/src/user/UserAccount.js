@@ -2,6 +2,7 @@ import Header from '../components/Header';
 import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import '../css/user/UserAccount.css';
+import axios from 'axios';
 
 const UserAccount = () => {
   const [userInfo, setUserInfo] = useState({
@@ -11,29 +12,63 @@ const UserAccount = () => {
     email: '',
     password: ''
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Fetch user data from localStorage and set state
     const storedUser = localStorage.getItem('user');
-    const storedFirstName = localStorage.getItem('firstName');
-    const storedLastName = localStorage.getItem('lastName');
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
+    if (storedUser) {
+        const user = JSON.parse(storedUser);
+        setUserId(user.id || user._id); // Store the user ID
+        
+        // Fetch user data from the server
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8025/user/${user.id}`);
+                setUserInfo(response.data);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
 
-    if (storedUser && storedFirstName && storedLastName && storedEmail && storedPassword) {
-      setUserInfo({
-        username: JSON.parse(storedUser).username,
-        firstName: JSON.parse(storedFirstName).firstName,
-        lastName: JSON.parse(storedLastName).lastName,
-        email: JSON.parse(storedEmail).email,
-        password: JSON.parse(storedPassword).password
-      });
-      setIsLoggedIn(true);
+        fetchUserData(); // Call the fetch function
+        setIsLoggedIn(true);
     } else {
-      setIsLoggedIn(false);
+        setIsLoggedIn(false);
     }
-  }, []);
+}, []);
+
+
+  const handleEditClick = () => {
+    if (isEditing) {
+      saveUserInfo(); // Call function to save updated user info
+    }
+    setIsEditing(!isEditing); // Toggle editing mode
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserInfo((prevState) => ({
+      ...prevState,
+      [name]: value, // Update the specific field being edited
+    }));
+  };
+
+  const saveUserInfo = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8025/user/${userId}`, userInfo); // Use the userId in the URL
+      if (response.status === 200) {
+        console.log('User updated successfully', response.data);
+        alert('Profile updated successfully');
+        localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId })); // Update localStorage
+        setIsEditing(false); // Switch back to read-only mode
+      }
+    } catch (error) {
+      console.error('Error updating user:', error);
+      alert('Failed to update profile');
+    }
+  };
 
   return (
     <Layout className='main-container-user-account' style={{ backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020' }}>
@@ -62,7 +97,8 @@ const UserAccount = () => {
                   type="text"
                   name="firstName"
                   value={userInfo.firstName}
-                  readOnly
+                  readOnly={!isEditing}
+                  onChange={handleInputChange}
                 />
               </div>
 
@@ -73,7 +109,8 @@ const UserAccount = () => {
                   type="text"
                   name="lastName"
                   value={userInfo.lastName}
-                  readOnly
+                  readOnly={!isEditing}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -85,7 +122,8 @@ const UserAccount = () => {
                 type="text"
                 name="username"
                 value={userInfo.username}
-                readOnly
+                readOnly={!isEditing}
+                onChange={handleInputChange}
               />
             </div>
 
@@ -96,7 +134,8 @@ const UserAccount = () => {
                 type="email"
                 name="email"
                 value={userInfo.email}
-                readOnly
+                readOnly={!isEditing}
+                onChange={handleInputChange}
               />
               <span className="change-link">Change Email</span>
             </div>
@@ -109,16 +148,22 @@ const UserAccount = () => {
               <input
                 className='input-info-profile'
                 type="password"
+                name="password"
                 value={userInfo.password}
-                readOnly
+                readOnly={!isEditing}
+                onChange={handleInputChange}
               />
               <span className="change-link">Change Password</span>
             </div>
           </div>
 
           <div className="action-buttons">
-            <button className="cancel-btn">Cancel</button>
-            <button className="save-btn">Save Changes</button>
+            <button className="cancel-btn" onClick={handleEditClick}>
+              {isEditing ? "Cancel" : "Update"}
+            </button>
+            <button className="save-btn" onClick={isEditing ? saveUserInfo : handleEditClick}>
+              {isEditing ? "Save Changes" : "Update"}
+            </button>
           </div>
         </div>
       </div>

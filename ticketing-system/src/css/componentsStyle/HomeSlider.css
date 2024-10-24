@@ -105,14 +105,24 @@
 
 .prev-btn {
   left: 10px; /* Position the prev button to the left */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-left: 20px;
 }
 
 .next-btn {
-  right: 10px; /* Position the next button to the right */
+  right: 10px; /* Position the prev button to the left */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-right: 20px;
 }
 
 .prev-btn:hover, .next-btn:hover {
-  background-color: rgba(0, 0, 0, 0.8); /* Darker shade on hover */
+  background-color: rgba(250, 250, 250, 0.8); /* Darker shade on hover */
 }
 
 .sli.slider-wrapper .slick-dots,

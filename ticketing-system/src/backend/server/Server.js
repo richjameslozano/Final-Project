@@ -93,8 +93,8 @@ const Movie = mongoose.model('movies', modelSchema);
  
 //Movies model
 const Tours = mongoose.model('tours', featureTour);
- 
-//Featured Shows model
+
+//Featured Shows model  
 const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
  
  //FOR PICTURE RETRIEVE
@@ -226,6 +226,36 @@ app.post('/signup', async (req, res) => {
 });
  
 // API route to get user data
+// API route to update user data
+app.put('/user/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const { username, firstName, lastName, email, password } = req.body;
+
+        // Validate if the userId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
+
+        // Update user information in the database
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { username, firstName, lastName, email, password }, // Fields to update
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+    } catch (err) {
+        console.error('Error updating user data:', err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// API route to get user data by ID
 app.get('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
@@ -234,37 +264,23 @@ app.get('/user/:id', async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Invalid user ID' });
         }
- 
-        const user = await User.findById(userId).select('-password'); // Exclude password from response
+
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.json(user);
-    } catch (err) {
-        console.error('Error fetching user data:', err);
+
+        // Exclude password from the response
+        const { password, ...userDetails } = user._doc;
+        res.status(200).json(userDetails);
+    } catch (error) {
+        console.error('Error fetching user data:', error);
         res.status(500).json({ error: 'Server error' });
     }
 });
- 
- 
-// app.get('/user-information', async (req, res) => {
-//     try {
-//         const userId = req.params.id;
-//         if(!mongoose.Types.ObjectId.isValid(userId)){
-//             return res.status(400).json({ message: 'Invalid user ID' });
-//         }
- 
-//         const user = await User.findById(userId);
-//         if (!user) {    
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-//         res.status(200).json(userInfo);
-//     } catch (error) {
-//         console.error('Error fetching User Information:', error);  
-//         res.status(500).json({ message: 'Error fetching User Information' });  
-//     }
-// });
- 
+
+
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
