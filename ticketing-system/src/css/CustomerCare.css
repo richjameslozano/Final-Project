@@ -1,9 +1,38 @@
-.customer-care-container1 {
+
+.main-container-customer{
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ height: 2000px;
+ padding-top: 120px;
+ 
+
+}
+.feedback-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    align-items: center;
+}
+
+.faq-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    margin-top: 20px;
+    border: 10px solid blue;
+}
+
+
+/* .customer-care-container1 {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
     margin-top: 150px;
+    border: 5px solid black;
 }
 
 .h1Text {
@@ -13,7 +42,7 @@
 
 .contact-info1 {
     margin-top: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 5px;
     padding: 15px;
     background-color: #f9f9f9;
@@ -34,4 +63,4 @@
 
 .strongText {
     color: #555;
-}
+} */

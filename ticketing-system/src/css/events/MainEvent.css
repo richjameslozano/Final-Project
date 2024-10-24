@@ -33,13 +33,13 @@
 .categories-container-main button {
   background-color: #171717;  
   border: none;
-  width: 300px;
+  width: 250px;
   height: 50px;
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid gray;
   font-family: theBold;
-  font-size: 20px;
+  font-size: 18px;
   transition: all 0.3s ease-in-out;
   color: white;
   margin-left: 20px;
@@ -64,7 +64,8 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 4000px;
+  height: auto;
+  min-height: 1600px;
   background-color: #171717;
   padding-left: 300px;
   padding-right: 300px;
@@ -117,4 +118,25 @@
   margin-top:170px;
   font-size: 50px;
   color: rgb(163, 175, 185);
+}
+.trailer-title{
+  font-size: 50px ;
+  font-family: Akira;
+  color: white;
+  margin-bottom: 20px;
+}
+.trailer-container{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  height: 850px;
+  padding-left: 300px;
+  padding-right: 300px;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  
+  justify-content: center;
+  background-color: #555555;
+  box-shadow: inset 0px 10px 40px;
 }

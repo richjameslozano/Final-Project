@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import '../css/user/UserAccount.css';
 import axios from 'axios';
-
+ 
 const UserAccount = () => {
   const [userInfo, setUserInfo] = useState({
     username: '',
@@ -15,38 +15,38 @@ const UserAccount = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
-
+ 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
         const user = JSON.parse(storedUser);
         setUserId(user.id || user._id); // Store the user ID
-        
+       
         // Fetch user data from the server
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8025/user/${user.id}`);
+                const response = await axios.get(`http://localhost:8031/user/${user.id}`);
                 setUserInfo(response.data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
         };
-
+ 
         fetchUserData(); // Call the fetch function
         setIsLoggedIn(true);
     } else {
         setIsLoggedIn(false);
     }
 }, []);
-
-
+ 
+ 
   const handleEditClick = () => {
     if (isEditing) {
       saveUserInfo(); // Call function to save updated user info
     }
     setIsEditing(!isEditing); // Toggle editing mode
   };
-
+ 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserInfo((prevState) => ({
@@ -54,10 +54,10 @@ const UserAccount = () => {
       [name]: value, // Update the specific field being edited
     }));
   };
-
+ 
   const saveUserInfo = async () => {
     try {
-      const response = await axios.put(`http://localhost:8025/user/${userId}`, userInfo); // Use the userId in the URL
+      const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo); // Use the userId in the URL
       if (response.status === 200) {
         console.log('User updated successfully', response.data);
         alert('Profile updated successfully');
@@ -69,11 +69,11 @@ const UserAccount = () => {
       alert('Failed to update profile');
     }
   };
-
+ 
   return (
     <Layout className='main-container-user-account' style={{ backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020' }}>
       <Header />
-
+ 
       <div className="user-profile-container">
         <div className="sidebar">
           <h1 className='profile-title'>Profile Settings</h1>
@@ -82,13 +82,13 @@ const UserAccount = () => {
             <li style={{ listStyleType: 'none' }}>Tickets Purchased</li>
           </ul>
         </div>
-
+ 
         <div className="profile-details">
           <h2>My Account</h2>
           <hr />
           <div className="account-info">
             <h3>Account Information</h3>
-
+ 
             <div className="two-column-grid">
               <div className="input-group">
                 <label>First Name</label>
@@ -101,7 +101,7 @@ const UserAccount = () => {
                   onChange={handleInputChange}
                 />
               </div>
-
+ 
               <div className="input-group">
                 <label>Last Name</label>
                 <input
@@ -114,7 +114,7 @@ const UserAccount = () => {
                 />
               </div>
             </div>
-
+ 
             <div className="input-group">
               <label>Username</label>
               <input
@@ -126,7 +126,7 @@ const UserAccount = () => {
                 onChange={handleInputChange}
               />
             </div>
-
+ 
             <div className="input-group">
               <label>Email</label>
               <input
@@ -140,7 +140,7 @@ const UserAccount = () => {
               <span className="change-link">Change Email</span>
             </div>
           </div>
-
+ 
           <div className="password-section">
             <h3>Password</h3>
             <div className="input-group">
@@ -156,7 +156,7 @@ const UserAccount = () => {
               <span className="change-link">Change Password</span>
             </div>
           </div>
-
+ 
           <div className="action-buttons">
             <button className="cancel-btn" onClick={handleEditClick}>
               {isEditing ? "Cancel" : "Update"}
@@ -170,5 +170,6 @@ const UserAccount = () => {
     </Layout>
   );
 };
-
-export default UserAccount; 
+ 
+export default UserAccount;
+ 

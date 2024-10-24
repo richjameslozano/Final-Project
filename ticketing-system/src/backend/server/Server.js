@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+ 
 const app = express();
-const PORT = process.env.PORT || 8025;
+const PORT = process.env.PORT || 8031;
 app.use('/images', express.static('public/images'));
-
-
+ 
+ 
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
@@ -26,8 +26,8 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     mobileNumber: { type: String, required: true }
 });
-
-
+ 
+ 
 // Movie Schema
 const modelSchema = new mongoose.Schema({
     Name:  { type: String},
@@ -39,7 +39,7 @@ const modelSchema = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
-//Featured Show 
+//Featured Show
 const featuredShowsSchemas = new mongoose.Schema({
     name:  { type: String},
     runTime:  { type: String},
@@ -50,7 +50,7 @@ const featuredShowsSchemas = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
-
+ 
 //Concerts
 const featureConcert = new mongoose.Schema({
     name:  { type: String},
@@ -60,7 +60,7 @@ const featureConcert = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
-
+ 
 const featureSport = new mongoose.Schema({
     name:  { type: String},
     price:  { type: String},
@@ -69,7 +69,7 @@ const featureSport = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
-
+ 
 const featureTour = new mongoose.Schema({
     name:  { type: String},
     price:  { type: String},
@@ -81,22 +81,23 @@ const featureTour = new mongoose.Schema({
  
 //Concert model
 const Concert = mongoose.model('concerts', featureConcert);
-
+ 
 //Sports model
 const Sports = mongoose.model('sports', featureSport);
-
+ 
 // User model
 const User = mongoose.model('accounts', userSchema);
-
+ 
 //Movies model
 const Movie = mongoose.model('movies', modelSchema);
-
+ 
 //Movies model
 const Tours = mongoose.model('tours', featureTour);
 
-//Featured Shows model  
+ 
+//Featured Shows model
 const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
-
+ 
  //FOR PICTURE RETRIEVE
 app.get('/movies', async (req, res) => {
     try {
@@ -108,6 +109,27 @@ app.get('/movies', async (req, res) => {
     }
 });
 
+// Fetch All Shows
+app.get('/AllShows', async (req, res) => {
+    try {
+        // Fetch data from each collection
+        
+        const concerts = await Concert.find();
+        const movies = await Movie.find();
+        const sports = await Sports.find();
+        const tours = await Tours.find();
+        
+        // Combine all the shows into a single array
+        const allShows = [...movies, ...concerts, ...sports, ...tours];
+
+        res.status(200).json(allShows);
+    } catch (error) {
+        console.error('Error fetching all shows:', error);
+        res.status(500).json({ message: 'Error fetching all shows' });
+    }
+});
+
+ 
  //FOR PICTURE TOURS RETRIEVE
  app.get('/tours', async (req, res) => {
     try {
@@ -118,7 +140,7 @@ app.get('/movies', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
-
+ 
  //FOR PICTURE SPORTS RETRIEVE
  app.get('/sports', async (req, res) => {
     try {
@@ -129,7 +151,7 @@ app.get('/movies', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
-
+ 
  //FOR PICTURE CONCERT RETRIEVE
  app.get('/concerts', async (req, res) => {
     try {
@@ -140,7 +162,7 @@ app.get('/movies', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
-
+ 
 //RETRIEVE USER INFORMATION
 // app.get('/profile', async (req, res)=>{
 //     try {
@@ -151,8 +173,8 @@ app.get('/movies', async (req, res) => {
 //         res.status(500).json({ message: 'Error fetching User Information' });
 //     }
 // })
-
-
+ 
+ 
 //FEATURED SHOWS
 app.get('/featuredshows', async (req, res) => {
     try {
@@ -163,23 +185,23 @@ app.get('/featuredshows', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
-
+ 
 // API route for login
 // Update your /login route
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-
+ 
     try {
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
-
+ 
         // Check plain-text password (not secure)
         if (password !== user.password) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-
+ 
         // Return the user details (excluding the password)
         res.json({
             message: 'Login successful',
@@ -195,8 +217,8 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
-
+ 
+ 
  
 // API route for signup
 app.post('/signup', async (req, res) => {
@@ -224,52 +246,52 @@ app.post('/signup', async (req, res) => {
         res.status(500).json({ message: 'Error registering user' });
     }
 });
-
+ 
 // API route to get user data
 // API route to update user data
 app.put('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         const { username, firstName, lastName, email, password } = req.body;
-
+ 
         // Validate if the userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Invalid user ID' });
         }
-
+ 
         // Update user information in the database
         const updatedUser = await User.findByIdAndUpdate(
             userId,
             { username, firstName, lastName, email, password }, // Fields to update
             { new: true } // Return the updated document
         );
-
+ 
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
-
+ 
         res.status(200).json({ message: 'User updated successfully', user: updatedUser });
     } catch (err) {
         console.error('Error updating user data:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
-
+ 
 // API route to get user data by ID
 app.get('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
-
+ 
         // Validate if the userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Invalid user ID' });
         }
-
+ 
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
+ 
         // Exclude password from the response
         const { password, ...userDetails } = user._doc;
         res.status(200).json(userDetails);
@@ -278,9 +300,9 @@ app.get('/user/:id', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
-
-
+ 
+ 
+ 
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
