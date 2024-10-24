@@ -11,7 +11,39 @@
     background-color: rgba(0, 0, 0, 0);
     margin-top: 80px;
   }
+
+  .movie-card-container2:hover .card-posters2 {
+    filter: brightness(50%);
+    border: 1px solid gray;
+    cursor: pointer;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); /* Inner shadow */
+    background-color: rgba(0, 0, 0, 0.5);
+  }
   
+  .button-container2 {
+    position: absolute; /* Position the button container absolutely */
+    padding-left: 20%;
+    margin-top: -60px;
+    transform: translate(-50%, -50%); /* Adjust for element size */
+    display: none; /* Hide button by default */
+    z-index: 1; /* Bring the button to the front */
+  }
+
+  .movie-card-container2:hover .button-container2 {
+    display: flex; /* Show button on hover */
+  }
+
+  .button-container2 button {
+    background-color: rgb(255, 100, 39);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+  }
+   
+  .button-container2 button:hover{
+    background-color: darkorange;
+  }
+
   .card-posters2{
     padding-left: 60px;
     padding-right: 60px;

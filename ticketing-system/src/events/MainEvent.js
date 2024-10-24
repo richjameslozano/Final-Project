@@ -19,7 +19,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchFshows = async () => {
           try {
-              const response = await axios.get('http://localhost:8022/featuredshows');
+              const response = await axios.get('http://localhost:8023/featuredshows');
               setFshows(response.data);
           } catch (error) {
               console.error('Error fetching featured shows:', error);
@@ -31,7 +31,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchSports = async () => {
           try {
-              const response = await axios.get('http://localhost:8022/sports');
+              const response = await axios.get('http://localhost:8023/sports');
               setSports(response.data);
           } catch (error) {
               console.error('Error fetching sports:', error);
@@ -87,7 +87,7 @@ const MainEvent = () => {
               <Card
                 key={index}
                 hoverable
-                className='event-card'
+                className='event-card'  
                 cover={<img alt={event.name} src={event.image} />}
               >
                 <Meta title={event.name} description={event.date} />
@@ -101,6 +101,11 @@ const MainEvent = () => {
         <Footer />
       </Layout>
     );
+
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    // gap: 20px;
+    // padding: 20px;
 };
 
 export default MainEvent;
