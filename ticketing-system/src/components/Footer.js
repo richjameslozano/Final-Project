@@ -29,7 +29,6 @@ const Footer = () => {
           behavior: 'smooth',
         });
       };
-
     const handleCustomerCare = () => {
         scrollToTop();
         handleNavigation('/customer-care');
@@ -40,6 +39,7 @@ const Footer = () => {
             <div className='footer-details-container'>
                 <div className='about-us-container'>
                     <h1 className='footer-title'>About us</h1>
+                
                     <div>Who we are</div>
                     <div>Our Mission & Vision</div>
                 </div>

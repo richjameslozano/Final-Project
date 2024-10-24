@@ -15,30 +15,31 @@ const UserAccount = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setUserId(user.id || user._id); // Store the user ID
-        
-        // Fetch user data from the server
-        const fetchUserData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8025/user/${user.id}`);
-                setUserInfo(response.data);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
+      const user = JSON.parse(storedUser);
+      setUserId(user.id || user._id); // Store the user ID
 
-        fetchUserData(); // Call the fetch function
-        setIsLoggedIn(true);
+      // Fetch user data from the server
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8031/user/${user.id || user._id}`);
+          console.log('Fetched user data:', response.data); // Log the response
+          setUserInfo(response.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchUserData(); // Call the fetch function
+      setIsLoggedIn(true);
     } else {
-        setIsLoggedIn(false);
+      setIsLoggedIn(false);
     }
-}, []);
-
+  }, []);
 
   const handleEditClick = () => {
     if (isEditing) {
@@ -57,7 +58,7 @@ const UserAccount = () => {
 
   const saveUserInfo = async () => {
     try {
-      const response = await axios.put(`http://localhost:8025/user/${userId}`, userInfo); // Use the userId in the URL
+      const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo); // Use the userId in the URL
       if (response.status === 200) {
         console.log('User updated successfully', response.data);
         alert('Profile updated successfully');
@@ -68,6 +69,10 @@ const UserAccount = () => {
       console.error('Error updating user:', error);
       alert('Failed to update profile');
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
   };
 
   return (
@@ -147,19 +152,21 @@ const UserAccount = () => {
               <label>Password</label>
               <input
                 className='input-info-profile'
-                type="password"
+                type={showPassword ? "text" : "password"} // Toggle between text and password type
                 name="password"
                 value={userInfo.password}
                 readOnly={!isEditing}
                 onChange={handleInputChange}
               />
-              <span className="change-link">Change Password</span>
+              <span className="change-link" onClick={togglePasswordVisibility}>
+                {showPassword ? "Hide" : "Show"} Password
+              </span>
             </div>
           </div>
 
           <div className="action-buttons">
             <button className="cancel-btn" onClick={handleEditClick}>
-              {isEditing ? "Cancel" : "Update"}
+              {isEditing ? "Cancel" : "Edit"}
             </button>
             <button className="save-btn" onClick={isEditing ? saveUserInfo : handleEditClick}>
               {isEditing ? "Save Changes" : "Update"}
@@ -171,4 +178,4 @@ const UserAccount = () => {
   );
 };
 
-export default UserAccount; 
+export default UserAccount;

@@ -1,0 +1,27 @@
+/* src/css/componentsStyle/SearchResult.css */
+.search-result-container {
+    padding: 20px;
+}
+
+.search-result-item {
+    display: flex;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.search-result-item img {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.search-result-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result-info h3 {
+    margin: 0;
+    font-size: 1.2em;
+}

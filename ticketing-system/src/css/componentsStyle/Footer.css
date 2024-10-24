@@ -93,3 +93,13 @@
 .customer-care-title:hover {
     color: #5fa0e6; /* Change this to the desired hover color */
 }
+
+.about-us-title {
+    font-family: Akira;
+    color: white;
+    font-size: 18px;
+}
+
+.about-us-title:hover {
+    color: #5fa0e6; /* Change this to the desired hover color */
+}
