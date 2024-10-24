@@ -23,7 +23,6 @@ const Login = ({ onCancel, onLoginSuccess }) => {
 
       // Trigger login success callback to update the parent component state
       onLoginSuccess(username); // Pass username here
-      onLoginSuccess(password);
 
       // Close the modal using the parent-provided onCancel function
       onCancel();
