@@ -8,25 +8,59 @@ import axios from 'axios';
 
 const Cart = () => {
   const [movies, setMovies] = useState([]);
+  const [totalCost, setTotalCost] = useState(0); // State to track total cost
 
-  // Fetch movies (or tickets) from the server
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const response = await axios.get('http://localhost:8031/cart');
-        console.log(response.data);
-        setMovies(response.data); // Set the movie data into state
+        const fetchedMovies = response.data.map((movie) => ({
+          ...movie,
+          quantity: 1, // Initialize quantity to 1 for each movie
+        }));
+        setMovies(fetchedMovies);
+        updateTotalCost(fetchedMovies); // Calculate initial total cost
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
     };
-
     fetchMovies();
   }, []);
 
-  // Handle item delete (remove from the state)
+  // Handle item delete
   const handleItemDelete = (id) => {
-    setMovies((prevMovies) => prevMovies.filter(ticket => ticket._id !== id)); // Safely update state
+    setMovies((prevMovies) => {
+      const updatedMovies = prevMovies.filter(ticket => ticket._id !== id);
+      updateTotalCost(updatedMovies); // Pass the updated movie list to recalculate total cost
+      return updatedMovies;
+    });
+  };
+
+  // Handle quantity change and update total cost
+  const handleQuantityChange = (id, quantity, price) => {
+    setMovies((prevMovies) => {
+      const updatedMovies = prevMovies.map(ticket => 
+        ticket._id === id ? { ...ticket, quantity } : ticket
+      );
+      updateTotalCost(updatedMovies); // Update total cost with new quantities
+      return updatedMovies;
+    });
+  };
+
+  // Function to update total cost
+  const updateTotalCost = (updatedMovies) => {
+    const total = updatedMovies.reduce((sum, movie) => {
+      const moviePrice = Number(movie.price); // Ensure price is a number
+      const movieQuantity = Number(movie.quantity); // Ensure quantity is a number
+      
+      console.log(`Calculating cost for movie: ${movie.name}, Price: ${moviePrice}, Quantity: ${movieQuantity}`);
+  
+      if (!isNaN(moviePrice) && !isNaN(movieQuantity)) {
+        return sum + (moviePrice * movieQuantity); // Calculate total cost
+      }
+      return sum;
+    }, 0);
+    setTotalCost(total);
   };
 
   return (
@@ -41,19 +75,26 @@ const Cart = () => {
             movies.map((ticket) => (
               <CartItem
                 key={ticket._id}
-                id={ticket._id}  // Pass the movie/ticket ID
+                id={ticket._id}
                 ticketname={ticket.name}
                 date={ticket.date}
                 place={ticket.place}
                 image={ticket.image}
                 time={ticket.time}
                 price={ticket.price}
-                onDelete={handleItemDelete} // Pass delete handler to remove item
+                quantity={ticket.quantity} // Pass the current quantity to CartItem
+                onDelete={handleItemDelete}
+                onQuantityChange={handleQuantityChange} // Pass down the quantity change handler
               />
             ))
           ) : (
             <p className='no-items'>there are no items in your cart</p> // Message when cart is empty
           )}
+        </div>
+        
+        {/* Display total cost */}
+        <div className='total-cost'>
+          <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
         </div>
       </div>
       <Footer />

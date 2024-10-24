@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    mobileNumber: { type: String, required: true }
+    mobileNumber: { type: String, required: true },
+    ticket:[]
 });
- 
  
 // Movie Schema
 const modelSchema = new mongoose.Schema({
@@ -61,7 +61,7 @@ const featureConcert = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
- 
+//Sports
 const featureSport = new mongoose.Schema({
     name:  { type: String},
     price:  { type: String},
@@ -70,7 +70,8 @@ const featureSport = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
- 
+
+//Tour 
 const featureTour = new mongoose.Schema({
     name:  { type: String},
     price:  { type: String},
@@ -80,6 +81,7 @@ const featureTour = new mongoose.Schema({
     image: { type: String }
 });
 
+//cart
 const cartModel = new mongoose.Schema({
     name:  { type: String},
     runTime:  { type: String},
@@ -90,7 +92,12 @@ const cartModel = new mongoose.Schema({
     date: { type: String },
     image: { type: String }
 });
- 
+
+const cartAdd = new mongoose.Schema({
+   id: {type:String}
+})
+ //cart id addition
+ const CartAddId = mongoose.model('users',cartAdd)
 //Concert model
 const Concert = mongoose.model('concerts', featureConcert);
  
@@ -112,6 +119,36 @@ const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
 //Cart Model
 const cartItems = mongoose.model('carts', cartModel);
  
+
+//FOR CART WITH ID
+app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
+    const { userId, concertId } = req.params;
+
+    try {
+        // Step 1: Find the concert by its ID
+        const concert = await Concert.findById(concertId);
+        if (!concert) {
+            return res.status(404).json({ message: 'Concert not found' });
+        }
+
+        // Step 2: Find the user and push the concert into their 'ticket' array
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $push: { ticket: concert } }, // Push concert into user's ticket array
+            { new: true } // Return the updated user document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Concert added to tickets', user: updatedUser });
+    } catch (error) {
+        console.error('Error adding ticket to user:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
  //FOR PICTURE RETRIEVE
 app.get('/movies', async (req, res) => {
     try {
@@ -361,7 +398,34 @@ app.get('/search', async (req, res) => {
     }
 });
 
+// Get current user data by ID
+app.get('/currentUser/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        // Validate if the userId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Exclude password from the response
+        const { password, ...userDetails } = user._doc;
+        res.status(200).json(userDetails);
+    } catch (error) {
+        console.error('Error fetching current user data:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
+
 // Start the server
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
