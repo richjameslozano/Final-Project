@@ -94,7 +94,7 @@ const Movie = mongoose.model('movies', modelSchema);
 //Movies model
 const Tours = mongoose.model('tours', featureTour);
 
-//Featured Shows model
+//Featured Shows model  
 const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
 
  //FOR PICTURE RETRIEVE

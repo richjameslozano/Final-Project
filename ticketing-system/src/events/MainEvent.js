@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import '../css/events/MainEvent.css';
+import MovieCard3 from '../components/MovieCard3';
+
 
 const { Meta } = Card;
 
@@ -20,7 +22,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchMovies = async () => {
           try {
-              const response = await axios.get('http://localhost:8027/movies');
+              const response = await axios.get('http://localhost:8025/movies');
               console.log(response.data);
               setMovies(response.data); // Set the movie data into state
           } catch (error) {
@@ -34,7 +36,7 @@ const MainEvent = () => {
   useEffect(() => {
     const fetchConcerts = async () => {
         try {
-            const response = await axios.get('http://localhost:8027/concerts');
+            const response = await axios.get('http://localhost:8025/concerts');
             console.log(response.data);
             setConcerts(response.data); // Set the movie data into state
         } catch (error) {
@@ -48,7 +50,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchFshows = async () => {
           try {
-              const response = await axios.get('http://localhost:8023/featuredshows');
+              const response = await axios.get('http://localhost:8025/featuredshows');
               setFshows(response.data);
           } catch (error) {
               console.error('Error fetching featured shows:', error);
@@ -60,7 +62,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchSports = async () => {
           try {
-              const response = await axios.get('http://localhost:8023/sports');
+              const response = await axios.get('http://localhost:8025/sports');
               setSports(response.data);
           } catch (error) {
               console.error('Error fetching sports:', error);
@@ -91,7 +93,7 @@ const MainEvent = () => {
     };
 
     return (
-      <Layout>
+      <Layout className='main-layout'>
         <Header />
 
         <div className='slider-event-bg' style={{ backgroundImage: 'url(/images/bg4.jpg)' }}></div>
@@ -103,37 +105,37 @@ const MainEvent = () => {
        
 
           <div className='categories-container-main'>
-          <Button onClick={() => handleCategoryClick('All Shows')} className={selectedCategory === 'All Shows' ? 'active' : ''}>All Shows</Button>
-          <Button onClick={() => handleCategoryClick('Movies')} className={selectedCategory === 'Movies' ? 'active' : ''}>Movies</Button>
-          <Button onClick={() => handleCategoryClick('Concerts')} className={selectedCategory === 'Concerts' ? 'active' : ''}>Concerts</Button>
-          <Button onClick={() => handleCategoryClick('Featured Shows')} className={selectedCategory === 'Featured Shows' ? 'active' : ''}>Featured Shows</Button>
-          <Button onClick={() => handleCategoryClick('Sports')} className={selectedCategory === 'Sports' ? 'active' : ''}>Sports</Button>
+          <button onClick={() => handleCategoryClick('All Shows')} className={selectedCategory === 'All Shows' ? 'active' : ''}>All Shows</button>
+          <button onClick={() => handleCategoryClick('Movies')} className={selectedCategory === 'Movies' ? 'active' : ''}>Movies</button>
+          <button onClick={() => handleCategoryClick('Concerts')} className={selectedCategory === 'Concerts' ? 'active' : ''}>Concerts</button>
+          <button onClick={() => handleCategoryClick('Featured Shows')} className={selectedCategory === 'Featured Shows' ? 'active' : ''}>Featured Shows</button>
+          <button onClick={() => handleCategoryClick('Sports')} className={selectedCategory === 'Sports' ? 'active' : ''}>Sports</button>
         </div>
 
-          <div className='events-grid'>
-            {getFilteredData().map((event, index) => (
-              <Card
-                key={index}
-                hoverable
-                className='event-card'  
-                cover={<img alt={event.name} src={event.image} />}
-              >
-                <Meta title={event.name} description={event.date} />
-                <p>{event.location}</p>
-                <Button type='primary' href={event.link}>Buy Tickets</Button>
-              </Card>
-            ))}
-          </div>
+<div className="other-card-container2">
+                  {getFilteredData().length === 0 ? (
+                <h1 className = "neven2">NO EVENTS YET</h1>  // Display this message if no events are found
+              ) :
+  
+              (getFilteredData().map((item) => (
+                <MovieCard3
+                  key={item._id}
+                  Name={item.Name || item.name} // Adjust based on movie or show
+                  date={item.date}
+                  place={item.place}
+                  price={item.price}
+                  image={item.image}
+                  time ={item.time}
+                />
+              )))}
+            </div>
+
         </div>
 
         <Footer />
       </Layout>
     );
 
-    // display: grid;
-    // grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    // gap: 20px;
-    // padding: 20px;
 };
 
 export default MainEvent;
