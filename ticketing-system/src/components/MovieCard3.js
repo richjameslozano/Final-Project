@@ -2,52 +2,50 @@ import React, { useState } from 'react';
 import { Card, Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
+import axios from 'axios';
 
-const MovieCard3 = ({ name, date, image, place, time }) => {
+const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigate = useNavigate(); 
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-  
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setIsModalVisible(false);
-    // Add logic for proceeding to purchase if needed
-    handleCartClick();
+
+    try {
+      // Step 1: Add the movie to the cart by making a POST request
+      const cartResponse = await axios.post('http://localhost:8031/cart', {
+        name,
+        date,
+        place,
+        time,
+        price,
+        image,
+      });
+      console.log('Item added to cart:', cartResponse.data);
+
+      // Step 2: Add the concert/event to the user's ticket array
+      const ticketResponse = await axios.post(`http://localhost:8031/user/${userId}/add-ticket/${cartResponse.data.item._id}`);
+      console.log('Item added to user tickets:', ticketResponse.data);
+
+    } catch (error) {
+      console.error('Failed to add item to cart or user tickets:', error);
+    }
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
-  const handleCartClick = () => {
-    scrollToTop();
-    navigate('/cart');
-  };
-
-  const addToCart = (item) => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(item);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Added to cart!');
-  };
-
-
   return (
-<div className='movie-card-container3'>
+    <div className='movie-card-container3'>
         <div className='button-container3'>
-          <Button type='primary' onClick={showModal}>Buy Tickets</Button>
-        </div>
+        <Button type='primary' onClick={showModal}>Buy Tickets</Button>
+          </div>
         <div>
-          <img src={image} className='card-posters3' alt='movie poster' />
+          <img src={image} className='card-posters3'></img>
         </div>
         <div className='details3'>
           <div className='deet-title3'>{name}</div>
@@ -74,10 +72,11 @@ const MovieCard3 = ({ name, date, image, place, time }) => {
               <p><strong>Date:</strong> {date}</p>
               <p><strong>Venue:</strong> {place}</p>
               <p><strong>Time:</strong> {time}</p>
+              <p><strong>Price:</strong> {price}</p>
             </div>
           </div>
         </Modal>
-      </div>
+  </div>
   );
 } 
 

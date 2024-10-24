@@ -46,7 +46,7 @@ body{
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 4000px;
+  height: 5000px;
   background-color: #171717;
   padding-left: 300px;
   padding-right: 300px;
@@ -79,6 +79,7 @@ body{
 
 
 .title-one{
+  margin-top: 100px;
   font-size: 50px;
   color: white;
   font-family: Akira;
@@ -102,6 +103,7 @@ body{
 
 .category-poster-container{
   width: 100%;
+  height: 1350px;
   display: flex;
   flex-direction: row;
 
@@ -112,13 +114,13 @@ body{
   margin-right: 60px;
   display: flex;
   flex-direction: column;
-  width: 310px;
+  width: 380px;
 }
 
 
 .category-container li{
   color: white;
-  font-size: 20px;
+  font-size: 28px;
   list-style-type: none;
   font-family: theBold;
   transition: all 0.2s;
@@ -128,7 +130,7 @@ body{
   color: #37FD12;
   cursor: pointer;
   font-family: theBold;
-  font-size: 23px;
+  font-size: 30px;
 }
 
 .categories{
@@ -144,8 +146,7 @@ body{
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-
-  height: 100%;
+  
 }
 
 .neven{
@@ -157,56 +158,140 @@ body{
 .main-about-us-container{
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 1900px;
   height: auto;
   flex-wrap: wrap;
   padding-top: 50px;
-  background-color: #313131;
-  border-radius: 10px;
-  margin-top: 100px;
+  margin-top: 200px;  
   align-items: center;
   padding-bottom: 60px;
+  justify-content: center;
+  background-color: white;
+  box-shadow: inset 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 .about-us-title{
-font-family: 'Courier New', Courier, monospace;
+font-family: Akira;
 font-size: 50px;
+color: black;
+margin-top: 50px;
+margin-bottom: 30px;
 }
 .dev-card-container{
   display: flex;
   flex-direction: row;
   margin: 20px;
-  background-color: rgb(147, 147, 150);
   border-radius: 10px;
-
-
-
+  height: 600px;
 }
 .dev-cards{
   display: flex;
   flex-direction: column;
   margin: 20px;
-  width:  100%;
-  height: auto;
+  width:  350px;
+  height: 550px;
   flex-wrap: wrap;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
  
 }
 .dev-image{
   width: 100%;
-  height: auto;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 10px 10px 0 0;
+  box-shadow: 0px 0px 30px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 10px 10px 10px 10px;
 }
+
+
 .card-contents{
   display: flex;
     flex-direction:column;
     height: auto;
     width: 100%;
-    background-color: #313131;
     margin-top: 20px;
     flex-wrap: wrap;
     padding-bottom: 40px;
     border-radius: 0 0 10px 10px;
+    font-size: 18px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
+.card-contents .dev-name{
+  font-size: 25px;
+  color: black;
+  font-family: AlteBold;
+}
+
+.description{
+  margin-top: 10px;
+  color: rgb(80, 78, 78);
+  font-family: AlteBold;
+
+}
+
+.facebook{
+  height: 40px;
+  width: 40px;
+}
+
+.email{
+  height: 42px;
+  width: 39px;
+    margin-left: 10px;
+    
+}
+
+
+.instagram{
+  height: 39px;
+  width: 39px;
+  margin-left: 10px;
+}
+
+.social-container{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+}
+
+.instagram, .facebook, .email:hover{
+  cursor: pointer;
+} 
+
+.mission-vision-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 200px;
+  height: 500px;
+  width: 1900px;
+}
+
+.mission-container{
+  margin-right: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vision-container{
+  margin-left: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mission, .vision{
+  color: white;
+  font-size: 35px;
+}
+
+.mission-vision-container p{
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.mission-icon, .vision-icon{
+  height: 40px;
+  width: 40px;
 }

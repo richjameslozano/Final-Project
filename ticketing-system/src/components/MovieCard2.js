@@ -2,38 +2,42 @@ import React, { useState } from 'react';
 import { Card, Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard2.css'; // Import the CSS file
+import axios from 'axios';
 
-const MovieCard2 = ({ name, date, image, place, time }) => {
-
+const MovieCard2 = ({ name, date, image, place, time, price, userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigate = useNavigate(); 
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-  
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setIsModalVisible(false);
-    // Add logic for proceeding to purchase if needed
-    handleCartClick();
+
+    try {
+      // Step 1: Add the movie to the cart by making a POST request
+      const cartResponse = await axios.post('http://localhost:8031/cart', {
+        name,
+        date,
+        place,
+        time,
+        price,
+        image,
+      });
+      console.log('Item added to cart:', cartResponse.data);
+
+      // Step 2: Add the concert/event to the user's ticket array
+      const ticketResponse = await axios.post(`http://localhost:8031/user/${userId}/add-ticket/${cartResponse.data.item._id}`);
+      console.log('Item added to user tickets:', ticketResponse.data);
+
+    } catch (error) {
+      console.error('Failed to add item to cart or user tickets:', error);
+    }
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
-  const handleCartClick = () => {
-    scrollToTop();
-    navigate('/cart');
-  };
-
   return (
     <div className='movie-card-container2'>
         <div className='button-container2'>
@@ -67,6 +71,7 @@ const MovieCard2 = ({ name, date, image, place, time }) => {
               <p><strong>Date:</strong> {date}</p>
               <p><strong>Venue:</strong> {place}</p>
               <p><strong>Time:</strong> {time}</p>
+              <p><strong>Price:</strong> {price}</p>
             </div>
           </div>
         </Modal>

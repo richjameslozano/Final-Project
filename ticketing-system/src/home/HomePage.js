@@ -125,6 +125,7 @@ const handleCategoryClick = (category) => {
   
 };
 
+
     return (
       <Layout className="home-page-layout">
         <Header />
@@ -198,19 +199,42 @@ const handleCategoryClick = (category) => {
                             <img src='/images/tristan.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Aquino, Tristan Jay</div>
-                              Backend Developer 
-                              facebook ni tj
+                             <div className='dev-name'>Aquino, Tristan Jay</div>
+                             <div className='description'>DIV MASTER</div>
+
+                             <div className='social-container'>
+
+                             <a href='https://www.facebook.com/tj.a.pogi' target='blank'>
+                                <img className = "facebook" src='/images/Facebook_Icon.png'></img>
+                             </a>
+                             <a href='https://www.instagram.com/trstn_tj/' target='blank'>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+                             <a href='mailto:tristanquino814@gmail.com'>
+                             <img className = "instagram" src='/images/Email_Icon.png' ></img>
+                             </a>
+                             </div>
+                             
+                              
                               </div>
                            </div>
                            
                            <div className='dev-cards'>
                             <img src='/images/hen.jpg' className='dev-image' alt="dev-photo"></img>
 
+                            
+
                               <div className='card-contents'>
-                             <div>Aruta, Henreizh Nathan</div>
-                              Backend Developer 
-                              facebook ni hen
+                             <div className='dev-name'>Aruta, Henreizh Nathan</div>
+                             <div className='description'>POGI LANG</div>
+                             <div className='social-container'>
+                            <a href='https://www.facebook.com/nathan.aruta.9/' target='blank'>
+                            <img className = "facebook" src='/images/Facebook_Icon.png'></img></a>
+                            <a href='https://www.instagram.com/hen.richh/' target='blank'>
+                            <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+                            <a href='mailto:henreizharuta@gmail.com'>
+                            <img className = "instagram" src='/images/Email_Icon.png'></img></a>
+                             </div>
+                              
                               </div>
                            </div>
 
@@ -218,9 +242,21 @@ const handleCategoryClick = (category) => {
                             <img src='/images/berlene.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Bernabe, Berlene</div>
-                              Backend Developer
-                              facebook ni berlene
+                             <div className='dev-name'>Bernabe, Berlene</div>
+                             <div className='description'>MIKMIK'S OWNER</div>
+                             <div className='social-container'>
+
+                             <a href='https://www.facebook.com/blyn30' target='blank'>
+                             <img className = "facebook" src='/images/Facebook_Icon.png'></img></a>
+
+                             <a href='https://www.instagram.com/bellrinsu/' target='blank'>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+
+                             <a href='mailto:berlenebernabe12@gmail.com'>
+                             <img className = "instagram" src='/images/Email_Icon.png'></img></a>
+                             
+                             </div>
+                              
                               </div>
 
                            </div>
@@ -228,13 +264,39 @@ const handleCategoryClick = (category) => {
                             <img src='/images/rj.jpg' className='dev-image' alt="dev-photo"></img>
 
                               <div className='card-contents'>
-                             <div>Lozano, Rich James</div>
-                              Backend Developer
-                              facebook ni rich
+                             <div className='dev-name'>Lozano, Rich James</div>
+                             <div className='description'>GIT GADZZ</div>
+                             <div className='social-container'>
+
+                            <a href='https://www.facebook.com/richjames.lozano.3' target='blank'>
+                            <img className = "facebook" src='/images/Facebook_Icon.png'></img></a>
+                            <a href='https://www.instagram.com/richjameslozano/' target='blank'>
+                            <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+                            <a href='mailto:richjameslozano@gmail.com'>
+                            <img className = "instagram" src='/images/Email_Icon.png'></img>
+                            </a>
+                             
+                             </div>
+                              
                               </div>
                            </div>
                       </div>
+
+                      
                 </div>  
+
+                <div className='mission-vision-container'>
+                        <div className='mission-container'>
+                          <img src='/images/mission-icon.png' className='mission-icon'></img>
+                          <h1 className='mission'>MISSION</h1>
+                          <p>MAKAPASA.</p>
+                        </div>
+                        <div className='vision-container'>
+                        <img src='/images/vision-icon.png' className='vision-icon'></img>
+                          <h1 className='vision'>VISION</h1>
+                          <p>MALABO NA.</p>
+                        </div>
+                      </div>
           </div>
           
             
