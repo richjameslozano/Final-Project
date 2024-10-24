@@ -6,11 +6,6 @@ import "../css/news/News.css"
 
 
 const News = () => { 
-    const [fadeOut, setFadeOut] = useState(false); // Trigger fade-out for loading overlay
-
-    setTimeout(() => {
-        setFadeOut(true); // Trigger fade-out effect for the loading overlay
-      }, 400); // Initial delay before starting fade-out
       
     return (
       <Layout>
