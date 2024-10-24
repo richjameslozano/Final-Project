@@ -125,6 +125,7 @@ const handleCategoryClick = (category) => {
   
 };
 
+
     return (
       <Layout className="home-page-layout">
         <Header />
@@ -203,9 +204,14 @@ const handleCategoryClick = (category) => {
 
                              <div className='social-container'>
 
-                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
-                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
-                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                             <a href='https://www.facebook.com/tj.a.pogi' target='blank'>
+                                <img className = "facebook" src='/images/Facebook_Icon.png'></img>
+                             </a>
+                             <a href='https://www.instagram.com/trstn_tj/' target='blank'>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+                             <a href='mailto:tristanquino814@gmail.com'>
+                             <img className = "instagram" src='/images/Email_Icon.png' ></img>
+                             </a>
                              </div>
                              
                               
@@ -215,14 +221,18 @@ const handleCategoryClick = (category) => {
                            <div className='dev-cards'>
                             <img src='/images/hen.jpg' className='dev-image' alt="dev-photo"></img>
 
+                            
+
                               <div className='card-contents'>
                              <div className='dev-name'>Aruta, Henreizh Nathan</div>
                              <div className='description'>POGI LANG</div>
                              <div className='social-container'>
-
-                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
-                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
-                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                            <a href='https://www.facebook.com/nathan.aruta.9/' target='blank'>
+                            <img className = "facebook" src='/images/Facebook_Icon.png'></img></a>
+                            <a href='https://www.instagram.com/hen.richh/' target='blank'>
+                            <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+                            <a href='mailto:henreizharuta@gmail.com'>
+                            <img className = "instagram" src='/images/Email_Icon.png'></img></a>
                              </div>
                               
                               </div>
@@ -236,9 +246,15 @@ const handleCategoryClick = (category) => {
                              <div className='description'>MIKMIK'S OWNER</div>
                              <div className='social-container'>
 
-                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
-                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
-                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                             <a href='https://www.facebook.com/blyn30' target='blank'>
+                             <img className = "facebook" src='/images/Facebook_Icon.png'></img></a>
+
+                             <a href='https://www.instagram.com/bellrinsu/' target='blank'>
+                             <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+
+                             <a href='mailto:berlenebernabe12@gmail.com'>
+                             <img className = "instagram" src='/images/Email_Icon.png'></img></a>
+                             
                              </div>
                               
                               </div>
@@ -252,15 +268,35 @@ const handleCategoryClick = (category) => {
                              <div className='description'>GIT GADZZ</div>
                              <div className='social-container'>
 
-                             <img className = "facebook" src='/images/Facebook_Icon.png'></img>
-                             <img className = "instagram" src='/images/Instagram_Icon.png'></img>
-                             <img className = "instagram" src='/images/Email_Icon.png'></img>
+                            <a href='https://www.facebook.com/richjames.lozano.3' target='blank'>
+                            <img className = "facebook" src='/images/Facebook_Icon.png'></img></a>
+                            <a href='https://www.instagram.com/richjameslozano/' target='blank'>
+                            <img className = "instagram" src='/images/Instagram_Icon.png'></img></a>
+                            <a href='mailto:richjameslozano@gmail.com'>
+                            <img className = "instagram" src='/images/Email_Icon.png'></img>
+                            </a>
+                             
                              </div>
                               
                               </div>
                            </div>
                       </div>
+
+                      
                 </div>  
+
+                <div className='mission-vision-container'>
+                        <div className='mission-container'>
+                          <img src='/images/mission-icon.png' className='mission-icon'></img>
+                          <h1 className='mission'>MISSION</h1>
+                          <p>MAKAPASA.</p>
+                        </div>
+                        <div className='vision-container'>
+                        <img src='/images/vision-icon.png' className='vision-icon'></img>
+                          <h1 className='vision'>VISION</h1>
+                          <p>MALABO NA.</p>
+                        </div>
+                      </div>
           </div>
           
             

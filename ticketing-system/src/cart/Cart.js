@@ -52,7 +52,7 @@ const Cart = () => {
               />
             ))
           ) : (
-            <p>No items in your cart.</p> // Message when cart is empty
+            <p className='no-items'>there are no items in your cart</p> // Message when cart is empty
           )}
         </div>
       </div>
