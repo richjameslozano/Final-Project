@@ -8,8 +8,8 @@ import ProfileButton from './ProfileButton';
 
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
-  const [username, setUsername] = useState(null); // Store the username
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+    const [username, setUsername] = useState(null); // Store the username
   const [loading, setLoading] = useState(false); // Track loading state
   const [fadeOut, setFadeOut] = useState(false); // Trigger fade-out for loading overlay
   const navigate = useNavigate(); 
@@ -17,13 +17,13 @@ const Header = () => {
   // On component mount, check if the user is logged in
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
-    if (loggedInUser) {
+    if (!loggedInUser) {
+      setUsername(null);
+      setIsLoggedIn(false);
+    } else {
         const user = JSON.parse(loggedInUser);
         setUsername(user.username);
         setIsLoggedIn(true);
-    } else {
-        setUsername(null);
-        setIsLoggedIn(false);
     }
   }, []);
 

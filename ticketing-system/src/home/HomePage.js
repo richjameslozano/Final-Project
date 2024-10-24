@@ -20,6 +20,7 @@ const HomePage = () => {
   const [sports, setSports] = useState([]);
   const [Tours, setTours] = useState([]);
   const [family, setFamily] = useState([]);
+  
   const [selectedCategory, setSelectedCategory] = useState('Movies');
 
   
@@ -27,7 +28,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
         try {
-            const response = await axios.get('http://localhost:8023/movies');
+            const response = await axios.get('http://localhost:8025/movies');
             console.log(response.data);
             setMovies(response.data); // Set the movie data into state
         } catch (error) {
@@ -41,7 +42,7 @@ const HomePage = () => {
 useEffect(() => {
   const fetchTours = async () => {
       try {
-          const response = await axios.get('http://localhost:8021/tours');
+          const response = await axios.get('http://localhost:8025/tours');
           console.log(response.data);
           setTours(response.data); // Set the movie data into state
       } catch (error) {
@@ -56,7 +57,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchConcerts = async () => {
       try {
-          const response = await axios.get('http://localhost:8021/concerts');
+          const response = await axios.get('http://localhost:8025/concerts');
           console.log(response.data);
           setConcerts(response.data); // Set the movie data into state
       } catch (error) {
@@ -70,7 +71,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchFshows = async () => {
       try {
-          const response = await axios.get('http://localhost:8023/featuredshows');
+          const response = await axios.get('http://localhost:8025/featuredshows');
           console.log(response.data);
           setFshows(response.data); // Set the movie data into state
       } catch (error) {
@@ -84,7 +85,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchSports = async () => {
       try {
-          const response = await axios.get('http://localhost:8023/sports');
+          const response = await axios.get('http://localhost:8025/sports');
           console.log(response.data);
           setSports(response.data); // Set the movie data into state
       } catch (error) {

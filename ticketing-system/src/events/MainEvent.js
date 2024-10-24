@@ -19,7 +19,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchFshows = async () => {
           try {
-              const response = await axios.get('http://localhost:8022/featuredshows');
+              const response = await axios.get('http://localhost:8025/featuredshows');
               setFshows(response.data);
           } catch (error) {
               console.error('Error fetching featured shows:', error);
@@ -31,7 +31,7 @@ const MainEvent = () => {
     useEffect(() => {
       const fetchSports = async () => {
           try {
-              const response = await axios.get('http://localhost:8022/sports');
+              const response = await axios.get('http://localhost:8025/sports');
               setSports(response.data);
           } catch (error) {
               console.error('Error fetching sports:', error);

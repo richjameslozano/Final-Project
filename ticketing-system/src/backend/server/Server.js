@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-// const Movie = require('./models/Movie');
 
 const app = express();
-const PORT = process.env.PORT || 8023;
+const PORT = process.env.PORT || 8025;
 app.use('/images', express.static('public/images'));
+
+
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
@@ -25,6 +26,8 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     mobileNumber: { type: String, required: true }
 });
+
+
 // Movie Schema
 const modelSchema = new mongoose.Schema({
     Name:  { type: String},
@@ -139,15 +142,17 @@ app.get('/movies', async (req, res) => {
 });
 
 //RETRIEVE USER INFORMATION
-app.get('/profile', async (req, res)=>{
-    try {
-        const userInfo = await User.find();
-        res.status(200).json(userInfo);
-    } catch (error) {
-        console.error('Error fetching movies:', error);
-        res.status(500).json({ message: 'Error fetching User Information' });
-    }
-})
+// app.get('/profile', async (req, res)=>{
+//     try {
+//         const userInfo = await User.find();
+//         res.status(200).json(userInfo);
+//     } catch (error) {
+//         console.error('Error fetching movies:', error);
+//         res.status(500).json({ message: 'Error fetching User Information' });
+//     }
+// })
+
+
 //FEATURED SHOWS
 app.get('/featuredshows', async (req, res) => {
     try {
@@ -158,6 +163,7 @@ app.get('/featuredshows', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
+
 // API route for login
 // Update your /login route
 app.post('/login', async (req, res) => {
@@ -174,13 +180,22 @@ app.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        // Return the username in the response
-        res.json({ message: 'Login successful', username: user.username });
+        // Return the user details (excluding the password)
+        res.json({
+            message: 'Login successful',
+            id: user._id,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password
+        });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
+
 
  
 // API route for signup
@@ -231,6 +246,24 @@ app.get('/user/:id', async (req, res) => {
     }
 });
 
+
+// app.get('/user-information', async (req, res) => {
+//     try {
+//         const userId = req.params.id;
+//         if(!mongoose.Types.ObjectId.isValid(userId)){
+//             return res.status(400).json({ message: 'Invalid user ID' });
+//         }
+
+//         const user = await User.findById(userId);
+//         if (!user) {    
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+//         res.status(200).json(userInfo);
+//     } catch (error) {
+//         console.error('Error fetching User Information:', error);   
+//         res.status(500).json({ message: 'Error fetching User Information' });   
+//     }
+// });
  
 // Start the server
 app.listen(PORT, () => {
