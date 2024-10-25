@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Button, Modal, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
 import axios from 'axios';
 
-const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
+const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,userData,setUserData }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false); // For loading state
+
+ 
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = async () => {
+  const submit = (eventId) =>{
+    setUserData({
+      ...userData,ticket:[...userData.ticket, eventId],
+    })
+    const userID = localStorage.getItem("user")
+    const userholder = JSON.parse(userID).id;
+    axios
+      .put("http://localhost:8031/updateUser/" + userholder, userData)
+      .then((response)=> console.log(response))
+      .catch(error => console.error(error));
+  }
+  
+
+  const handleOk = async (eventId) => {
+    submit(eventId);
+    console.log(eventId);
     setIsModalVisible(false);
     setLoading(true); // Start loading
-
     try {
       // Step 1: Add the movie to the cart by making a POST request
       const cartResponse = await axios.post('http://localhost:8031/cart', {
@@ -95,7 +111,7 @@ const handleAddTicket = async (userId, eventId) => {
       <Modal
         title="Event Details"
         visible={isModalVisible}
-        onOk={handleOk}
+        onOk={()=>handleOk(eventId)}
         onCancel={handleCancel}
         okText={loading ? 'Adding...' : 'Add to Cart'} // Show loading text
         cancelText="Cancel"
