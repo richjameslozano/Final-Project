@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Button, Modal, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
 import axios from 'axios';
-
+ 
 const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,userData,setUserData }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false); // For loading state
-
+ 
+ 
+ 
   const showModal = () => {
     setIsModalVisible(true);
   };
-
-  const checkItemInCart = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8031/cart`);
-      const cartItems = response.data;
-
-      // Check if the current item already exists in the cart
-      const itemExists = cartItems.some(item => item.name === name && item.date === date);
-      setIsItemInCart(itemExists);
-    } catch (error) {
-      console.error('Failed to fetch cart items:', error);
-    }
-  };
-
-  const handleOk = async () => {
+ 
+  const submit = (eventId) =>{
+    setUserData({
+      ...userData,ticket:[...userData.ticket, eventId],
+    })
+    const userID = localStorage.getItem("user")
+    const userholder = JSON.parse(userID).id;
+    axios
+      .put("http://localhost:8031/updateUser/" + userholder, userData)
+      .then((response)=> console.log(response))
+      .catch(error => console.error(error));
+  }
+ 
+ 
+  const handleOk = async (eventId) => {
+    submit(eventId);
+    console.log(eventId);
     setIsModalVisible(false);
     setLoading(true); // Start loading
     try {
@@ -39,27 +43,26 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
         image,
       });
       const movieId = cartResponse.data.item._id; // Get the movie ID from the cart response
-
+ 
       console.log('Item added to cart:', cartResponse.data);
-      message.success('Added to Cart Successfully');
-
+ 
       // Step 2: Add the movie/event to the user's ticket array
       const addEventToUserResponse = await axios.put('http://localhost:8031/addEventToUser', {
         userId,
         movieId, // Pass the movie ID
       });
-
+ 
       console.log('Event added to user tickets:', addEventToUserResponse.data);
-
+ 
       // Show success message
       message.success('Movie added to cart and tickets!');
-
+ 
       // Show success notification
       notification.success({
         message: 'Success',
         description: 'Item added to cart and tickets successfully!',
       });
-
+ 
     } catch (error) {
       console.error('Failed to add item to cart or user tickets:', error);
       message.error('Failed to add movie to cart or tickets.');
@@ -67,7 +70,7 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
       setLoading(false); // End loading
     }
   };
-
+ 
   const handleAddToCart = async (item) => {
     try {
         const response = await axios.post('http://localhost:8031/cart', item);
@@ -75,28 +78,22 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
     } catch (error) {
         console.error('Failed to add item to cart:', error);
     }
-  };
-
-  // Example function to add a ticket for the user
-  const handleAddTicket = async (userId, eventId) => {
-      try {
-          const response = await axios.put(`http://localhost:8031/user/${userId}/add-ticket/${eventId}`);
-          console.log('Ticket added:', response.data);
-      } catch (error) {
-          console.error('Failed to add ticket:', error);
-      }
-  };
-
+};
+ 
+// Example function to add a ticket for the user
+const handleAddTicket = async (userId, eventId) => {
+    try {
+        const response = await axios.put(`http://localhost:8031/user/${userId}/add-ticket/${eventId}`);
+        console.log('Ticket added:', response.data);
+    } catch (error) {
+        console.error('Failed to add ticket:', error);
+    }
+};
+ 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
-  useEffect(() => {
-    if (isModalVisible) {
-      checkItemInCart(); // Check if the item is in the cart when the modal is opened
-    }
-  }, [isModalVisible]);
-
+ 
   return (
     <div className='movie-card-container3'>
       <div className='button-container3'>
@@ -110,7 +107,7 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
         <div className='deet-date3'>{date}</div>
         <div className='deet-venue3'>{place}</div>
       </div>
-
+ 
       <Modal
         title="Event Details"
         visible={isModalVisible}
@@ -138,5 +135,5 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
     </div>
   );
 };
-
+ 
 export default MovieCard3;
