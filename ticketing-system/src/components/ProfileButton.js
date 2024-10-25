@@ -31,6 +31,16 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
     navigate('/profile');
   };
 
+  const handleLogoutConfirm = () => {
+    Modal.confirm({
+      title: 'Are you sure you want to logout?',
+      onOk: handleLogout,
+      onCancel() {
+        console.log('Logout canceled');
+      },
+    });
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('user'); // Clear user data on logout
     setIsLoggedIn(false);
@@ -70,7 +80,7 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
               <a className="header-button" onClick={goToProfile}>
                 My Profile
               </a>
-              <a className="header-button" onClick={handleLogout}>
+              <a className="header-button" onClick={handleLogoutConfirm}>
                 Logout
               </a>
             </>

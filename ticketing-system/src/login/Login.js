@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Typography } from 'antd';
+import { Form, Input, Button, Typography, message } from 'antd'; // Added message
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -23,6 +23,9 @@ const Login = ({ onCancel, onLoginSuccess }) => {
             // Trigger login success callback to update the parent component state
             onLoginSuccess(username);
 
+            // Show a success message upon successful login
+            message.success('Login successful!');
+
             // Close the modal using the parent-provided onCancel function
             onCancel();
 
@@ -30,6 +33,13 @@ const Login = ({ onCancel, onLoginSuccess }) => {
             navigate('/homepage');
         } catch (error) {
             console.error('Login Failed:', error.response?.data?.message || error.message);
+            
+            // Show a warning message if credentials are incorrect or no user is found
+            if (error.response?.status === 400) {
+                message.warning('Invalid credentials or user not found.');
+            } else {
+                message.error('Login failed. Please try again.');
+            }
         }
     };
 

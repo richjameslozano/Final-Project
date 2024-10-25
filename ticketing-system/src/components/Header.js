@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader'; 
+import { Modal } from 'antd';
 import '../css/componentsStyle/Header.css'; 
 import ProfileButton from './ProfileButton';
 import SearchResult from './SearchResult';
@@ -12,6 +13,7 @@ const Header = () => {
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState(""); // State for search query
     const [searchTerm, setSearchTerm] = useState('');
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const navigate = useNavigate(); 
 
     useEffect(() => {
@@ -34,6 +36,13 @@ const Header = () => {
         }, 1000); 
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      };
+
     const handleSearch = async () => {
         if (!searchQuery.trim()) return; // Don't search if the query is empty
         try {
@@ -45,6 +54,30 @@ const Header = () => {
             console.error('Error fetching search results:', error);
         }
     };
+
+    const handleCartClick = () => {
+        scrollToTop();
+      
+        // Check if the user is logged in
+        if (isLoggedIn) {
+          handleNavigation('/cart'); // Navigate to the Cart page
+        } else {
+          showModal(); // Show modal for not logged in
+        }
+      };
+
+      const showModal = () => {
+        setIsModalVisible(true);
+      };
+      
+      const handleOk = () => {
+        setIsModalVisible(false);
+      };
+      
+      const handleCancel = () => {
+        setIsModalVisible(false);
+      };
+      
 
     return (
         <div className="header-container">
@@ -71,14 +104,14 @@ const Header = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 {searchTerm && <SearchResult searchTerm={searchTerm} />}
-                
+
                 <img 
                     className="search-btn" 
                     src="https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png" 
                     alt="search-btn" 
                     onClick={handleSearch} 
                 />
-                <ShoppingCartOutlined className="cart-icon" onClick={() => handleNavigation('/cart')} />
+               <ShoppingCartOutlined className="cart-icon" onClick={handleCartClick} />
                 
                 <ProfileButton 
                     isLoggedIn={isLoggedIn} 
@@ -89,6 +122,15 @@ const Header = () => {
                 
                 {isLoggedIn && <div className="username-display" style={{display:"flex"}}>Hi, {username}!</div>}
             </div>
+
+            <Modal
+                title="Login Required"
+                visible={isModalVisible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                >
+                <p>You need to log in first to access the cart.</p>
+            </Modal>
         </div>
     );
 };

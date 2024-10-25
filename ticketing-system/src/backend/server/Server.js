@@ -1,3 +1,4 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,7 +7,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 8031;
 app.use('/images', express.static('public/images'));
- 
  
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -17,6 +17,7 @@ mongoose.connect('mongodb://localhost:27017/onepixel', { useNewUrlParser: true, 
 app.use(cors());
 app.use(bodyParser.json());
  
+//--------------------------------SCHEMAS----------------------------------------------//
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -29,8 +30,6 @@ const userSchema = new mongoose.Schema({
     ticket:[]
 });
  
- 
-
 // Movie Schema
 const modelSchema = new mongoose.Schema({
     name:  { type: String},
@@ -53,7 +52,6 @@ const featuredShowsSchemas = new mongoose.Schema({
     date: { type: String},
     image: { type: String }
 });
- 
 
 //Concerts
 const featureConcert = new mongoose.Schema({
@@ -96,12 +94,9 @@ const cartModel = new mongoose.Schema({
     image: { type: String }
 });
 
-const cartAdd = new mongoose.Schema({
-   id: {type:String}
-})
- //cart id addition
- const CartAddId = mongoose.model('users',cartAdd)
-//Concert model
+//--------------------------------MODELS----------------------------------------------//
+
+//Concert Model
 const Concert = mongoose.model('concerts', featureConcert);
  
 //Sports model
@@ -123,36 +118,7 @@ const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
 const cartItems = mongoose.model('carts', cartModel);
  
 
-//FOR CART WITH ID
-app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
-    const { userId, concertId } = req.params;
-
-    try {
-        // Step 1: Find the concert by its ID
-        const concert = await Concert.findById(concertId);
-        if (!concert) {
-            return res.status(404).json({ message: 'Concert not found' });
-        }
-
-        // Step 2: Find the user and push the concert into their 'ticket' array
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { $push: { ticket: concert } }, // Push concert into user's ticket array
-            { new: true } // Return the updated user document
-        );
-
-        if (!updatedUser) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.status(200).json({ message: 'Concert added to tickets', user: updatedUser });
-    } catch (error) {
-        console.error('Error adding ticket to user:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
-});
-
- //FOR PICTURE RETRIEVE
+ //Retrieving Pictures of Movies
 app.get('/movies', async (req, res) => {
     try {
         const movies = await Movie.find();
@@ -162,18 +128,8 @@ app.get('/movies', async (req, res) => {
         res.status(500).json({ message: 'Error fetching movies' });
     }
 });
-
-app.get('/cart', async (req, res) => {
-    try {
-        const cartlist = await cartItems.find();
-        res.status(200).json(cartlist);
-    } catch (error) {
-        console.error('Error fetching movies:', error);
-        res.status(500).json({ message: 'Error fetching movies' });
-    }
-});
  
- //FOR PICTURE TOURS RETRIEVE
+ // Retieving Tours Pictures 
  app.get('/tours', async (req, res) => {
     try {
         const tours = await Tours.find();
@@ -184,7 +140,7 @@ app.get('/cart', async (req, res) => {
     }
 });
  
- //FOR PICTURE SPORTS RETRIEVE
+ //Retrieving Sports Pictures
  app.get('/sports', async (req, res) => {
     try {
         const sport = await Sports.find();
@@ -195,7 +151,7 @@ app.get('/cart', async (req, res) => {
     }
 });
  
- //FOR PICTURE CONCERT RETRIEVE
+ //Retieving Concerts Pictures
  app.get('/concerts', async (req, res) => {
     try {
         const concert = await Concert.find();
@@ -217,7 +173,7 @@ app.get('/cart', async (req, res) => {
 //     }
 // })
  
-//FEATURED SHOWS
+//Fetching Features Shows
 app.get('/featuredshows', async (req, res) => {
     try {
         const featuredshows = await FeaturedShows.find();
@@ -228,39 +184,7 @@ app.get('/featuredshows', async (req, res) => {
     }
 });
  
-// API route for login
-// Update your /login route
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
- 
-    try {
-        const user = await User.findOne({ username });
-        if (!user) {
-            return res.status(400).json({ message: 'User not found' });
-        }
- 
-        // Check plain-text password (not secure)
-        if (password !== user.password) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-        
-
-        // Return the user details including the password
-        res.json({
-            message: 'Login successful',
-            id: user._id,
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            password: user.password // Include password in the response
-        });
-    } catch (err) {
-        console.error('Login error:', err);
-        res.status(500).json({ error: 'Server error' });
-    }
-});
- 
+//Fetching ALl Shows
 app.get('/AllShows', async (req, res) => {
     try {
         // Fetch data from each collection
@@ -277,6 +201,36 @@ app.get('/AllShows', async (req, res) => {
     } catch (error) {
         console.error('Error fetching all shows:', error);
         res.status(500).json({ message: 'Error fetching all shows' });
+    }
+});
+
+ // Login Function  //Getting Profile Infos
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+ 
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+        // Check plain-text password (not secure)
+        if (password !== user.password) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+        
+        // Return the user details including the password
+        res.json({
+            message: 'Login successful',
+            id: user._id,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password // Include password in the response
+        });
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 
@@ -307,7 +261,7 @@ app.post('/signup', async (req, res) => {
     }
 });
  
-// API route to update user data
+//  Putting New User Changes 
 app.put('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
@@ -335,8 +289,8 @@ app.put('/user/:id', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
- 
-// API route to get user data by ID
+
+// Getting New User Changes
 app.get('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
@@ -360,7 +314,7 @@ app.get('/user/:id', async (req, res) => {
     }
 });
 
-
+//Deleting Items in the Cart
 app.delete('/cart/:id', async (req, res) => {
     try {
       const deletedItem = await cartItems.findByIdAndDelete(req.params.id); // Use req.params.id
@@ -374,6 +328,28 @@ app.delete('/cart/:id', async (req, res) => {
     }
   });
 
+  // Searching Function
+app.get('/search', async (req, res) => {
+    const { query } = req.query;
+
+    try {
+        const results = await Movie.find({
+            $or: [
+                { Name: { $regex: query, $options: 'i' } },
+                { genre: { $regex: query, $options: 'i' } }
+            ]
+        });
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error searching movies:', error);
+        res.status(500).json({ message: 'Error searching movies' });
+    }
+});
+
+
+  //pass data to Cart
+  // to be modified
   app.post('/cart', async (req, res) => {
     try {
         const { name, runTime, genre, price, time, place, date, image } = req.body;
@@ -399,26 +375,20 @@ app.delete('/cart/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to add item to cart', error });
     }
 });
-
-// Search endpoint
-// Search route
-app.get('/search', async (req, res) => {
-    const { query } = req.query;
-
+//getting data cart
+app.get('/cart', async (req, res) => {
     try {
-        const results = await Movie.find({
-            $or: [
-                { Name: { $regex: query, $options: 'i' } },
-                { genre: { $regex: query, $options: 'i' } }
-            ]
-        });
-
-        res.status(200).json(results);
+        const cartlist = await cartItems.find();
+        res.status(200).json(cartlist);
     } catch (error) {
-        console.error('Error searching movies:', error);
-        res.status(500).json({ message: 'Error searching movies' });
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
     }
 });
+
+//-----------------------------------------------------------------------------------//
+
+
 
 // Get current user data by ID
 app.get('/currentUser/:id', async (req, res) => {
@@ -444,10 +414,38 @@ app.get('/currentUser/:id', async (req, res) => {
     }
 });
 
+//FOR CART WITH ID
+app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
+    const { userId, concertId } = req.params;
+
+    try {
+        // Step 1: Find the concert by its ID
+        const concert = await Concert.findById(concertId);
+        if (!concert) {
+            return res.status(404).json({ message: 'Concert not found' });
+        }
+
+        // Step 2: Find the user and push the concert into their 'ticket' array
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $push: { ticket: concert } }, // Push concert into user's ticket array
+            { new: true } // Return the updated user document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Concert added to tickets', user: updatedUser });
+    } catch (error) {
+        console.error('Error adding ticket to user:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 
 // Start the server
-
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+

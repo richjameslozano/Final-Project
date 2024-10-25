@@ -3,10 +3,12 @@ import axios from 'axios';
 import '../css/SignUp.css';
 import Header from '../components/Header';
 import { message, Layout } from 'antd';
- 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 const SignUp = () => {
     const [loading, setLoading] = useState(false);
- 
+    const navigate = useNavigate(); // Initialize navigate
+
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -16,7 +18,7 @@ const SignUp = () => {
         email: '',
         mobileNumber: ''
     });
- 
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -24,34 +26,34 @@ const SignUp = () => {
             [name]: value,
         });
     };
- 
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
- 
+
         const { username, password, confirmPassword } = formData;
- 
+
         // Check if all required fields are filled
         if (!username || !password || !confirmPassword) {
             message.warning('Please fill in all fields');
             return;
         }
- 
+
         // Check if passwords match
         if (password !== confirmPassword) {
             message.warning('Passwords do not match');
             return;
         }
- 
+
         setLoading(true);
         try {
             const response = await axios.post('http://localhost:8031/signup', formData);
             if (response.status === 201) {
                 message.success('User registered successfully');
+                navigate('/'); // Redirect to the homepage
             }
         } catch (error) {
             console.error('There was an error registering the user!', error);
             if (error.response) {
-                // Log additional details from the server response
                 console.error('Response data:', error.response.data);
                 message.error(`Error: ${error.response?.data?.message || 'Failed to register user'}`);
             } else {
@@ -61,11 +63,11 @@ const SignUp = () => {
             setLoading(false);
         }
     };
- 
+
     return (
-         <Layout style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
+        <Layout style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020'}}>
             <Header/>
-            <form className="signup-container" onSubmit={handleSubmit} >
+            <form className="signup-container" onSubmit={handleSubmit}>
                 <div className='register-title'>Register</div>
                 <hr></hr>
                 <div className="signup-form">
@@ -105,7 +107,7 @@ const SignUp = () => {
                             />
                         </div>
                     </div>
- 
+
                     <div className="signup-section">
                         <h3>Personal Information</h3>
                         <div className="form-group">
@@ -133,7 +135,7 @@ const SignUp = () => {
                             </div>
                         </div>
                     </div>
- 
+
                     <div className="signup-section">
                         <h3>Contact Information</h3>
                         <div className="signup-field">
@@ -159,19 +161,17 @@ const SignUp = () => {
                             />
                         </div>
                     </div>
- 
+
                     <div className="signup-buttons">
-                        <button type="submit" className="register-button">Register</button>
+                        <button type="submit" className="register-button">
+                            {loading ? 'Registering...' : 'Register'}
+                        </button>
                         <button type="button" className="cancel-button" onClick={() => console.log('Cancel')}>Cancel</button>
                     </div>
                 </div>
             </form>
         </Layout>
- 
-           
-           
- 
     );
 };
- 
+
 export default SignUp;
