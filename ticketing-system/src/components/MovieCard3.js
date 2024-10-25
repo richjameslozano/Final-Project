@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal } from 'antd';
+import { Card, Button, Modal, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
 import axios from 'axios';
 
 const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -26,12 +27,25 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
       });
       console.log('Item added to cart:', cartResponse.data);
 
+     
       // Step 2: Add the concert/event to the user's ticket array
       const ticketResponse = await axios.post(`http://localhost:8031/user/${userId}/add-ticket/${cartResponse.data.item._id}`);
       console.log('Item added to user tickets:', ticketResponse.data);
 
+      // Show success notification
+      notification.success({
+        message: 'Success',
+        description: 'Item added to cart and tickets successfully!',
+      });
+
     } catch (error) {
       console.error('Failed to add item to cart or user tickets:', error);
+      notification.error({
+        message: 'Error',
+        description: 'Failed to add item to cart or tickets.',
+      });
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 

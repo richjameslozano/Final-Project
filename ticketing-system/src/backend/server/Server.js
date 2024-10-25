@@ -377,7 +377,7 @@ app.delete('/cart/:id', async (req, res) => {
   app.post('/cart', async (req, res) => {
     try {
         const { name, runTime, genre, price, time, place, date, image } = req.body;
-
+        
         // Create a new cart item based on the request data
         const newCartItem = new cartItems({
             name,
@@ -451,3 +451,7 @@ app.get('/currentUser/:id', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+
+
+

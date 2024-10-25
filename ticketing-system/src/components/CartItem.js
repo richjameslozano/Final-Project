@@ -53,7 +53,7 @@ const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, o
                 <option value={3}>3</option>
               </select>
               <div style={{ paddingTop: '10px', fontWeight: 700, fontSize: '22px', color: 'orange' }}>
-                ${totalPrice.toFixed(2)} {/* Display total price */}
+              ₱{totalPrice.toFixed(2)} {/* Display total price */}
               </div>
             </div>
           </div>
