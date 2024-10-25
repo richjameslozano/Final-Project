@@ -97,7 +97,7 @@ const Cart = () => {
                   <CartItem
                   key={ticket._id}
                   id={ticket._id}
-                  ticketname={ticket.name}
+                  ticketname={ticket.Name}
                   date={ticket.date}
                   place={ticket.place}
                   image={ticket.image}
