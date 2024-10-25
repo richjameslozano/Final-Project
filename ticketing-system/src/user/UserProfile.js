@@ -1,58 +1,34 @@
-import React from 'react';
-import { Input } from 'antd';  // Import Ant Design's Input component
-import '../css/user/Profile.css';  // Add your custom styles here
+import React, { useState } from "react";
 
-const UserProfile = () => {
-    return (
-        <div className="profile-content">
-            <h2>My Account</h2>
-            <section className="account-info">
-                <h3>Account Information</h3>
+function ProfileButtons() {
+  // State to control the visibility of the 'Update' button
+  const [isEditing, setIsEditing] = useState(false);
 
-                <div className="form-row">
-                    <div className="form-group">
-                        <label>First Name</label>
-                        <Input className="input-field" value="Berlene" disabled />
-                    </div>
-                    <div className="form-group">
-                        <label>Last Name</label>
-                        <Input className="input-field" value="Bernabe" disabled />
-                    </div>
-                </div>
+  // Function to handle the 'Edit Profile' click
+  const handleEditClick = () => {
+    setIsEditing(true); // Show the 'Update' button
+  };
 
-                <div className="form-row">
-                    <div className="form-group">
-                        <label>Username</label>
-                        <Input className="input-field" value="BellrinSu30" disabled />
-                    </div>
-                </div>
+  // Function to handle the 'Update' click
+  const saveUserInfo = () => {
+    setIsEditing(false); // Hide the 'Update' button after saving
+  };
 
-                <div className="form-row">
-                    <div className="form-group">   
-                        <label>Email</label>
-                        <Input className="input-field" value="berlenebamabe12@gmail.com" disabled />
-                        <a href="#" className="change-link">Change Email</a>
-                    </div>
-                </div>
+  return (
+    <div>
+      {/* 'Edit Profile' button, always visible */}
+      <button className="edit-btn" onClick={handleEditClick}>
+        Edit Profile
+      </button>
 
-                <div className="form-row">
-                    <div className="form-group">
-                        <label>Status</label>
-                        <Input className="input-field" value="Verified" disabled />
-                    </div>
-                </div>
+      {/* 'Update' button, visible only when isEditing is true */}
+      {isEditing && (
+        <button className="update-btn" onClick={saveUserInfo}>
+          Update
+        </button>
+      )}
+    </div>
+  );
+}
 
-                <div className="form-row">
-                    <h3>Password</h3>
-                    <div className="form-group">
-                        <label>Password</label>
-                        <Input.Password className="input-field" value="*********" disabled />
-                        <a href="#" className="change-link">Change Password</a>
-                    </div>
-                </div>
-            </section>
-        </div>
-    );
-};
-
-export default UserProfile;
+export default ProfileButtons;

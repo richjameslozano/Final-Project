@@ -41,6 +41,12 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
       // Show success message
       message.success('Movie added to cart and tickets!');
 
+      // Show success notification
+      notification.success({
+        message: 'Success',
+        description: 'Item added to cart and tickets successfully!',
+      });
+
     } catch (error) {
       console.error('Failed to add item to cart or user tickets:', error);
       message.error('Failed to add movie to cart or tickets.');

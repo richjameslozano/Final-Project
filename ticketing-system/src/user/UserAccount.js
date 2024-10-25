@@ -12,6 +12,8 @@ const UserAccount = () => {
     email: '',
     password: ''
   });
+
+  const [initialUserInfo, setInitialUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
@@ -41,23 +43,27 @@ const UserAccount = () => {
     }
   }, []);
 
+  // const handleEditClick = () => {
+  //   if (isEditing) {
+  //     saveUserInfo(); // Call function to save updated user info
+  //   }
+  //   setIsEditing(!isEditing); // Toggle editing mode
+  // };
+
   const handleEditClick = () => {
     if (isEditing) {
-      saveUserInfo(); // Call function to save updated user info
+      setUserInfo(initialUserInfo); // Revert changes if canceling edit mode
+    } else {
+      setInitialUserInfo(userInfo); // Store current data when entering edit mode
     }
-    setIsEditing(!isEditing); // Toggle editing mode
+    setIsEditing(!isEditing); // Toggle editing mode  
   };
- 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserInfo((prevState) => ({
-      ...prevState,
-      [name]: value, // Update the specific field being edited
-    }));
-  };
- 
+
+  // Function to handle the 'Update' click
   const saveUserInfo = async () => {
-    try {
+    setIsEditing(false); // Hide the 'Update' button after saving
+
+        try {
       const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo); // Use the userId in the URL
       if (response.status === 200) {
         console.log('User updated successfully', response.data);
@@ -70,6 +76,15 @@ const UserAccount = () => {
       alert('Failed to update profile');
     }
   };
+ 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserInfo((prevState) => ({
+      ...prevState,
+      [name]: value, // Update the specific field being edited
+    }));
+  };
+ 
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); // Toggle password visibility
@@ -157,7 +172,7 @@ const UserAccount = () => {
                 value={userInfo.password}
                 readOnly={!isEditing}
                 onChange={handleInputChange}
-              />
+              />  
               <span className="change-link" onClick={togglePasswordVisibility}>
                 {showPassword ? "Hide" : "Show"} Password
               </span>
@@ -165,15 +180,18 @@ const UserAccount = () => {
           </div>
  
           <div className="action-buttons">
-            <button className="cancel-btn" onClick={handleEditClick}>
-              {isEditing ? "Cancel" : "Edit"}
+            <button className={isEditing ? 'cancel-btn' : 'edit-btn'} onClick={handleEditClick}>
+              {isEditing ? 'Cancel' : 'Edit Profile'}
             </button>
-            <button className="save-btn" onClick={isEditing ? saveUserInfo : handleEditClick}>
-              {isEditing ? "Save Changes" : "Update"}
+            {isEditing && (
+              <button className="save-btn" onClick={saveUserInfo}>  
+              Save Changes
             </button>
+            )}
+            
           </div>
         </div>
-      </div>
+      </div>  
     </Layout>
   );
 };

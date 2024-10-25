@@ -17,7 +17,7 @@ import UserProfile from '../user/UserProfile';
 import UserAccount from '../user/UserAccount';
 import Cart from '../cart/Cart';
 import CustomerCare from '../contact/CustomerCare';
-
+import ProfileButtons from '../user/UserProfile';
 
 
 const AppController = () => {
@@ -26,6 +26,7 @@ const AppController = () => {
     return (
         <BrowserRouter>
         <Routes>
+            <Route path='/try' element={<UserProfile/>}/>
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/user-profile" element={<UserProfile />} />

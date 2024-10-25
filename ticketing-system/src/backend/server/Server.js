@@ -353,7 +353,7 @@ app.get('/search', async (req, res) => {
   app.post('/cart', async (req, res) => {
     try {
         const { name, runTime, genre, price, time, place, date, image } = req.body;
-
+        
         // Create a new cart item based on the request data
         const newCartItem = new cartItems({
             name,

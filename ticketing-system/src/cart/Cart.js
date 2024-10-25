@@ -90,12 +90,16 @@ const Cart = () => {
           ) : (
             <p className='no-items'>there are no items in your cart</p> // Message when cart is empty
           )}
+
+                  <div className='total-cost'>
+                      <h3 style={{fontSize: '30px'}}>Total Cost: <span style={{color:'orange'}}>${totalCost.toFixed(2)}</span></h3>
+                  </div>
         </div>
         
-        {/* Display total cost */}
-        <div className='total-cost'>
-          <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
-        </div>
+              <div className='total-cost-container'>
+                    <h1 style={{color: 'black'}}>PROCEED TO CHECKOUT</h1>
+              </div>
+        
       </div>
       <Footer />
     </Layout>
