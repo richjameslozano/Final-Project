@@ -29,6 +29,7 @@ const Header = () => {
     }, []);
 
     const handleNavigation = (route) => {
+        scrollToTop();
         setLoading(true); 
         setTimeout(() => {
             setLoading(false); 

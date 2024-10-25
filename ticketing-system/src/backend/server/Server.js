@@ -306,7 +306,7 @@ app.get('/user/:id', async (req, res) => {
         }
  
         // Exclude password from the response
-        const { password, ...userDetails } = user._doc;
+        const {...userDetails } = user._doc;
         res.status(200).json(userDetails);
     } catch (error) {
         console.error('Error fetching user data:', error);

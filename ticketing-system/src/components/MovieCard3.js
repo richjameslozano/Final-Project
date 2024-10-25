@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Modal, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
@@ -7,12 +7,33 @@ import axios from 'axios';
 const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false); // For loading state
+  const [isItemInCart, setIsItemInCart] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
+  const checkItemInCart = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8031/cart`);
+      const cartItems = response.data;
+
+      // Check if the current item already exists in the cart
+      const itemExists = cartItems.some(item => item.name === name && item.date === date);
+      setIsItemInCart(itemExists);
+    } catch (error) {
+      console.error('Failed to fetch cart items:', error);
+    }
+  };
+
   const handleOk = async () => {
+    if (isItemInCart) {
+      // Show a message if the item is already in the cart
+      message.warning('This item is already in your cart!');
+      setIsModalVisible(false);
+      return;
+    }
+
     setIsModalVisible(false);
     setLoading(true); // Start loading
 
@@ -29,6 +50,7 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
       const movieId = cartResponse.data.item._id; // Get the movie ID from the cart response
 
       console.log('Item added to cart:', cartResponse.data);
+      message.success('Added to Cart Successfully');
 
       // Step 2: Add the movie/event to the user's ticket array
       const addEventToUserResponse = await axios.put('http://localhost:8031/addEventToUser', {
@@ -62,21 +84,27 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId }) => {
     } catch (error) {
         console.error('Failed to add item to cart:', error);
     }
-};
+  };
 
-// Example function to add a ticket for the user
-const handleAddTicket = async (userId, eventId) => {
-    try {
-        const response = await axios.put(`http://localhost:8031/user/${userId}/add-ticket/${eventId}`);
-        console.log('Ticket added:', response.data);
-    } catch (error) {
-        console.error('Failed to add ticket:', error);
-    }
-};
+  // Example function to add a ticket for the user
+  const handleAddTicket = async (userId, eventId) => {
+      try {
+          const response = await axios.put(`http://localhost:8031/user/${userId}/add-ticket/${eventId}`);
+          console.log('Ticket added:', response.data);
+      } catch (error) {
+          console.error('Failed to add ticket:', error);
+      }
+  };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  useEffect(() => {
+    if (isModalVisible) {
+      checkItemInCart(); // Check if the item is in the cart when the modal is opened
+    }
+  }, [isModalVisible]);
 
   return (
     <div className='movie-card-container3'>

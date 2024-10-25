@@ -92,7 +92,7 @@ const Cart = () => {
           )}
 
                   <div className='total-cost'>
-                      <h3 style={{fontSize: '30px'}}>Total Cost: <span style={{color:'orange'}}>${totalCost.toFixed(2)}</span></h3>
+                      <h3 style={{fontSize: '30px'}}>Total Cost: <span style={{color:'orange'}}>₱{totalCost.toFixed(2)}</span></h3>
                   </div>
         </div>
         
