@@ -116,7 +116,28 @@ const FeaturedShows = mongoose.model('featuredshows', featuredShowsSchemas);
 
 //Cart Model
 const cartItems = mongoose.model('carts', cartModel);
- 
+
+//////////////////////////////////////////////////////////////////
+const updateUser = (req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .then(user => res.json(user))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+      });
+  }
+  
+  const getUser = (req, res) => {
+    User.findById(req.params.id)
+      .then(user => res.json(user))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+      });
+  }
+  app.put('/updateUser/:id', updateUser)
+  app.get('/getUser/:id', getUser)
+ //////////////////////////////////////////////////////////////////////////////
 
  //Retrieving Pictures of Movies
 app.get('/movies', async (req, res) => {
@@ -290,6 +311,7 @@ app.put('/user/:id', async (req, res) => {
     }
 });
 
+
 // Getting New User Changes
 app.get('/user/:id', async (req, res) => {
     try {
@@ -306,7 +328,7 @@ app.get('/user/:id', async (req, res) => {
         }
  
         // Exclude password from the response
-        const { password, ...userDetails } = user._doc;
+        const {...userDetails } = user._doc;
         res.status(200).json(userDetails);
     } catch (error) {
         console.error('Error fetching user data:', error);

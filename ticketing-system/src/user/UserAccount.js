@@ -1,9 +1,9 @@
 import Header from '../components/Header';
 import React, { useEffect, useState } from 'react';
-import { Layout } from 'antd';
+import { Layout, Modal, message } from 'antd'; // Import Modal from antd
 import '../css/user/UserAccount.css';
 import axios from 'axios';
- 
+
 const UserAccount = () => {
   const [userInfo, setUserInfo] = useState({
     username: '',
@@ -31,6 +31,7 @@ const UserAccount = () => {
           const response = await axios.get(`http://localhost:8031/user/${user.id || user._id}`);
           console.log('Fetched user data:', response.data); // Log the response
           setUserInfo(response.data);
+          setInitialUserInfo(response.data); // Set initialUserInfo to fetched data
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
@@ -43,40 +44,54 @@ const UserAccount = () => {
     }
   }, []);
 
-  // const handleEditClick = () => {
-  //   if (isEditing) {
-  //     saveUserInfo(); // Call function to save updated user info
-  //   }
-  //   setIsEditing(!isEditing); // Toggle editing mode
-  // };
+  const hasChanges = () => {
+    return JSON.stringify(userInfo) !== JSON.stringify(initialUserInfo);
+  };
 
   const handleEditClick = () => {
     if (isEditing) {
-      setUserInfo(initialUserInfo); // Revert changes if canceling edit mode
+      // Check if there are changes before showing the confirmation
+      if (hasChanges()) {
+        // Use Ant Design's Modal.confirm for cancellation confirmation
+        Modal.confirm({
+          title: 'Cancel Changes',
+          content: 'Are you sure you want to cancel the changes?',
+          okText: 'Yes',
+          cancelText: 'No',
+          onOk: () => {
+            setUserInfo(initialUserInfo); // Revert changes if canceling edit mode
+            setIsEditing(false); // Exit edit mode
+          },
+          onCancel: () => {
+            // Do nothing if user cancels
+          }
+        });
+      } else {
+        // If no changes, just exit edit mode without confirmation
+        setIsEditing(false);
+      }
     } else {
       setInitialUserInfo(userInfo); // Store current data when entering edit mode
+      setIsEditing(true); // Toggle editing mode  
     }
-    setIsEditing(!isEditing); // Toggle editing mode  
   };
 
-  // Function to handle the 'Update' click
   const saveUserInfo = async () => {
     setIsEditing(false); // Hide the 'Update' button after saving
 
-        try {
-      const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo); // Use the userId in the URL
+    try {
+      const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
       if (response.status === 200) {
-        console.log('User updated successfully', response.data);
-        alert('Profile updated successfully');
-        localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId })); // Update localStorage
-        setIsEditing(false); // Switch back to read-only mode
+        message.success('Profile updated successfully'); // Use Ant Design's message
+        localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
+        setInitialUserInfo(userInfo); // Update initial user info to new state after saving
       }
     } catch (error) {
       console.error('Error updating user:', error);
-      alert('Failed to update profile');
+      message.error('Failed to update profile'); // Use Ant Design's error message
     }
   };
- 
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserInfo((prevState) => ({
@@ -84,7 +99,6 @@ const UserAccount = () => {
       [name]: value, // Update the specific field being edited
     }));
   };
- 
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword); // Toggle password visibility
@@ -93,7 +107,6 @@ const UserAccount = () => {
   return (
     <Layout className='main-container-user-account' style={{ backgroundImage: 'url(/images/HomeImages/footer-bg.png)', backgroundColor: '#202020' }}>
       <Header />
- 
       <div className="user-profile-container">
         <div className="sidebar">
           <h1 className='profile-title'>Profile Settings</h1>
@@ -102,13 +115,13 @@ const UserAccount = () => {
             <li style={{ listStyleType: 'none' }}>Tickets Purchased</li>
           </ul>
         </div>
- 
+
         <div className="profile-details">
           <h2>My Account</h2>
           <hr />
           <div className="account-info">
             <h3>Account Information</h3>
- 
+
             <div className="two-column-grid">
               <div className="input-group">
                 <label>First Name</label>
@@ -121,7 +134,7 @@ const UserAccount = () => {
                   onChange={handleInputChange}
                 />
               </div>
- 
+
               <div className="input-group">
                 <label>Last Name</label>
                 <input
@@ -134,7 +147,7 @@ const UserAccount = () => {
                 />
               </div>
             </div>
- 
+
             <div className="input-group">
               <label>Username</label>
               <input
@@ -146,7 +159,7 @@ const UserAccount = () => {
                 onChange={handleInputChange}
               />
             </div>
- 
+
             <div className="input-group">
               <label>Email</label>
               <input
@@ -157,10 +170,10 @@ const UserAccount = () => {
                 readOnly={!isEditing}
                 onChange={handleInputChange}
               />
-              <span className="change-link">Change Email</span>
+
             </div>
           </div>
- 
+
           <div className="password-section">
             <h3>Password</h3>
             <div className="input-group">
@@ -172,26 +185,29 @@ const UserAccount = () => {
                 value={userInfo.password}
                 readOnly={!isEditing}
                 onChange={handleInputChange}
-              />  
-              <span className="change-link" onClick={togglePasswordVisibility}>
+              />
+              {/* <span className="change-link" onClick={togglePasswordVisibility}>
                 {showPassword ? "Hide" : "Show"} Password
-              </span>
+              </span> */}
             </div>
           </div>
- 
+
           <div className="action-buttons">
             <button className={isEditing ? 'cancel-btn' : 'edit-btn'} onClick={handleEditClick}>
               {isEditing ? 'Cancel' : 'Edit Profile'}
             </button>
             {isEditing && (
-              <button className="save-btn" onClick={saveUserInfo}>  
-              Save Changes
-            </button>
+              <button
+                className="save-btn"
+                onClick={saveUserInfo}
+                disabled={!isEditing || !hasChanges()}  // Disable if not editing or no changes made
+              >
+                Save Changes
+              </button>
             )}
-            
           </div>
         </div>
-      </div>  
+      </div>
     </Layout>
   );
 };

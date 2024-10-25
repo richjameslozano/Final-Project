@@ -11,6 +11,13 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
 
   const navigate = useNavigate();
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -42,6 +49,7 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
   };
 
   const handleLogout = () => {
+    scrollToTop();
     localStorage.removeItem('user'); // Clear user data on logout
     setIsLoggedIn(false);
     setUsername(''); // Clear username on logout

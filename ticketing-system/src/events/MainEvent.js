@@ -15,10 +15,9 @@ const MainEvent = ({ movie, isVisible }) => {
   const [sports, setSports] = useState([]);
   const [Tours, setTours] = useState([]);
   const [family, setFamily] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All Shows');
+  const [selectedCategory, setSelectedCategory] = useState('Shows & Concerts');
 
   const [isAnimating, setIsAnimating] = useState(false);
-
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -170,6 +169,9 @@ const MainEvent = ({ movie, isVisible }) => {
                   price={item.price}
                   image={item.image}
                   time={item.time}
+                  eventId={item._id}
+                  userData={userData}
+                  setUserData={setUserData}
                 />
 
               </div>

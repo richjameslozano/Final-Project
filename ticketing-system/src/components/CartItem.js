@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
+import { message } from 'antd';
 import ConfirmationModal from './ConfirmationModal'; 
 
 const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, onDelete, onQuantityChange }) => {
@@ -22,11 +23,17 @@ const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, o
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8031/cart/${id}`);
-      onDelete(id); 
+      console.log('Item deleted successfully');
+      onDelete(id);
+      
+      // Show success message using Ant Design's message
+      message.success(`Successfully Deleted ${ticketname}`);
+
     } catch (error) {
       console.error('Failed to delete item:', error);
     }
   };
+  
 
   return (
     <div className='main-cart-item'>
@@ -46,14 +53,14 @@ const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, o
               <select
                 className='select-quantity'
                 value={selectedQuantity}
-                onChange={(e) => setSelectedQuantity(Number(e.target.value))} // Ensure quantity is a number
+                onChange={(e) => setSelectedQuantity(Number(e.target.value))}
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
               </select>
               <div style={{ paddingTop: '10px', fontWeight: 700, fontSize: '22px', color: 'orange' }}>
-              ₱{totalPrice.toFixed(2)} {/* Display total price */}
+                ₱{totalPrice.toFixed(2)}
               </div>
             </div>
           </div>
