@@ -94,7 +94,7 @@ const Cart = () => {
         
         {/* Display total cost */}
         <div className='total-cost'>
-          <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
+          <h3>Total Cost: ₱{totalCost.toFixed(2)}</h3>
         </div>
       </div>
       <Footer />

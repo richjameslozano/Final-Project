@@ -39,17 +39,21 @@ const MovieCard2 = ({ name, date, image, place, time, price, userId }) => {
     setIsModalVisible(false);
   };
   return (
+    <div className='movie-card-wrapper'>
+
+    
     <div className='movie-card-container2'>
         <div className='button-container2'>
           <Button type='primary' onClick={showModal}>Buy Tickets</Button>
         </div>
-        <div>
+        <div className='image'>
           <img src={image} className='card-posters2' alt='movie poster' />
         </div>
         <div className='details2'>
           <div className='deet-title2'>{name}</div>
           <div className='deet-date2'>{date}</div>
           <div className='deet-venue2'>{place}</div>
+        </div>
         </div>
 
         <Modal

@@ -1,28 +1,35 @@
+.movie-card-wrapper1 {
+  display: flex;
+  flex-wrap: wrap; /* Ensures cards wrap on smaller screens */
+  justify-content: center; /* Centers cards horizontally */
+  align-items: stretch; /* Makes all cards equal height */
+  gap: 20px; /* Add space between the cards */
+}
+
 .movie-card-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   height: 600px;
   width: 400px;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-top: 80px;
-  position: relative;
-  overflow: hidden;
-  background-color: rgba(0, 0, 0, 0);
-  margin-top: 80px;
-  position: relative;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0); /* Transparent background */
+  position: relative; /* Position relative for button positioning */
+}
+
+.image1 {
+  width: 100%; /* Full width for image */
+  height: 500px; /* Fixed height */
+  position: relative; /* Allows positioning the button inside the image */
 }
 
 .card-posters {
-  padding-right: 60px;
-  padding-left: 60px;
-  height: auto;
-  max-width: 100%;
+border-radius: 8px;
+  height: 100%;
+  width: 100%;
   border: none;
   transition: all 0.3s ease-in-out;
-  background-color: rgba(0, 0, 0, 0);
-  overflow: hidden;
+
 }
 
 .card-posters:hover img {
@@ -30,11 +37,11 @@
 }
 
 .details {
-  margin: 20px;
+  margin-top: 15px;
+  padding-left: 10px;
   font-size: 20px;
   font-weight: bold;
-  font-family: AlteBold;
-  margin-bottom: 2px;
+  text-align: left; /* Left-align the details */
 }
 
 .deet-date {
@@ -47,18 +54,11 @@
 .deet-venue {
   color: rgb(255, 100, 39);
   border: 0.5px solid white;
+  text-wrap: wrap;
 }
 
 
 
-.button-container {
-  position: absolute; /* Position the button container absolutely */
-  top: 40%; /* Center vertically */
-  left: 55%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust for element size */
-  display: none; /* Hide button by default */
-  z-index: 1; /* Bring the button to the front */
-}
 
 .card-posters:hover{
   border: 1px solid gray;
@@ -71,20 +71,25 @@
 .button-container { 
   position: absolute; /* Position the button container absolutely */
   transform: translate(-50%, -50%); /* Adjust for element size */
-  top: 40%;
-  left: 55%;
+  top: 42%;
+  left: 50%;
   display: none;
   z-index: 1; /* Bring the button to the front */
 }
  
 .movie-card-container:hover .button-container {
-  display: flex; /* Show button on hover */
+  display: block; /* Show button on hover */
 }
  
 .button-container button {
   background-color: rgb(255, 100, 39);
   color: white;
   border: none;
+
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
  
