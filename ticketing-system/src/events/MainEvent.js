@@ -15,7 +15,7 @@ const MainEvent = ({ movie, isVisible }) => {
   const [sports, setSports] = useState([]);
   const [Tours, setTours] = useState([]);
   const [family, setFamily] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('Shows & Concerts');
+  const [selectedCategory, setSelectedCategory] = useState('All Shows');
 
   const [isAnimating, setIsAnimating] = useState(false);
 

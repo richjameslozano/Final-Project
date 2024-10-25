@@ -138,7 +138,7 @@ const handleCategoryClick = (category) => {
 
           <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
             <h1 className='title-one'>FEATURED SHOWS</h1>
-            <h2 className='sub-title'>FROM INF224</h2>
+            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INF 224</h2>
         
             <div className="movie-card-container-main">
             {fshows.map((featureds) => (

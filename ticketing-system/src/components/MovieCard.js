@@ -71,7 +71,7 @@ const MovieCard = ({ name, date, image, place, time, price, userId }) => {
     <div className='movie-card-wrapper1'>
     <div className='movie-card-container'>
       <div className='button-container'>
-        <Button type='primary' onClick={showModal}>Buy Tickets</Button>
+        <button type='primary' onClick={showModal}>Buy Ticket</button>
       </div>
       <div className='image1'>
         <img src={image} className='card-posters' alt='movie poster' />
