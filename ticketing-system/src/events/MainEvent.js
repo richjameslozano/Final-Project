@@ -15,10 +15,27 @@ const MainEvent = ({ movie, isVisible }) => {
   const [sports, setSports] = useState([]);
   const [Tours, setTours] = useState([]);
   const [family, setFamily] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('Shows & Concerts');
+  const [selectedCategory, setSelectedCategory] = useState();
 
+  //---------------------------------------------//
+  const [userData, setUserData] =useState({})
+  useEffect (()=>{
+    getUser()
+  },[])
+
+  const getUser = () =>{
+    const userID = localStorage.getItem("user")
+    const userholder = JSON.parse(userID).id;
+    console.log(userholder);
+    
+    axios.get(`http://localhost:8031/getUser/${userholder}` )
+    .then((response)=>{
+      setUserData(response.data);
+      console.log(userData);
+    }).catch(error => console.error(error));
+  }
+//------------------------------------------------//
   const [isAnimating, setIsAnimating] = useState(false);
-
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -170,6 +187,9 @@ const MainEvent = ({ movie, isVisible }) => {
                   price={item.price}
                   image={item.image}
                   time={item.time}
+                  eventId={item._id}
+                  userData={userData}
+                  setUserData={setUserData}
                 />
 
               </div>
