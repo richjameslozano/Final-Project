@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal, message } from 'antd';
+import { Card, Button, Modal, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
 import axios from 'axios';
