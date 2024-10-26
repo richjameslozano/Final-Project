@@ -19,7 +19,17 @@ app.use(bodyParser.json());
  
 //--------------------------------SCHEMAS----------------------------------------------//
 
-// User Schema
+// ticket Schema
+const ticketSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    date: { type: String, required: true },
+    place: { type: String, required: true },
+    time: { type: String, required: true },
+    price: { type: Number, required: true },
+    // Include other relevant fields as needed
+});
+
+// Define user schema
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // Storing password in plain text (not recommended)
@@ -27,9 +37,9 @@ const userSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     mobileNumber: { type: String, required: true },
-    ticket:[]
+    ticket: [ticketSchema] // Array of ticket objects
 });
- 
+
 // Movie Schema
 const modelSchema = new mongoose.Schema({
     name:  { type: String},
@@ -464,6 +474,45 @@ app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+
+
+// Delete a ticket from the user's cart
+// Not Working yet
+app.delete('/user/:userId/remove-ticket/:concertId', async (req, res) => {
+    const { userId, concertId } = req.params;
+
+    try {
+        console.log('Delete request:', { userId, concertId }); // Debugging: log request parameters
+
+        // Validate if the userId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid user ID' });
+        }
+
+        // Validate if the concertId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(concertId)) {
+            return res.status(400).json({ message: 'Invalid concert ID' });
+        }
+
+        // Step 1: Find the user by ID and remove the concert from their 'ticket' array
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $pull: { ticket: { _id: concertId } } }, // Use $pull to remove the concert
+            { new: true } // Return the updated user document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log('Updated User:', updatedUser); // Debugging: log updated user
+        res.status(200).json({ message: 'Concert removed from tickets', user: updatedUser });
+    } catch (error) {
+        console.error('Error removing ticket from user:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 
 
 // Start the server

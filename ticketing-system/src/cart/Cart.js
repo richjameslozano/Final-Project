@@ -24,7 +24,8 @@ const Cart = () => {
         const ticketArray = userResponse.data.ticket;
 
         const ticketIds = [...new Set(ticketArray.map(ticket => ticket._id))];
-        setUserCart(ticketIds);
+        // Initialize userCart with objects that contain id and quantity
+        setUserCart(ticketIds.map(ticketId => ({ id: ticketId, quantity: 1 }))); // Set default quantity to 1
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -39,28 +40,28 @@ const Cart = () => {
   }, [userCart, allShows]);
 
   const calculateTotalCost = () => {
-    const total = userCart.reduce((acc, ticketId) => {
-      const show = allShows.find(show => show._id === ticketId);
-      return show ? acc + parseFloat(show.price) : acc;
+    const total = userCart.reduce((acc, cartItem) => {
+      const show = allShows.find(show => show._id === cartItem.id);
+      return show ? acc + (parseFloat(show.price) * cartItem.quantity) : acc; // Multiply by quantity
     }, 0);
     setTotalCost(total);
   };
 
   const handleQuantityChange = (id, quantity) => {
-    // Update the userCart state to reflect the new quantity for the ticket
-    const updatedCart = userCart.map(ticketId => {
-      if (ticketId === id) {
-        return { id: ticketId, quantity }; // Include quantity in the object if needed
+    const updatedCart = userCart.map(item => {
+      if (item.id === id) {
+        return { ...item, quantity };
       }
-      return { id: ticketId };
+      return item;
     });
-
+  
     setUserCart(updatedCart);
+    localStorage.setItem('userCart', JSON.stringify(updatedCart)); // Save updated cart to local storage
     calculateTotalCost();
   };
 
   const handleItemDelete = (id) => {
-    setUserCart(prevCart => prevCart.filter(ticketId => ticketId !== id)); // Remove the ticket ID from the userCart
+    setUserCart(prevCart => prevCart.filter(ticket => ticket.id !== id)); // Remove the ticket from the userCart
     calculateTotalCost();
   };
 
@@ -72,11 +73,11 @@ const Cart = () => {
         <h2 className='sub-title-cart'>TICKET LIST</h2>
 
         <div className="movie-cart-container-main">
-        {userCart.length > 0 ? (
+          {userCart.length > 0 ? (
             allShows.length > 0 ? (
               allShows.map((ticket) => {
-                const isInCart = userCart.includes(ticket._id);
-                if (isInCart) {
+                const cartItem = userCart.find(item => item.id === ticket._id); // Find the cart item
+                if (cartItem) {
                   return (
                     <CartItem
                       key={ticket._id}
@@ -87,7 +88,7 @@ const Cart = () => {
                       image={ticket.image}
                       time={ticket.time}
                       price={ticket.price}
-                      quantity={ticket.quantity || 1}
+                      quantity={cartItem.quantity} // Pass the quantity from the cart
                       onDelete={handleItemDelete}
                       onQuantityChange={handleQuantityChange}
                     />
@@ -113,7 +114,6 @@ const Cart = () => {
       </div>
       <Footer />
     </Layout>
-    
   );
 };
 
