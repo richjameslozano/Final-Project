@@ -1,149 +1,3 @@
-/* 
-.movie-card-container2{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 450px;
-    width: 350px;
-    background-color: white;
-    margin-left: 30px;
-    margin-right: 30px;     
-    background-color: rgba(0, 0, 0, 0);
-    margin-top: 80px;
-  }
-
-  .movie-card-container2:hover .card-posters2 {
-    filter: brightness(50%);
-    border: 1px solid gray;
-    cursor: pointer;
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); 
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .button-container2 {
-    position: absolute; 
-    padding-left: 20%;
-    margin-top: -60px;
-    transform: translate(-50%, -50%); 
-    display: none; 
-    z-index: 1; 
-  }
-
-  .movie-card-container2:hover .button-container2 {
-    display: flex;
-  }
-
-  .button-container2 button {
-    background-color: rgb(255, 100, 39);
-    color: white;
-    border: none;
-    transition: all 0.3s ease;
-  }
-   
-  .button-container2 button:hover{
-    background-color: darkorange;
-  }
-
-  .card-posters2{
-    padding-left: 60px;
-    padding-right: 60px;
-    height: auto;
-    max-width: 100%;
-    border: none;
-    transition: all 0.3s ease-in-out;
-    background-color: rgba(0, 0, 0, 0)
-  }
-  
-  .details2{
-    margin: 20px;
-    font-size: 20px;
-    font-weight: bold;  
-    font-family: AlteBold ;
-    margin-bottom: 2px;
-  }
-  
-  .deet-date2{
-    color: gray;
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
-  .deet-venue2{
-    color: rgb(255, 100, 39);
-    border: 0.5px solid white;
-    text-wrap: wrap;
-  }
-  
-  .card-posters2:hover{
-    border: 1px solid gray;
-    cursor: pointer;
-    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5); 
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  
-
-.custom-modal .ant-modal-close {
-  position: absolute;
-  top: 10px; 
-  right: -30px; 
-  z-index: 1000; 
-}
-
-.custom-modal .ant-modal-body {
-  height: 500px; 
-  overflow-y: auto; 
-}
-
-
-.custom-modal .ant-modal-header {
-  background-color: #212121;
-
-}
-
-.custom-modal .ant-modal-close-x {
-  font-size: 18px;
-  color: #000;
-}
-
-.custom-modal .ant-modal-content {
-  background-color: #212121;
-  max-height: 90vh; 
-}
-
-
-.custom-modal .ant-modal-title {
-  color: #ffffff; 
-  font-weight: bold; 
-}
-
-.modal-content-container2 {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.modal-image-container2 img {
-  width: 2000px;
-  max-width: 300px;
-  height: auto;
-}
-
-.modal-details-container2 {
-  flex: 1;
-}
-
-.modal-details-container2 p {
-  margin: 10px 0;
-  color: white;
-  font-size: 20px;
-}
-
-
-  
-  
-   */
-
    /* Container for movie cards */
 .movie-card-wrapper {
   display: flex;
@@ -249,10 +103,7 @@
 }
 
 .custom-modal .ant-modal-close {
-  position: absolute;
-  top: 10px; 
-  right: -30px; 
-  z-index: 1000; 
+  display: none;
 }
 
 .custom-modal .ant-modal-body {
@@ -262,13 +113,12 @@
 
 
 .custom-modal .ant-modal-header {
-  background-color: #212121;
+  background-color: transparent;
 
 }
 
 .custom-modal .ant-modal-close-x {
-  font-size: 18px;
-  color: #000;
+  display: none;
 }
 
 .custom-modal .ant-modal-content {
@@ -296,6 +146,7 @@
 
 .modal-details-container2 {
   flex: 1;
+  margin-top: -20px;
 }
 
 .modal-details-container2 p {
