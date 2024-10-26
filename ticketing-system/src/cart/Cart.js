@@ -15,7 +15,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const showsResponse = await axios.get(`http://localhost:8031/AllShows`);
+        const showsResponse = await axios.get(`http://localhost:8031/allevents`);
         setAllShows(showsResponse.data);
 
         const userID = localStorage.getItem("user");

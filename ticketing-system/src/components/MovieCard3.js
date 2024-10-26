@@ -53,7 +53,7 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
   return (
     <div className='movie-card-container3'>
       <div className='button-container3'>
-        <Button type='primary' onClick={showModal}>Buy Tickets</Button>
+        <button type='primary' onClick={showModal}>Buy Tickets</button>
       </div>
       <div>
         <img src={image} className='card-posters3' alt="Event Poster" />
@@ -80,12 +80,14 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
             <img src={image} alt={name} />
           </div>
           <div className="modal-details-container3">
-            <p><strong>Name:</strong> {name}</p>
-            <p><strong>Date:</strong> {date}</p>
-            <p><strong>Venue:</strong> {place}</p>
-            <p><strong>Time:</strong> {time}</p>
-            <p><strong>Price:</strong> {price}</p>
-          </div>
+              <h1 className='item-title'>{name}</h1>
+              <hr style={{marginTop: '-20px', marginBottom: '40px',height: '1px', backgroundColor: '#37FD12', border: 'none'}}></hr>
+              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}> {price}</p>
+              <p><strong>Date:</strong> {date}</p>
+              <p><strong>Venue:</strong> {place}</p>
+              <p><strong>Time:</strong> {time}</p>
+              
+            </div>
         </div>
       </Modal>
     </div>
