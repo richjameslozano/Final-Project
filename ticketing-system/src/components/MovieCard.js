@@ -72,7 +72,7 @@ const MovieCard = ({ name, date, image, place, time, price, userId }) => {
     <div className='movie-card-wrapper1'>
     <div className='movie-card-container'>
       <div className='button-container'>
-        <Button type='primary' onClick={showModal}>Buy Tickets</Button>
+        <button type='primary' onClick={showModal}>Buy Tickets</button>
       </div>
       <div className='image1'>
         <img src={image} className='card-posters' alt='movie poster' />
@@ -93,16 +93,18 @@ const MovieCard = ({ name, date, image, place, time, price, userId }) => {
           className="custom-modal"
           width={800} // Set the width (in pixels)
         >
-          <div className="modal-content-container">
+          <div className="modal-content-container" >
             <div className="modal-image-container">
               <img src={image} alt={name} />
             </div>
             <div className="modal-details-container">
-              <p><strong>Name:</strong> {name}</p>
+              <h1 className='item-title'>{name}</h1>
+              <hr style={{marginTop: '-20px', marginBottom: '40px',height: '1px', backgroundColor: '#37FD12', border: 'none'}}></hr>
+              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}> {price}</p>
               <p><strong>Date:</strong> {date}</p>
               <p><strong>Venue:</strong> {place}</p>
               <p><strong>Time:</strong> {time}</p>
-              <p><strong>Price:</strong> {price}</p>
+              
             </div>
           </div>
         </Modal>

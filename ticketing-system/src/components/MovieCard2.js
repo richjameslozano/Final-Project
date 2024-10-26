@@ -74,7 +74,7 @@ const MovieCard2 = ({ name, date, image, place, time, price, userId }) => {
     
     <div className='movie-card-container2'>
         <div className='button-container2'>
-          <Button type='primary' onClick={showModal}>Buy Tickets</Button>
+          <button type='primary' onClick={showModal}>Buy Tickets</button>
         </div>
         <div className='image'>
           <img src={image} className='card-posters2' alt='movie poster' />
@@ -101,11 +101,13 @@ const MovieCard2 = ({ name, date, image, place, time, price, userId }) => {
               <img src={image} alt={name} />
             </div>
             <div className="modal-details-container2">
-              <p><strong>Name:</strong> {name}</p>
+              <h1 className='item-title'>{name}</h1>
+              <hr style={{marginTop: '-20px', marginBottom: '40px',height: '1px', backgroundColor: '#37FD12', border: 'none'}}></hr>
+              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}> {price}</p>
               <p><strong>Date:</strong> {date}</p>
               <p><strong>Venue:</strong> {place}</p>
               <p><strong>Time:</strong> {time}</p>
-              <p><strong>Price:</strong> {price}</p>
+              
             </div>
           </div>
         </Modal>

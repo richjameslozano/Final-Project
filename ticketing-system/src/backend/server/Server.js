@@ -104,6 +104,23 @@ const cartModel = new mongoose.Schema({
     image: { type: String }
 });
 
+const allEventsSchema = new mongoose.Schema({
+    type: { type: String, required: true }, // e.g., 'movie', 'concert', 'sport', 'tour', 'show'
+    name: { type: String, required: true },
+    runTime: { type: String }, // Optional for events without duration (e.g., concerts)
+    genre: { type: String }, // Optional for events like sports
+    price: { type: String, required: true },
+    time: { type: String, required: true },
+    place: { type: String, required: true },
+    date: { type: String, required: true },
+    image: { type: String }, // Optional if no image available
+    description: { type: String } // Additional field for more event details
+});
+
+// All Events Model
+const AllEvents = mongoose.model('allevents', allEventsSchema);
+
+
 //--------------------------------MODELS----------------------------------------------//
 
 //Concert Model
@@ -153,6 +170,16 @@ const updateUser = (req, res) => {
 app.get('/movies', async (req, res) => {
     try {
         const movies = await Movie.find();
+        res.status(200).json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ message: 'Error fetching movies' });
+    }
+});
+
+app.get('/allevents', async (req, res) => {
+    try {
+        const movies = await AllEvents.find();
         res.status(200).json(movies);
     } catch (error) {
         console.error('Error fetching movies:', error);
@@ -378,8 +405,6 @@ app.get('/search', async (req, res) => {
         res.status(500).json({ message: 'Error searching movies' });
     }
 });
-
-
   //pass data to Cart
   // to be modified
   app.post('/cart', async (req, res) => {
@@ -446,16 +471,17 @@ app.get('/currentUser/:id', async (req, res) => {
     }
 });
 
-//FOR CART WITH ID
+//FOR CART WITH ID --- GUMAWA AKO BAGONG COLLECTION, NAME: ALLEVENTS
 app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
     const { userId, concertId } = req.params;
 
     try {
         // Step 1: Find the concert by its ID
-        const concert = await Concert.findById(concertId);
+        const concert = await AllEvents.findById(concertId);
         if (!concert) {
             return res.status(404).json({ message: 'Concert not found' });
         }
+
 
         // Step 2: Find the user and push the concert into their 'ticket' array
         const updatedUser = await User.findByIdAndUpdate(
