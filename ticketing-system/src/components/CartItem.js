@@ -1,24 +1,17 @@
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { message } from 'antd';
 import ConfirmationModal from './ConfirmationModal'; 
 
 const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, onDelete, onQuantityChange }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(quantity);
-  const [totalPrice, setTotalPrice] = useState(price * quantity); // Calculate initial total price
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const onQuantityChangeRef = useRef(onQuantityChange); // Use ref to store the handler
 
-  useEffect(() => {
-    console.log(`Price for ${ticketname}: `, price); // Log price for debugging
-
-    // Calculate new total price
-    const newTotalPrice = price * selectedQuantity;
-    setTotalPrice(newTotalPrice);
-
-    // Call the onQuantityChangeRef instead of onQuantityChange directly to avoid re-render
-    onQuantityChangeRef.current(id, selectedQuantity, newTotalPrice); 
-  }, [selectedQuantity, id, price]); // Remove onQuantityChange from the dependency array
+  // Update quantity and total price in the parent component
+  const handleQuantityChange = (newQuantity) => {
+    setSelectedQuantity(newQuantity);
+    onQuantityChange(id, newQuantity, price * newQuantity); // Call the parent's quantity change function
+  };
 
   const handleDelete = async () => {
     try {
@@ -28,12 +21,10 @@ const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, o
       
       // Show success message using Ant Design's message
       message.success(`Successfully Deleted ${ticketname}`);
-
     } catch (error) {
       console.error('Failed to delete item:', error);
     }
   };
-  
 
   return (
     <div className='main-cart-item'>
@@ -53,14 +44,14 @@ const CartItem = ({ id, ticketname, date, place, image, time, price, quantity, o
               <select
                 className='select-quantity'
                 value={selectedQuantity}
-                onChange={(e) => setSelectedQuantity(Number(e.target.value))}
+                onChange={(e) => handleQuantityChange(Number(e.target.value))}
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>
               </select>
               <div style={{ paddingTop: '10px', fontWeight: 700, fontSize: '22px', color: 'orange' }}>
-                ₱{totalPrice.toFixed(2)}
+                ₱{(price * selectedQuantity).toFixed(2)}
               </div>
             </div>
           </div>

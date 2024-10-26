@@ -23,17 +23,29 @@ const MainEvent = ({ movie, isVisible }) => {
     getUser()
   },[])
  
-  const getUser = () =>{
-    const userID = localStorage.getItem("user")
-    const userholder = JSON.parse(userID).id;
-    console.log(userholder);
-   
-    axios.get(`http://localhost:8031/getUser/${userholder}` )
-    .then((response)=>{
-      setUserData(response.data);
-      console.log(userData);
-    }).catch(error => console.error(error));
-  }
+  const getUser = () => {
+    const userID = localStorage.getItem("user");
+  
+    // Check if userID exists before proceeding
+    if (userID) {
+      try {
+        const userholder = JSON.parse(userID).id;
+        console.log(userholder);
+  
+        axios.get(`http://localhost:8031/getUser/${userholder}`)
+          .then((response) => {
+            setUserData(response.data);
+            console.log(userData);
+          })
+          .catch((error) => console.error(error));
+      } catch (error) {
+        console.error("Error parsing user ID:", error);
+      }
+    } else {
+      console.warn("No user is logged in.");
+    }
+  };
+  
 //------------------------------------------------//
   const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {

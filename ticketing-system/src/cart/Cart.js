@@ -6,80 +6,62 @@ import Footer from '../components/Footer';
 import CartItem from '../components/CartItem';
 import axios from 'axios';
 
-
-
-
 const Cart = () => {
-  const [movies, setMovies] = useState([]);
-  const [totalCost, setTotalCost] = useState(0); // State to track total cost
+  const [totalCost, setTotalCost] = useState(0);
   const [allShows, setAllShows] = useState([]);
+  const [userCart, setUserCart] = useState([]);
 
+  // Fetch all shows and user cart when component mounts
   useEffect(() => {
-    const fetchAll = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8031/AllShows');
-        setAllShows(response.data);
+        const showsResponse = await axios.get(`http://localhost:8031/AllShows`);
+        setAllShows(showsResponse.data);
 
+        const userID = localStorage.getItem("user");
+        const userholder = JSON.parse(userID).id;
+        const userResponse = await axios.get(`http://localhost:8031/getUser/${userholder}`);
+        const ticketArray = userResponse.data.ticket;
 
+        const ticketIds = [...new Set(ticketArray.map(ticket => ticket._id))];
+        setUserCart(ticketIds);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error fetching data:', error);
       }
     };
-    fetchAll();
+
+    fetchData();
   }, []);
 
-  // Handle item delete
-  const handleItemDelete = (id) => {
-    setMovies((prevMovies) => {
-      const updatedMovies = prevMovies.filter(ticket => ticket._id !== id);
-      updateTotalCost(updatedMovies); // Pass the updated movie list to recalculate total cost
-      return updatedMovies;
-    });
-  };
+  // Calculate total cost whenever userCart or allShows changes
+  useEffect(() => {
+    calculateTotalCost();
+  }, [userCart, allShows]);
 
-  const [userCart, setUserCart] =useState([])
-  useEffect (()=>{
-    getUser()
-  },[])
-
-  const getUser = () =>{
-    const userID = localStorage.getItem("user")
-    const userholder = JSON.parse(userID).id;
-    console.log(userholder);
-    
-    axios.get(`http://localhost:8031/getUser/${userholder}` )
-    .then((response)=>{
-      setUserCart(response.data.ticket);
-      console.log(response.data.ticket);
-      console.log(userCart);
-    }).catch(error => console.error(error));
-  }
-
-  // Handle quantity change and update total cost
-  const handleQuantityChange = (id, quantity, price) => {
-    setMovies((prevMovies) => {
-      const updatedMovies = prevMovies.map(ticket => 
-        ticket._id === id ? { ...ticket, quantity } : ticket
-      );
-      updateTotalCost(updatedMovies); // Update total cost with new quantities
-      return updatedMovies;
-    });
-  };
-
-  // Function to update total cost
-  const updateTotalCost = (updatedMovies) => {
-    const total = updatedMovies.reduce((sum, movie) => {
-      const moviePrice = Number(movie.price); // Ensure price is a number
-      const movieQuantity = Number(movie.quantity); // Ensure quantity is a number
-      
-      console.log(`Calculating cost for movie: ${movie.name}, Price: ${moviePrice}, Quantity: ${movieQuantity}`);
-  
-      if (!isNaN(moviePrice) && !isNaN(movieQuantity)) {
-        return sum + (moviePrice * movieQuantity); // Calculate total cost
-      }
-      return sum;
+  const calculateTotalCost = () => {
+    const total = userCart.reduce((acc, ticketId) => {
+      const show = allShows.find(show => show._id === ticketId);
+      return show ? acc + parseFloat(show.price) : acc;
     }, 0);
     setTotalCost(total);
+  };
+
+  const handleQuantityChange = (id, quantity) => {
+    // Update the userCart state to reflect the new quantity for the ticket
+    const updatedCart = userCart.map(ticketId => {
+      if (ticketId === id) {
+        return { id: ticketId, quantity }; // Include quantity in the object if needed
+      }
+      return { id: ticketId };
+    });
+
+    setUserCart(updatedCart);
+    calculateTotalCost();
+  };
+
+  const handleItemDelete = (id) => {
+    setUserCart(prevCart => prevCart.filter(ticketId => ticketId !== id)); // Remove the ticket ID from the userCart
+    calculateTotalCost();
   };
 
   return (
@@ -90,46 +72,44 @@ const Cart = () => {
         <h2 className='sub-title-cart'>TICKET LIST</h2>
 
         <div className="movie-cart-container-main">
-          {movies.length > -1 ? (
-            allShows.map((ticket) => {
-              if(userCart.includes(ticket._id)){
-                return (
-                  <CartItem
-                  key={ticket._id}
-                  id={ticket._id}
-                  ticketname={ticket.name}
-                  date={ticket.date}
-                  place={ticket.place}
-                  image={ticket.image}
-                  time={ticket.time}
-                  price={ticket.price}
-                  quantity={ticket.quantity} // Pass the current quantity to CartItem
-                  onDelete={handleItemDelete}
-                  onQuantityChange={handleQuantityChange} // Pass down the quantity change handler
-                />
-                )              
-              }else{
-                return (
-                  <>
-                
-                  </>
-                )
-              }
-
-            })
+        {userCart.length > 0 ? (
+            allShows.length > 0 ? (
+              allShows.map((ticket) => {
+                const isInCart = userCart.includes(ticket._id);
+                if (isInCart) {
+                  return (
+                    <CartItem
+                      key={ticket._id}
+                      id={ticket._id}
+                      ticketname={ticket.name}
+                      date={ticket.date}
+                      place={ticket.place}
+                      image={ticket.image}
+                      time={ticket.time}
+                      price={ticket.price}
+                      quantity={ticket.quantity || 1}
+                      onDelete={handleItemDelete}
+                      onQuantityChange={handleQuantityChange}
+                    />
+                  );
+                }
+                return null;
+              })
+            ) : (
+              <p className='no-items'>No shows available.</p>
+            )
           ) : (
-            <p className='no-items'>there are no items in your cart</p> // Message when cart is empty
+            <p className='no-items'>There are no items in your cart</p>
           )}
 
-                  <div className='total-cost'>
-                      <h3 style={{fontSize: '30px'}}>Total Cost: <span style={{color:'orange'}}>₱{totalCost.toFixed(2)}</span></h3>
-                  </div>
+          <div className='total-cost'>
+            <h3 style={{ fontSize: '30px' }}>Total Cost: <span style={{ color: 'orange' }}>₱{totalCost.toFixed(2)}</span></h3>
+          </div>
         </div>
-        
-              <div className='total-cost-container'>
-                    <h1 style={{color: 'black'}}>PROCEED TO CHECKOUT</h1>
-              </div>
-        
+
+        <div className='total-cost-container'>
+          <h1 style={{ color: 'black' }}>PROCEED TO CHECKOUT</h1>
+        </div>
       </div>
       <Footer />
     </Layout>
