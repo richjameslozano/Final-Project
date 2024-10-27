@@ -14,7 +14,7 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
     setIsModalVisible(true);
   };
  
-  const submit = (eventId) =>{
+  const submit = async (eventId) =>{
     setUserData({
       ...userData,ticket:[...userData.ticket, eventId],
     })
@@ -70,25 +70,6 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
       setLoading(false); // End loading
     }
   };
- 
-  const handleAddToCart = async (item) => {
-    try {
-        const response = await axios.post('http://localhost:8031/cart', item);
-        console.log('Item added to cart:', response.data);
-    } catch (error) {
-        console.error('Failed to add item to cart:', error);
-    }
-};
- 
-// Example function to add a ticket for the user
-const handleAddTicket = async (userId, eventId) => {
-    try {
-        const response = await axios.put(`http://localhost:8031/user/${userId}/add-ticket/${eventId}`);
-        console.log('Ticket added:', response.data);
-    } catch (error) {
-        console.error('Failed to add ticket:', error);
-    }
-};
  
   const handleCancel = () => {
     setIsModalVisible(false);
