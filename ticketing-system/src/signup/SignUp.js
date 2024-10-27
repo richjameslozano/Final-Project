@@ -30,11 +30,37 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
-        const { username, password, confirmPassword } = formData;
+        const { username, password, confirmPassword, firstName, lastName, mobileNumber } = formData;
 
         // Check if all required fields are filled
-        if (!username || !password || !confirmPassword) {
+        if (!username || !password || !confirmPassword || !firstName || !lastName || !mobileNumber) {
             message.warning('Please fill in all fields');
+            return;
+        }
+
+        // Check length validations
+        if (username.length < 4 || username.length > 6) {
+            message.warning('Username must be between 4 and 6 characters');
+            return;
+        }
+
+        if (password.length < 8) {
+            message.warning('Password must be at least 8 characters');
+            return;
+        }
+
+        if (firstName.length < 2 || firstName.length > 20) {
+            message.warning('First name must be between 2 and 20 characters');
+            return;
+        }
+
+        if (lastName.length < 2 || lastName.length > 20) {
+            message.warning('Last name must be between 2 and 20 characters');
+            return;
+        }
+
+        if (!/^\d{11}$/.test(mobileNumber)) {
+            message.warning('Mobile number must be exactly 11 digits');
             return;
         }
 
