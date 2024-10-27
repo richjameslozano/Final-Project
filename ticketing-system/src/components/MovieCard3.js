@@ -1,80 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, Button, Modal, message, notification } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import '../css/componentsStyle/MovieCard3.css'; // Import the CSS file
+import '../css/componentsStyle/MovieCard3.css';
 import axios from 'axios';
- 
-const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,userData,setUserData }) => {
+
+const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserData, eventId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false); // For loading state
- 
- 
- 
+  const [loading, setLoading] = useState(false);
+
   const showModal = () => {
     setIsModalVisible(true);
   };
- 
-  const submit = async (eventId) =>{
-    setUserData({
-      ...userData,ticket:[...userData.ticket, eventId],
-    })
-    const userID = localStorage.getItem("user")
+
+  const handleOk = async () => {
+    const userID = localStorage.getItem("user");
     const userholder = JSON.parse(userID).id;
-    axios
-      .put("http://localhost:8031/updateUser/" + userholder, userData)
-      .then((response)=> console.log(response))
-      .catch(error => console.error(error));
-  }
- 
- 
-  const handleOk = async (eventId) => {
-    submit(eventId);
-    console.log(eventId);
+
     setIsModalVisible(false);
-    setLoading(true); // Start loading
+    setLoading(true);
+
     try {
-      // Step 1: Add the movie to the cart by making a POST request
-      const cartResponse = await axios.post('http://localhost:8031/cart', {
-        name,
-        date,
-        place,
-        time,
-        price,
-        image,
-      });
-      const movieId = cartResponse.data.item._id; // Get the movie ID from the cart response
- 
-      console.log('Item added to cart:', cartResponse.data);
- 
-      // Step 2: Add the movie/event to the user's ticket array
-      const addEventToUserResponse = await axios.put('http://localhost:8031/addEventToUser', {
-        userId,
-        movieId, // Pass the movie ID
-      });
- 
+      // Check if the ticket is already in the cart
+      if (userData.ticket.some(ticket => ticket._id === eventId)) {
+        message.warning('This ticket is already in your cart!');
+        return; // Exit if ticket is already in cart
+      }
+
+      const addEventToUserResponse = await axios.post(`http://localhost:8031/user/${userholder}/add-ticket/${eventId}`);
       console.log('Event added to user tickets:', addEventToUserResponse.data);
- 
-      // Show success message
-      message.success('Movie added to cart and tickets!');
- 
-      // Show success notification
+
       notification.success({
         message: 'Success',
         description: 'Item added to cart and tickets successfully!',
       });
- 
+
+      // Update userData state
+      setUserData(prevData => ({
+        ...prevData,
+        ticket: [...prevData.ticket, addEventToUserResponse.data], // Update with new cart data
+      }));
     } catch (error) {
-      console.error('Failed to add item to cart or user tickets:', error);
+      console.error('Failed to add item to cart or user tickets:', error.response ? error.response.data : error.message);
       message.error('Failed to add movie to cart or tickets.');
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
- 
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
- 
+
   return (
     <div className='movie-card-container3'>
       <div className='button-container3'>
@@ -88,15 +63,15 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
         <div className='deet-date3'>{date}</div>
         <div className='deet-venue3'>{place}</div>
       </div>
- 
+
       <Modal
         title="Event Details"
         visible={isModalVisible}
-        onOk={()=>handleOk(eventId)}
+        onOk={handleOk}
         onCancel={handleCancel}
-        okText={loading ? 'Adding...' : 'Add to Cart'} // Show loading text
+        okText={loading ? 'Adding...' : 'Add to Cart'}
         cancelText="Cancel"
-        confirmLoading={loading} // Disable the button while loading
+        confirmLoading={loading}
         className="custom-modal"
         width={800}
       >
@@ -116,5 +91,5 @@ const MovieCard3 = ({ name, date, image, place, time, price, userId, eventId,use
     </div>
   );
 };
- 
+
 export default MovieCard3;
