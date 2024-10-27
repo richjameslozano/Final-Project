@@ -55,12 +55,12 @@ body{
 }
   /* Movie card container styles */
 .movie-card-container-main {
+  margin-top: 50 px;
   display: flex;
   flex-direction: row;
   justify-content: center;
    width: 1500px;  
-  height: 1200px;
-  margin-bottom: 100px;
+  height: auto;
   flex-wrap: wrap;
 }
 
@@ -124,6 +124,7 @@ body{
   list-style-type: none;
   font-family: theBold;
   transition: all 0.2s;
+  margin-bottom: 20px;
 }
 
 .category-container li:hover{
@@ -295,3 +296,6 @@ margin-bottom: 30px;
   height: 40px;
   width: 40px;
 }
+
+
+

@@ -110,6 +110,7 @@ const UserAccount = () => {
       <div className="user-profile-container">
         <div className="sidebar">
           <h1 className='profile-title'>Profile Settings</h1>
+          <hr></hr>
           <ul className='sidebar-button-list'>
             <li style={{ listStyleType: 'none' }}>My Account</li>
             <li style={{ listStyleType: 'none' }}>Tickets Purchased</li>
@@ -121,7 +122,6 @@ const UserAccount = () => {
           <hr />
           <div className="account-info">
             <h3>Account Information</h3>
-
             <div className="two-column-grid">
               <div className="input-group">
                 <label>First Name</label>

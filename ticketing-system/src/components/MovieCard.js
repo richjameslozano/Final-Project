@@ -1,72 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Modal, message } from 'antd';
+import { Card, Button, Modal, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import '../css/componentsStyle/MovieCard.css'; // Import the CSS file
 import axios from 'axios';
 
-const MovieCard = ({ name, date, image, place, time, price, userId }) => {
+const MovieCard = ({ name, date, image, place, time, price, userData, setUserData, eventId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isItemInCart, setIsItemInCart] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const checkItemInCart = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8031/cart`);
-      const cartItems = response.data;
-
-      // Check if the current item already exists in the cart
-      const itemExists = cartItems.some(item => item.name === name && item.date === date);
-      setIsItemInCart(itemExists);
-    } catch (error) {
-      console.error('Failed to fetch cart items:', error);
-    }
-  };
-
   const handleOk = async () => {
-    if (isItemInCart) {
-      // Show a message if the item is already in the cart
-      message.warning('This item is already in your cart!');
+    const userID = localStorage.getItem("user");
+
+    // Check if user is logged in
+    if (!userID) {
+      message.warning('You need to log in first!');
       setIsModalVisible(false);
-      return;
+      return; // Exit if no user is logged in
     }
 
+    const userholder = JSON.parse(userID).id;
     setIsModalVisible(false);
+    setLoading(true);
 
     try {
-      // Step 1: Add the movie to the cart by making a POST request
-      const cartResponse = await axios.post('http://localhost:8031/cart', {
-        name,
-        date,
-        place,
-        time,
-        price,
-        image,
+      // Check if the ticket is already in the cart
+      if (userData.ticket.some(ticket => ticket._id === eventId)) {
+        message.warning('This ticket is already in your cart!');
+        return; // Exit if ticket is already in cart
+      }
+
+      const addEventToUserResponse = await axios.post(`http://localhost:8031/user/${userholder}/add-ticket/${eventId}`);
+      console.log('Event added to user tickets:', addEventToUserResponse.data);
+
+      notification.success({
+        message: 'Success',
+        description: 'Item added to cart and tickets successfully!',
       });
-      console.log('Item added to cart:', cartResponse.data);
-      // Show success message
-      message.success('Added to Cart Successfully');
 
-      // Step 2: Add the concert/event to the user's ticket array
-      const ticketResponse = await axios.post(`http://localhost:8031/user/${userId}/add-ticket/${cartResponse.data.item._id}`);
-      console.log('Item added to user tickets:', ticketResponse.data);
-
+      // Update userData state
+      setUserData(prevData => ({
+        ...prevData,
+        ticket: [...prevData.ticket, addEventToUserResponse.data], // Update with new cart data
+      }));
+      
     } catch (error) {
-      console.error('Failed to add item to cart or user tickets:', error);
+      console.error('Failed to add item to cart or user tickets:', error.response ? error.response.data : error.message);
+      message.error('Failed to add movie to cart or tickets.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
-  useEffect(() => {
-    if (isModalVisible) {
-      checkItemInCart(); // Check if the item is in the cart when the modal is opened
-    }
-  }, [isModalVisible]);
 
   return (
     <div className='movie-card-wrapper1'>
@@ -88,10 +79,11 @@ const MovieCard = ({ name, date, image, place, time, price, userId }) => {
           visible={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
-          okText="Add to Cart"
+          okText={loading ? 'Adding...' : 'Add to Cart'}
           cancelText="Cancel"
+          confirmLoading={loading}
           className="custom-modal"
-          width={800} // Set the width (in pixels)
+          width={800}
         >
           <div className="modal-content-container" >
             <div className="modal-image-container">
