@@ -125,6 +125,7 @@ const Header = () => {
             </div>
 
             <Modal
+                className='login-modal'
                 title="Login Required"
                 visible={isModalVisible}
                 onOk={handleOk}

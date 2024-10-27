@@ -138,7 +138,7 @@ const handleCategoryClick = (category) => {
 
           <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
             <h1 className='title-one'>FEATURED SHOWS</h1>
-            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INFORMATION TECHNOLOGY</h2>
+            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INFORMATION</h2>
         
             <div className="movie-card-container-main">
             {fshows.map((featureds) => (
@@ -200,7 +200,7 @@ const handleCategoryClick = (category) => {
 
                               <div className='card-contents'>
                              <div className='dev-name'>Aquino, Tristan Jay</div>
-                             <div className='description'>DIV MASTER</div>
+                             <div className='description'>DIV MASTER (?)</div>
 
                              <div className='social-container'>
 

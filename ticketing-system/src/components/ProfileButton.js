@@ -106,6 +106,7 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
       )}
 
       <Modal 
+      className='sign-in-modal'
         visible={isModalVisible} 
         onCancel={handleCancel}  
         footer={null}
