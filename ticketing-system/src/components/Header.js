@@ -11,8 +11,8 @@ const Header = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [searchQuery, setSearchQuery] = useState(""); // State for search query
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]); // State for search results
     const [isModalVisible, setIsModalVisible] = useState(false);
     const navigate = useNavigate(); 
 
@@ -42,17 +42,23 @@ const Header = () => {
           top: 0,
           behavior: 'smooth',
         });
-      };
+    };
 
-    const handleSearch = async () => {
-        if (!searchQuery.trim()) return; // Don't search if the query is empty
-        try {
-            const response = await fetch(`http://localhost:8031/search?query=${searchQuery}`);
-            const results = await response.json();
-            console.log(results); // Handle the results as needed
-            // You can set results in state and display them as desired
-        } catch (error) {
-            console.error('Error fetching search results:', error);
+    // Moved handleInputChange to Header.js
+    const handleInputChange = async (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+
+        if (value) {
+            try {
+                const response = await fetch(`http://localhost:8031/search?query=${value}`);
+                const results = await response.json();
+                setSearchResults(results); // Update search results
+            } catch (error) {
+                console.error('Failed to fetch search results:', error);
+            }
+        } else {
+            setSearchResults([]); // Clear results if input is empty
         }
     };
 
@@ -65,21 +71,20 @@ const Header = () => {
         } else {
           showModal(); // Show modal for not logged in
         }
-      };
+    };
 
-      const showModal = () => {
+    const showModal = () => {
         setIsModalVisible(true);
-      };
-      
-      const handleOk = () => {
+    };
+    
+    const handleOk = () => {
         setIsModalVisible(false);
-      };
-      
-      const handleCancel = () => {
+    };
+    
+    const handleCancel = () => {
         setIsModalVisible(false);
-      };
-      
-
+    };
+    
     return (
         <div className="header-container">
             {loading && (
@@ -98,21 +103,29 @@ const Header = () => {
                 <button onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}>Ticket Outlets</button>
                 <button onClick={() => handleNavigation('/news')}>News</button>
                 <button onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}>Contact Us</button>
-                <input
-                    placeholder="Looking for anything?"
-                    className="search-bar"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && <SearchResult searchTerm={searchTerm} />}
+                
+                <div className="search-container">
+                    <input
+                        placeholder="Looking for anything?"
+                        className="search-bar"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                    />
+                    <img 
+                        className="search-btn" 
+                        src="https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png" 
+                        alt="search-btn" 
+                        onClick={() => searchTerm && handleInputChange({ target: { value: searchTerm } })} // Trigger search on button click
+                    />
+                        {searchResults.length > 0 && (
+                            <div className="search-results-dropdown">
+                                <SearchResult results={searchResults} /> {/* Pass results to SearchResult */}
+                            </div>
+                        )}
 
-                <img 
-                    className="search-btn" 
-                    src="https://www.pngall.com/wp-content/uploads/13/Search-Button-White-PNG.png" 
-                    alt="search-btn" 
-                    onClick={handleSearch} 
-                />
-               <ShoppingCartOutlined className="cart-icon" onClick={handleCartClick} />
+                </div>
+                
+                <ShoppingCartOutlined className="cart-icon" onClick={handleCartClick} />
                 
                 <ProfileButton 
                     isLoggedIn={isLoggedIn} 
@@ -129,7 +142,7 @@ const Header = () => {
                 visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
-                >
+            >
                 <p>You need to log in first to access the cart.</p>
             </Modal>
         </div>

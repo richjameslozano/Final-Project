@@ -1,27 +1,47 @@
-/* src/css/componentsStyle/SearchResult.css */
 .search-result-container {
-    padding: 20px;
+    margin-top: 10px; /* Adds some spacing above the results */
+}
+
+.loading-message,
+.error-message,
+.no-results-message {
+    text-align: center; /* Center text for messages */
+    font-size: 1.2em;
+    color: #888; /* Gray color for messages */
 }
 
 .search-result-item {
-    display: flex;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-
-.search-result-item img {
-    width: 100px;
-    height: auto;
-    margin-right: 20px;
+    display: flex; /* Align items horizontally */
+    align-items: center; /* Center vertically */
+    margin-bottom: 15px; /* Space between results */
 }
 
 .search-result-info {
+    margin-left: 10px; /* Space between image and text */
+}
+
+img {
+    width: 100px; /* Set a fixed width for images */
+    height: auto; /* Keep aspect ratio */
+    border-radius: 5px; /* Optional: rounded corners for images */
+}
+
+.custom-modal .modal-content-container {
+    display: flex;
+    gap: 20px;
+}
+
+.modal-image-container img {
+    max-width: 200px;
+    border-radius: 8px;
+}
+
+.modal-details-container {
     display: flex;
     flex-direction: column;
 }
 
-.search-result-info h3 {
-    margin: 0;
-    font-size: 1.2em;
+.item-title {
+    font-size: 24px;
+    font-weight: bold;
 }
