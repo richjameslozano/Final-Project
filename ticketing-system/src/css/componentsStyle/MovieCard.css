@@ -11,7 +11,7 @@
   flex-direction: column;
   justify-content: flex-start;
   height: 600px;
-  width: 400px;
+  width: 350px;
   margin: 20px;
   background-color: rgba(0, 0, 0, 0); /* Transparent background */
   position: relative; /* Position relative for button positioning */

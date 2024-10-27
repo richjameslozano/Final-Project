@@ -59,11 +59,13 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
   };
 
   return (
+    
+    <div className='movie-card-wrapper'>
     <div className='movie-card-container3'>
       <div className='button-container3'>
         <button type='primary' onClick={showModal}>Buy Tickets</button>
       </div>
-      <div>
+      <div className='image'>
         <img src={image} className='card-posters3' alt="Event Poster" />
       </div>
       <div className='details3'>
@@ -96,7 +98,9 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
               <p><strong>Time:</strong> {time}</p>
             </div>
         </div>
+        
       </Modal>
+    </div>
     </div>
   );
 };
