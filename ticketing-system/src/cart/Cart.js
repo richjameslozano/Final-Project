@@ -65,6 +65,27 @@ const Cart = () => {
     calculateTotalCost();
   };
 
+
+  //DELETE FUNTION TEST:
+
+  //   const handleRemoveTicket = async () => {
+  //   try {
+  //     const response = await fetch(`http://localhost:5000/users/${userId}/tickets`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ ticketId }),
+  //     });
+
+  //     const data = await response.json();
+  //     setMessage(data.message);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     setMessage('Failed to remove ticket');
+  //   }
+  // };
+
   return (
     <Layout className="cart-page-layout">
       <Header />

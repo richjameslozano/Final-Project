@@ -34,10 +34,10 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
       });
 
       // Update userData state
-      setUserData(prevData => ({
-        ...prevData,
-        ticket: [...prevData.ticket, addEventToUserResponse.data], // Update with new cart data
-      }));
+      // setUserData(prevData = ({
+      //   ...prevData,
+      //   ticket: [...prevData.ticket, addEventToUserResponse.data], // Update with new cart data
+      // }));
     } catch (error) {
       console.error('Failed to add item to cart or user tickets:', error.response ? error.response.data : error.message);
       message.error('Failed to add movie to cart or tickets.');
