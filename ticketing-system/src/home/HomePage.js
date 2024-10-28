@@ -20,6 +20,7 @@ const HomePage = () => {
   const [sports, setSports] = useState([]);
   const [Tours, setTours] = useState([]);
   const [family, setFamily] = useState([]);
+  const [animationClass, setAnimationClass] = useState('slide-in');
   
   const [selectedCategory, setSelectedCategory] = useState('Movies');
 
@@ -52,7 +53,7 @@ const HomePage = () => {
   };
   
 //------------------------------------------------//
-  const [isAnimating, setIsAnimating] = useState(false);
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -116,7 +117,13 @@ useEffect(() => {
 }, []);
 
 const handleCategoryClick = (category) => {
-  setSelectedCategory(category);
+  if (selectedCategory !== category) {
+    setAnimationClass('slide-out'); // Trigger slide-out first
+    setTimeout(() => {
+      setSelectedCategory(category);
+      setAnimationClass('slide-in'); // Then trigger slide-in after category update
+    }, 300); // Delay to allow slide-out animation to complete
+  }
 };
   const getFilteredData = () => {
     switch (selectedCategory) {
@@ -180,7 +187,7 @@ const handleCategoryClick = (category) => {
             <div className='other-events-container'>
               <h1 className='title-one'>Other Events</h1>
               <div className='category-poster-container'>
-                <div className='category-container'>
+                {/* <div className='category-container'>
                   <ul className='categories'>
                     <li onClick={() => handleCategoryClick('Movies')}>Movies</li>
                     <li onClick={() => handleCategoryClick('Concerts & Shows')}>Concerts & Shows</li>
@@ -189,10 +196,45 @@ const handleCategoryClick = (category) => {
                     <li onClick={() => handleCategoryClick('Family')}>Family</li>
                     
                   </ul>
-                </div>
+                </div> */}
+                <div className='category-container'>
+  <ul className='categories'>
+    <li 
+      className={selectedCategory === 'Movies' ? 'active-category' : ''} 
+      onClick={() => handleCategoryClick('Movies')} >
+      Movies
+    </li>
+
+    <li 
+      className={selectedCategory === 'Concerts & Shows' ? 'active-category' : ''} 
+      onClick={() => handleCategoryClick('Concerts & Shows')}>
+      Concerts & Shows
+    </li>
+
+    <li 
+      className={selectedCategory === 'Sports' ? 'active-category' : ''} 
+      onClick={() => handleCategoryClick('Sports')} >
+      Sports
+    </li>
+
+    <li 
+      className={selectedCategory === 'Tours & Attractions' ? 'active-category' : ''} 
+      onClick={() => handleCategoryClick('Tours & Attractions')} >
+      Tours & Attractions
+    </li>
+
+    <li 
+      className={selectedCategory === 'Family' ? 'active-category' : ''} 
+      onClick={() => handleCategoryClick('Family')}>
+      Family
+    </li>
+    
+  </ul>
+</div>
+
                 
 
-                  <div className="other-card-container">
+                  <div className={`other-card-container ${animationClass}`} >
                   {getFilteredData().length === 0 ? (
                 <h1 className = "neven">NO EVENTS YET</h1>  // Display this message if no events are found
                 ) :
