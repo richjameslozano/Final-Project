@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import Header from '../components/Header';
 import '../css/cart/Cart.css';
 import Footer from '../components/Footer';
@@ -23,9 +23,8 @@ const Cart = () => {
         const userResponse = await axios.get(`http://localhost:8031/getUser/${userholder}`);
         const ticketArray = userResponse.data.ticket;
 
-        const ticketIds = [...new Set(ticketArray.map(ticket => ticket._id))];
         // Initialize userCart with objects that contain id and quantity
-        setUserCart(ticketIds.map(ticketId => ({ id: ticketId, quantity: 1 }))); // Set default quantity to 1
+        setUserCart(ticketArray.map(ticket => ({ id: ticket._id, quantity: 1 }))); // Set default quantity to 1
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -54,16 +53,37 @@ const Cart = () => {
       }
       return item;
     });
-  
+
     setUserCart(updatedCart);
     localStorage.setItem('userCart', JSON.stringify(updatedCart)); // Save updated cart to local storage
     calculateTotalCost();
   };
 
-  const handleItemDelete = (id) => {
-    setUserCart(prevCart => prevCart.filter(ticket => ticket.id !== id)); // Remove the ticket from the userCart
-    calculateTotalCost();
-  };
+const handleItemDelete = async (id) => {
+  try {
+    const userID = localStorage.getItem("user");
+    const userholder = JSON.parse(userID).id;
+
+    console.log(`Deleting ticket with ID: ${id} for user: ${userholder}`);
+
+    const response = await axios.delete(`http://localhost:8031/user/${userholder}/remove-ticket/${id}`);
+
+    if (response.status === 200) {
+      // Update userCart state correctly by filtering out the deleted item
+      setUserCart(prevCart => prevCart.filter(ticket => ticket.id !== id)); // Use 'id' here directly since it's a string
+      calculateTotalCost(); // Recalculate total cost
+      message.success("Item removed successfully.");
+    }
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    if (error.response) {
+      console.error('Response data:', error.response.data);
+      console.error('Response status:', error.response.status);
+    }
+    message.error("Failed to remove item.");
+  }
+};
+
 
 
   //DELETE FUNTION TEST:

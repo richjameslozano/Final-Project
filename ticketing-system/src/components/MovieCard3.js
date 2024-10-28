@@ -13,8 +13,15 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
 
   const handleOk = async () => {
     const userID = localStorage.getItem("user");
-    const userholder = JSON.parse(userID).id;
 
+    // Check if user is logged in
+    if (!userID) {
+      message.warning('You need to log in first!');
+      setIsModalVisible(false);
+      return; // Exit if no user is logged in
+    }
+
+    const userholder = JSON.parse(userID).id;
     setIsModalVisible(false);
     setLoading(true);
 
@@ -34,10 +41,11 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
       });
 
       // Update userData state
-      // setUserData(prevData = ({
-      //   ...prevData,
-      //   ticket: [...prevData.ticket, addEventToUserResponse.data], // Update with new cart data
-      // }));
+      setUserData(prevData => ({
+        ...prevData,
+        ticket: [...prevData.ticket, addEventToUserResponse.data], // Update with new cart data
+      }));
+      
     } catch (error) {
       console.error('Failed to add item to cart or user tickets:', error.response ? error.response.data : error.message);
       message.error('Failed to add movie to cart or tickets.');
@@ -51,11 +59,13 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
   };
 
   return (
+    
+    <div className='movie-card-wrapper'>
     <div className='movie-card-container3'>
       <div className='button-container3'>
         <button type='primary' onClick={showModal}>Buy Tickets</button>
       </div>
-      <div>
+      <div className='image'>
         <img src={image} className='card-posters3' alt="Event Poster" />
       </div>
       <div className='details3'>
@@ -81,15 +91,16 @@ const MovieCard3 = ({ name, date, image, place, time, price, userData, setUserDa
           </div>
           <div className="modal-details-container3">
               <h1 className='item-title'>{name}</h1>
-              <hr style={{marginTop: '-20px', marginBottom: '40px',height: '1px', backgroundColor: '#37FD12', border: 'none'}}></hr>
-              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}> {price}</p>
+              <hr style={{marginTop: '-20px', marginBottom: '40px', height: '1px', backgroundColor: '#37FD12', border: 'none'}} />
+              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize: '30px', marginBottom: '70px'}}> {price}</p>
               <p><strong>Date:</strong> {date}</p>
               <p><strong>Venue:</strong> {place}</p>
               <p><strong>Time:</strong> {time}</p>
-              
             </div>
         </div>
+        
       </Modal>
+    </div>
     </div>
   );
 };

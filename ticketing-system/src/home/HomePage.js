@@ -23,50 +23,83 @@ const HomePage = () => {
   
   const [selectedCategory, setSelectedCategory] = useState('Movies');
 
+  const [userData, setUserData] =useState({})
+  useEffect (()=>{
+    getUser()
+  },[])
+ 
+  const getUser = () => {
+    const userID = localStorage.getItem("user");
   
+    // Check if userID exists before proceeding
+    if (userID) {
+      try {
+        const userholder = JSON.parse(userID).id;
+        console.log(userholder);
   
+        axios.get(`http://localhost:8031/getUser/${userholder}`)
+          .then((response) => {
+            setUserData(response.data);
+            console.log(userData);
+          })
+          .catch((error) => console.error(error));
+      } catch (error) {
+        console.error("Error parsing user ID:", error);
+      }
+    } else {
+      console.warn("No user is logged in.");
+    }
+  };
+  
+//------------------------------------------------//
+  const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {
     const fetchMovies = async () => {
-        try {
-            const response = await axios.get('http://localhost:8031/movies');
-            console.log(response.data);
-            setMovies(response.data); // Set the movie data into state
-        } catch (error) {
-            console.error('Error fetching movies:', error);
-        }
+      try {
+        const response = await axios.get('http://localhost:8031/movies');
+        setMovies(response.data);
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
     };
-
     fetchMovies();
-}, []);
-
-useEffect(() => {
-  const fetchTours = async () => {
+  }, []);
+ 
+  useEffect(() => {
+    const fetchSports = async () => {
       try {
-          const response = await axios.get('http://localhost:8031/tours');
-          console.log(response.data);
-          setTours(response.data); // Set the movie data into state
+        const response = await axios.get('http://localhost:8031/sports');
+        setSports(response.data);
       } catch (error) {
-          console.error('Error fetching movies:', error);
+        console.error('Error fetching movies:', error);
       }
-  };
-
-  fetchTours();
-}, []);
-
-
-useEffect(() => {
-  const fetchConcerts = async () => {
+    };
+    fetchSports();
+  }, []);
+ 
+  useEffect(() => {
+    const fetchConcert = async () => {
       try {
-          const response = await axios.get('http://localhost:8031/concerts');
-          console.log(response.data);
-          setConcerts(response.data); // Set the movie data into state
+        const response = await axios.get('http://localhost:8031/concerts');
+        setConcerts(response.data);
       } catch (error) {
-          console.error('Error fetching movies:', error);
+        console.error('Error fetching movies:', error);
       }
-  };
-
-  fetchConcerts();
-}, []);
+    };
+    fetchConcert();
+  }, []);
+ 
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await axios.get('http://localhost:8031/tours');
+        setTours(response.data);
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+    fetchTours();
+  }, []);
 
 useEffect(() => {
   const fetchFshows = async () => {
@@ -81,21 +114,6 @@ useEffect(() => {
 
   fetchFshows();
 }, []);
-
-useEffect(() => {
-  const fetchSports = async () => {
-      try {
-          const response = await axios.get('http://localhost:8031/sports');
-          console.log(response.data);
-          setSports(response.data); // Set the movie data into state
-      } catch (error) {
-          console.error('Error fetching movies:', error);
-      }
-  };
-
-  fetchSports();
-}, []);
-
 
 const handleCategoryClick = (category) => {
   setSelectedCategory(category);
@@ -138,18 +156,21 @@ const handleCategoryClick = (category) => {
 
           <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
             <h1 className='title-one'>FEATURED SHOWS</h1>
-            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INFORMATION TECHNOLOGY</h2>
+            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INFORMATION</h2>
         
             <div className="movie-card-container-main">
             {fshows.map((featureds) => (
             <MovieCard
-            key={featureds._id} // Unique identifier
-            name={featureds.name}  // Use movie.Name
-            date={featureds.date}  // Use movie.date
-            place={featureds.place}  // Use movie.place for venue
-            time ={featureds.time}
-            price={featureds.price}  // Use movie.price
-            image={featureds.image}  // Use movie.image (make sure the path is correct)  
+            key={featureds._id}
+            name={featureds.Name || featureds.name}
+            date={featureds.date}
+            place={featureds.place}
+            price={featureds.price}
+            image={featureds.image}
+            time={featureds.time}
+            eventId={featureds._id}
+            userData={userData}
+            setUserData={setUserData} // Use movie.image (make sure the path is correct)  
             />
             ))}
 
@@ -179,12 +200,15 @@ const handleCategoryClick = (category) => {
                     (getFilteredData().map((item) => (
                     <MovieCard2
                     key={item._id}
-                    name={item.Name || item.name} // Adjust based on movie or show
+                    name={item.Name || item.name}
                     date={item.date}
                     place={item.place}
                     price={item.price}
                     image={item.image}
-                    time ={item.time}
+                    time={item.time}
+                    eventId={item._id}
+                    userData={userData}
+                    setUserData={setUserData}
                    />
                     )))}    
                   </div>
@@ -200,7 +224,7 @@ const handleCategoryClick = (category) => {
 
                               <div className='card-contents'>
                              <div className='dev-name'>Aquino, Tristan Jay</div>
-                             <div className='description'>DIV MASTER</div>
+                             <div className='description'>DIV MASTER (?)</div>
 
                              <div className='social-container'>
 

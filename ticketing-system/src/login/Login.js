@@ -10,31 +10,23 @@ const Login = ({ onCancel, onLoginSuccess }) => {
 
     const onFinish = async (values) => {
         try {
-            // Send POST request to the login endpoint
+
             const response = await axios.post('http://localhost:8031/login', values);
             console.log('Login Success:', response.data);
-
-            // Destructure user details from the response
             const { id, username, lastName, firstName, email } = response.data;
 
-            // Save the user details in local storage as a single object
             localStorage.setItem('user', JSON.stringify({ id, username, firstName, lastName, email }));
 
-            // Trigger login success callback to update the parent component state
             onLoginSuccess(username);
 
-            // Show a success message upon successful login
             message.success('Login successful!');
 
-            // Close the modal using the parent-provided onCancel function
             onCancel();
 
-            // Redirect to the main page
             navigate('/homepage');
         } catch (error) {
             console.error('Login Failed:', error.response?.data?.message || error.message);
-            
-            // Show a warning message if credentials are incorrect or no user is found
+
             if (error.response?.status === 400) {
                 message.warning('Invalid credentials or user not found.');
             } else {
@@ -69,7 +61,7 @@ const Login = ({ onCancel, onLoginSuccess }) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" block>
+                    <Button className='sign-in-button' type="primary" htmlType="submit" block>
                         Sign In
                     </Button>
                 </Form.Item>

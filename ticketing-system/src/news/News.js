@@ -77,7 +77,6 @@ Avengers: Secret Wars promises to be a landmark entry in the MCU, integrating nu
 
 
             </div>
-       
         </div>
 
         <Footer />

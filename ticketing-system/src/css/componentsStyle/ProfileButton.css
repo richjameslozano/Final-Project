@@ -29,3 +29,7 @@
   background-color: #585858; /* Background color on hover */
 }
 
+  .sign-in-modal .ant-form-item:nth-child(3){
+    background-color: rgb(26, 131, 66);
+    border-radius: 5px;
+  }
