@@ -39,13 +39,13 @@ const SignUp = () => {
         }
 
         // Check length validations
-        if (username.length < 4 || username.length > 6) {
-            message.warning('Username must be between 4 and 6 characters');
+        if (username.length < 4 || username.length > 10) {
+            message.warning('Username must be between 4 and 10 characters');
             return;
         }
 
-        if (password.length < 8) {
-            message.warning('Password must be at least 8 characters');
+        if (password.length < 4) {
+            message.warning('Password must be at least 4 characters');
             return;
         }
 
@@ -69,6 +69,12 @@ const SignUp = () => {
             message.warning('Passwords do not match');
             return;
         }
+
+        if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            message.warning('Please enter a valid email address');
+            return;
+        }
+        
 
         setLoading(true);
         try {

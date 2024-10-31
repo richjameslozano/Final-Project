@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
  
 const app = express();
 const PORT = process.env.PORT || 8031;
@@ -208,17 +209,7 @@ app.get('/allevents', async (req, res) => {
     }
 });
  
-//RETRIEVE USER INFORMATION
-// app.get('/profile', async (req, res)=>{
-//     try {
-//         const userInfo = await User.find();
-//         res.status(200).json(userInfo);
-//     } catch (error) {
-//         console.error('Error fetching movies:', error);
-//         res.status(500).json({ message: 'Error fetching User Information' });
-//     }
-// })
- 
+
 //Fetching Features Shows
 app.get('/featuredshows', async (req, res) => {
     try {
@@ -251,20 +242,22 @@ app.get('/AllShows', async (req, res) => {
 });
  
  // Login Function  //Getting Profile Infos
-app.post('/login', async (req, res) => {
+ app.post('/login', async (req, res) => {
     const { username, password } = req.body;
- 
+
     try {
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
-        // Check plain-text password (not secure)
-        if (password !== user.password) {
+
+        // Compare entered password with hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-       
-        // Return the user details including the password
+
+        // Return the user details without the password
         res.json({
             message: 'Login successful',
             id: user._id,
@@ -272,69 +265,82 @@ app.post('/login', async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            password: user.password // Include password in the response
+            // No password in the response
         });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
- 
-// API route for signup
+
+
+  // Add bcrypt
+
 app.post('/signup', async (req, res) => {
-    console.log('Request Body:', req.body); // Log the incoming data
     const { username, password, firstName, lastName, email, mobileNumber } = req.body;
- 
-    // Input validation
+
     if (!username || !password || !firstName || !lastName || !email || !mobileNumber) {
         return res.status(400).json({ message: 'All fields are required' });
     }
- 
+
     try {
-        // Check for existing user by username or email
         const existingUser = await User.findOne({ $or: [{ username }, { email }] });
         if (existingUser) {
             return res.status(400).json({ message: 'Username or email already exists, please choose a different one' });
         }
- 
-        // Create new user with plain-text password
-        const newUser = new User({ username, password, firstName, lastName, email, mobileNumber });
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user with hashed password
+        const newUser = new User({ username, password: hashedPassword, firstName, lastName, email, mobileNumber });
         await newUser.save();
+
         res.status(201).json(newUser);
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering user' });
     }
 });
- 
-//  Putting New User Changes
+
+
+// Putting New User Changes
 app.put('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         const { username, firstName, lastName, email, password } = req.body;
- 
+
         // Validate if the userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
             return res.status(400).json({ message: 'Invalid user ID' });
         }
- 
-        // Update user information in the database
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { username, firstName, lastName, email, password }, // Fields to update
-            { new: true } // Return the updated document
-        );
- 
-        if (!updatedUser) {
+
+        // Find the user first
+        const user = await User.findById(userId);
+        if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
- 
+
+        // Update user information in the database
+        user.username = username;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+
+        // You can choose to update the password if provided or leave it as is
+        if (password) {
+            user.password = password; // Update only if password is provided
+        }
+
+        const updatedUser = await user.save(); // Save the updated user document
+
         res.status(200).json({ message: 'User updated successfully', user: updatedUser });
     } catch (err) {
         console.error('Error updating user data:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
+
  
  
 // Getting New User Changes
@@ -360,7 +366,32 @@ app.get('/user/:id', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
- 
+
+// Verifying User Password
+app.post('/user/:id/verify-password', async (req, res) => {
+    const userId = req.params.id;
+    const { password } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Compare the entered password with the hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid password' });
+        }
+
+        res.status(200).json({ message: 'Password verified' });
+    } catch (error) {
+        console.error('Error verifying password:', error);
+        res.status(500).json({ message: 'Error verifying password' });
+    }
+});
+
+
 //Deleting Items in the Cart
 app.delete('/cart/:id', async (req, res) => {
     try {

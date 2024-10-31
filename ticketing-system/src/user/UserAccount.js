@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 import React, { useEffect, useState } from 'react';
-import { Layout, Modal, message } from 'antd'; // Import Modal from antd
+import { Layout, Modal, message, Input } from 'antd';
 import '../css/user/UserAccount.css';
 import axios from 'axios';
 
@@ -17,27 +17,27 @@ const UserAccount = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [userId, setUserId] = useState(null);
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordModalVisible, setPasswordModalVisible] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      setUserId(user.id || user._id); // Store the user ID
+      setUserId(user.id || user._id);
 
-      // Fetch user data from the server
       const fetchUserData = async () => {
         try {
           const response = await axios.get(`http://localhost:8031/user/${user.id || user._id}`);
-          console.log('Fetched user data:', response.data); // Log the response
           setUserInfo(response.data);
-          setInitialUserInfo(response.data); // Set initialUserInfo to fetched data
+          setInitialUserInfo(response.data);
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
       };
 
-      fetchUserData(); // Call the fetch function
+      fetchUserData();
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
@@ -50,58 +50,69 @@ const UserAccount = () => {
 
   const handleEditClick = () => {
     if (isEditing) {
-      // Check if there are changes before showing the confirmation
       if (hasChanges()) {
-        // Use Ant Design's Modal.confirm for cancellation confirmation
         Modal.confirm({
           title: 'Cancel Changes',
           content: 'Are you sure you want to cancel the changes?',
           okText: 'Yes',
           cancelText: 'No',
           onOk: () => {
-            setUserInfo(initialUserInfo); // Revert changes if canceling edit mode
-            setIsEditing(false); // Exit edit mode
+            setUserInfo(initialUserInfo);
+            setIsEditing(false);
           },
-          onCancel: () => {
-            // Do nothing if user cancels
-          }
+          onCancel: () => {}
         });
       } else {
-        // If no changes, just exit edit mode without confirmation
         setIsEditing(false);
       }
     } else {
-      setInitialUserInfo(userInfo); // Store current data when entering edit mode
-      setIsEditing(true); // Toggle editing mode  
+      setInitialUserInfo(userInfo);
+      setIsEditing(true);
     }
   };
 
   const saveUserInfo = async () => {
-    setIsEditing(false); // Hide the 'Update' button after saving
+    setPasswordModalVisible(true); // Show modal for password input
+};
 
+const handlePasswordSubmit = async () => {
     try {
-      const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
-      if (response.status === 200) {
-        message.success('Profile updated successfully'); // Use Ant Design's message
-        localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
-        setInitialUserInfo(userInfo); // Update initial user info to new state after saving
-      }
+        // Verify the user's password
+        const verifyResponse = await axios.post(`http://localhost:8031/user/${userId}/verify-password`, { password: passwordInput });
+        if (verifyResponse.status === 200) {
+            // Proceed to update user info if password verification is successful
+            const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
+            if (response.status === 200) {
+                message.success('Profile updated successfully');
+                localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
+                setInitialUserInfo(userInfo);
+                setPasswordModalVisible(false); // Close password modal
+                setPasswordInput(''); // Clear password input
+            } else {
+                message.error(`Failed to update profile: ${response.data.message}`);
+            }
+        }
     } catch (error) {
-      console.error('Error updating user:', error);
-      message.error('Failed to update profile'); // Use Ant Design's error message
+        console.error('Error during update:', error);
+        if (error.response && error.response.data && error.response.data.message) {
+            message.error(`Error: ${error.response.data.message}`);
+        } else {
+            message.error('Failed to update profile');
+        }
     }
-  };
+};
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUserInfo((prevState) => ({
       ...prevState,
-      [name]: value, // Update the specific field being edited
+      [name]: value,
     }));
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle password visibility
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -170,25 +181,6 @@ const UserAccount = () => {
                 readOnly={!isEditing}
                 onChange={handleInputChange}
               />
-
-            </div>
-          </div>
-
-          <div className="password-section">
-            <h3>Password</h3>
-            <div className="input-group">
-              <label>Password</label>
-              <input
-                className='input-info-profile'
-                type={showPassword ? "text" : "password"} // Toggle between text and password type
-                name="password"
-                value={userInfo.password}
-                readOnly={!isEditing}
-                onChange={handleInputChange}
-              />
-              {/* <span className="change-link" onClick={togglePasswordVisibility}>
-                {showPassword ? "Hide" : "Show"} Password
-              </span> */}
             </div>
           </div>
 
@@ -200,12 +192,27 @@ const UserAccount = () => {
               <button
                 className="save-btn"
                 onClick={saveUserInfo}
-                disabled={!isEditing || !hasChanges()}  // Disable if not editing or no changes made
+                disabled={!isEditing || !hasChanges()}
               >
                 Save Changes
               </button>
             )}
           </div>
+
+          <Modal
+              title="Verify Password"
+              visible={passwordModalVisible}
+              onOk={handlePasswordSubmit}
+              onCancel={() => setPasswordModalVisible(false)}
+          >
+              <input
+                  type="password"
+                  placeholder="Enter your password"
+                  value={passwordInput}
+                  onChange={(e) => setPasswordInput(e.target.value)}
+              />
+          </Modal>
+
         </div>
       </div>
     </Layout>

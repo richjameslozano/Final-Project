@@ -39,7 +39,17 @@ body{
     overflow: hidden;
 }
   
+.fade-out {
+  opacity: 0;
+}
 
+.fade-in {
+  opacity: 1;
+}
+
+.slide-in {
+  transform: translateX(0); /* Slide the content in from the left to the default position */
+}
 .main-content-container{
   margin-top: -5px;
   display: flex;
@@ -139,7 +149,9 @@ body{
   margin-left: 0;
   
 }
-
+.categories .active-category {
+  color: #37FD12; /* green color when selected */
+}
 .other-card-container{
   margin-right: -50px;
   display: flex;
@@ -147,7 +159,16 @@ body{
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.slide-in {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-out {
+  transform: translateX(-50px); /* Slide out to the left */
+  opacity: 0;
 }
 
 .neven{

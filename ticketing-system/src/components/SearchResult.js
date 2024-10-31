@@ -1,49 +1,69 @@
 import React, { useState } from 'react';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal, message, notification } from 'antd';
 import '../css/componentsStyle/SearchResult.css';
+import axios from 'axios';
 
 const SearchResult = ({ results }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
 
-    // Show modal and set selected item
     const showModal = (item) => {
+        console.log("Showing modal for:", item); // Debug log
         setSelectedItem(item);
         setIsModalVisible(true);
     };
 
-    // Handle modal close
     const handleCancel = () => {
         setIsModalVisible(false);
         setSelectedItem(null);
     };
 
-    // Handle Add to Cart with login and duplicate check
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         const userID = localStorage.getItem("user");
+    
+        // Check if user is logged in
         if (!userID) {
             message.warning('You need to log in first!');
-            handleCancel();
-            return;
+            handleCancel(); // Close the modal
+            return; // Exit if no user is logged in
         }
-
-        // Check if cart exists in localStorage, if not, initialize it
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        // Check if selectedItem is already in the cart
-        const itemExists = cart.some((cartItem) => cartItem._id === selectedItem._id);
-        
-        if (itemExists) {
-            message.info('Item already exists in cart!');
-        } else {
-            // Add the item to the cart and update localStorage
-            cart.push(selectedItem);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            message.success('Item added to cart!');
+    
+        const userholder = JSON.parse(userID).id;
+        const selectedItemId = selectedItem._id;
+    
+    
+        try {
+            // Check if the ticket is already in the cart
+            const userResponse = await axios.get(`http://localhost:8031/user/${userholder}`);
+            const userData = userResponse.data;
+    
+            if (userData.ticket.some(ticket => ticket._id === selectedItemId)) {
+                message.warning('This ticket is already in your cart!');
+                handleCancel(); // Close the modal
+                return; // Exit if ticket is already in cart
+            }
+    
+            // If not, add the item to the user's cart in MongoDB
+            const addEventToUserResponse = await axios.post(`http://localhost:8031/user/${userholder}/add-ticket/${selectedItemId}`);
+            console.log('Event added to user tickets:', addEventToUserResponse.data);
+    
+            // Show success message
+            notification.success({
+                message: 'Success',
+                description: 'Item added to cart and tickets successfully!',
+            });
+    
+            handleCancel(); // Close the modal
+    
+        } catch (error) {
+            console.error('Failed to add item to cart or user tickets:', error.response ? error.response.data : error.message);
+            message.error('Failed to add movie to cart or tickets.');
+        } finally {
+            
         }
-
-        handleCancel();
     };
+    
+    
 
     return (
         <div className="search-result-container">
