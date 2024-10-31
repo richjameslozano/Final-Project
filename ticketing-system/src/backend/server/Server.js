@@ -22,13 +22,18 @@ app.use(bodyParser.json());
 // User Schema
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Storing password in plain text (not recommended)
+    password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     mobileNumber: { type: String, required: true },
-    ticket:[]
-});
+    ticket: [
+      {
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' },
+        quantity: { type: Number, required: true, default: 1},
+      },
+    ],
+  });
  
 // Movie Schema
 const modelSchema = new mongoose.Schema({
@@ -492,34 +497,87 @@ app.get('/currentUser/:id', async (req, res) => {
 });
  
 //FOR CART WITH ID --- GUMAWA AKO BAGONG COLLECTION, NAME: ALLEVENTS
-app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
-    const { userId, concertId } = req.params;
+// app.post('/user/:userId/add-ticket/:concertId', async (req, res) => {
+//     const { userId, concertId } = req.params;
  
-    try {
-        // Step 1: Find the concert by its ID
-        const concert = await AllEvents.findById(concertId);
-        if (!concert) {
-            return res.status(404).json({ message: 'Concert not found' });
+//     try {
+//         // Step 1: Find the concert by its ID
+//         const concert = await AllEvents.findById(concertId);
+//         if (!concert) {
+//             return res.status(404).json({ message: 'Concert not found' });
+//         }
+ 
+ 
+//         // Step 2: Find the user and push the concert into their 'ticket' array
+//         const updatedUser = await User.findByIdAndUpdate(
+//             userId,
+//             { $push: { ticket: concert } }, // Push concert into user's ticket array
+//             { new: true } // Return the updated user document
+//         );
+ 
+//         if (!updatedUser) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+ 
+//         res.status(200).json({ message: 'Concert added to tickets', user: updatedUser });
+//     } catch (error) {
+//         console.error('Error adding ticket to user:', error);
+//         res.status(500).json({ error: 'Server error' });
+//     }
+// });
+
+    app.post('/user/:userId/add-ticket/:eventId', async (req, res) => {
+        const { userId, eventId } = req.params;
+        const { quantity } = req.body;
+    
+        try {
+        // Retrieve the event/movie data based on eventId
+        const event = await AllEvents.findById(eventId);
+        if (!event) return res.status(404).json({ message: 'Event not found' });
+    
+        // Construct the ticket object to include quantity
+        const ticketWithQuantity = { ...event.toObject(), quantity };
+    
+        // Find the user and add the ticket to their array
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+    
+        // Push the ticket with quantity into the user's tickets
+        user.ticket.push(ticketWithQuantity);
+        await user.save();
+    
+        res.status(200).json(ticketWithQuantity);
+        } catch (error) {
+        console.error('Error adding ticket:', error);
+        res.status(500).json({ message: 'Failed to add ticket' });
         }
- 
- 
-        // Step 2: Find the user and push the concert into their 'ticket' array
-        const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { $push: { ticket: concert } }, // Push concert into user's ticket array
-            { new: true } // Return the updated user document
-        );
- 
-        if (!updatedUser) {
-            return res.status(404).json({ message: 'User not found' });
+    });
+
+    app.put('/user/:userId/update-ticket/:eventId', async (req, res) => {
+        const { userId, eventId } = req.params;
+        const { quantity } = req.body;
+    
+        try {
+            // Find the user by userId
+            const user = await User.findById(userId);
+            if (!user) return res.status(404).json({ message: 'User not found' });
+    
+            // Find the ticket in the user's tickets
+            const ticketIndex = user.ticket.findIndex(ticket => ticket._id.toString() === eventId);
+            if (ticketIndex === -1) return res.status(404).json({ message: 'Ticket not found' });
+    
+            // Update the quantity
+            user.ticket[ticketIndex].quantity = quantity;
+            
+            await user.save();
+            
+            res.status(200).json(user.ticket[ticketIndex]); // Send back the updated ticket
+        } catch (error) {
+            console.error('Error updating ticket:', error);
+            res.status(500).json({ message: 'Failed to update ticket' });
         }
- 
-        res.status(200).json({ message: 'Concert added to tickets', user: updatedUser });
-    } catch (error) {
-        console.error('Error adding ticket to user:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
-});
+    });
+    
 
 // Delete ticket from user's cart
 app.delete('/user/:userId/remove-ticket/:ticketId', async (req, res) => {

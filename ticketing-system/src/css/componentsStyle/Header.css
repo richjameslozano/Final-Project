@@ -71,6 +71,7 @@
   cursor: pointer;
   color: white;
   transition: all 0.2s ease-in-out;
+
 }
 
 .search-btn:hover{
@@ -192,6 +193,7 @@
 
 .search-container {
   position: relative; /* Needed for positioning the dropdown */
+  display: flex;
 }
 
 .search-results-dropdown {

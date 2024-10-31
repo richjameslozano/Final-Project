@@ -16,22 +16,26 @@ const Cart = () => {
   // Fetch all shows and user cart when component mounts
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const showsResponse = await axios.get('http://localhost:8031/allevents');
-        setAllShows(showsResponse.data);
+        try {
+            const showsResponse = await axios.get('http://localhost:8031/allevents');
+            setAllShows(showsResponse.data);
 
-        const userID = JSON.parse(localStorage.getItem('user')).id;
-        const userResponse = await axios.get(`http://localhost:8031/getUser/${userID}`);
-        const ticketArray = userResponse.data.ticket;
+            const userID = JSON.parse(localStorage.getItem('user')).id;
+            const userResponse = await axios.get(`http://localhost:8031/getUser/${userID}`);
+            const ticketArray = userResponse.data.ticket;
 
-        setUserCart(ticketArray.map(ticket => ({ id: ticket._id, quantity: 1 }))); // Default quantity 1
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+            // Set the userCart with the correct quantity from the database
+            setUserCart(ticketArray.map(ticket => ({ 
+                id: ticket._id, 
+                quantity: ticket.quantity // Set quantity from the database
+            }))); 
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     fetchData();
-  }, []);
+}, []);
 
   // Function to calculate total cost based on current userCart and allShows
   const calculateTotalCost = useCallback(() => {
@@ -50,9 +54,9 @@ const Cart = () => {
   }, [calculateTotalCost, totalCost]);
 
   const handleQuantityChange = (id, quantity) => {
-    // setUserCart(prevCart =>
-    //   prevCart.map(item => (item.id === id ? { ...item, quantity } : item))
-    // );
+    setUserCart(prevCart =>
+      prevCart.map(item => (item.id === id ? { ...item, quantity } : item))
+    );
   };
 
   const handleItemDelete = async id => {
@@ -111,6 +115,8 @@ const Cart = () => {
                       price={ticket.price}
                       quantity={cartItem.quantity}
                       onDelete={handleItemDelete}
+                      userholder={ticket.userholder}  // Pass the userholder here
+                      eventId={ticket.eventId} // Pass the eventId here
                       onQuantityChange={handleQuantityChange}
                     />
                   )
@@ -124,16 +130,27 @@ const Cart = () => {
           )}
 
           <div className="total-cost">
+            <div className='instructions'>
+              <ol>
+                <li> Make sure to finalize/check your tickets (ticketname, venue, quantity, price, etc.) as this cannot be undone.</li>
+                <li> Only a maximum of 3 tickets can be ordered per purchase.</li>
+                <li> Should you have any trouble ordering a ticket, please contact our <a>customer service</a>.</li>
+              </ol>
+            </div>
+  
+            <div className='price-container'>
             <h3 style={{ fontSize: '30px' }}>
               Total Cost: <span style={{ color: 'orange' }}>₱{totalCost.toFixed(2)}</span>
             </h3>
+            </div>
           </div>
         </div>
 
-        <div className="total-cost-container">
-          <Button type="primary" onClick={showModal} style={{ marginTop: '20px' }}>
+        <div className="total-cost-container" onClick={showModal}>
+          {/* <Button type="primary" onClick={showModal} style={{ marginTop: '20px' }}>
             PROCEED TO CHECKOUT
-          </Button>
+          </Button> */}
+          Proceed to Checkout
         </div>
 
         <Modal

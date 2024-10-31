@@ -1,5 +1,6 @@
 body{
   background-color: #121212;  
+ 
 }
 .main-container-user-account{
   display: flex;
@@ -7,6 +8,7 @@ body{
   padding-bottom: 20px;
   justify-content: center;
   height: 980px;
+  overflow: hidden;
 
 }
 
@@ -18,6 +20,7 @@ body{
   margin-top: 150px;
   background-color: #121212;
   border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .main-container-signup{
@@ -70,6 +73,7 @@ body{
   background-color: rgb(245, 245, 245);
   border-radius: 0px 25px 25px 0px;
   box-shadow: rgba(0,0,0,0.5);
+  position: relative;
 }
 
 .profile-details h2 {
@@ -97,12 +101,11 @@ body{
   font-weight: bold;
 }
 
-.input-group input {
+.input-group .input-info-profile {
   padding: 12px;
   border: 2px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
-
 }
 
 .change-link {
@@ -122,6 +125,8 @@ body{
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 200px;
+  
 }
 
 .edit-btn, .save-btn {
@@ -185,4 +190,11 @@ body{
 
 .sidebar-button-list{
   margin-left: -35px;
+}
+
+.input-group .info-editing {
+  padding: 12px;
+  border: 3px solid #00ff0d;
+  border-radius: 5px;
+  font-size: 14px;
 }

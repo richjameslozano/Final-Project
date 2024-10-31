@@ -75,7 +75,8 @@
   }
 
 .item-image{
-    max-width: 90%;
+    width: 100%;
+    max-width: 150px;
     height: 100%;
 }
 
@@ -83,7 +84,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
+  width: 90%;
   padding-left: 25px;
 }
 
@@ -202,8 +203,9 @@
 
 .total-cost{
   display: flex;
-  justify-content: end;
+
   width: 100%;
+  margin-top: 40px;
 }
 
 .total-cost-container{
@@ -217,6 +219,9 @@
   width: 1300px;
   border-radius: 0 0 25px 25px;
   margin-bottom: 100px;
+  font-size: 30px;
+  font-family: Akira;
+  text-shadow: 0px 0.5px 1px black;
   transition: all 0.1s ease-in-out;
   border: 1px solid gray;
   border-top: 0px;
@@ -225,4 +230,35 @@
 .total-cost-container:hover{
   background-color: #84ff6e;
   cursor: pointer;
+}
+
+.price-container{
+  background-color: #333333;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.instructions{
+  display: flex;
+  flex-direction: column;
+  width: 610px;
+}
+
+.instructions ol{
+  margin: 0;
+  padding-left: 0;
+  padding-right: 30px;
+  margin-left: 10px;
+}
+
+.instructions li{
+  color: white;
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+  font-weight: 600;
 }

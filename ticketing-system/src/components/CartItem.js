@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import ConfirmationModal from './ConfirmationModal';
+import '../css/componentsStyle/Header.css'; 
+import axios from 'axios'
 
 const CartItem = ({
   id,
@@ -13,6 +15,8 @@ const CartItem = ({
   quantity,
   onDelete,
   onQuantityChange,
+  userholder,
+  eventId
 }) => {
   const [selectedQuantity, setSelectedQuantity] = useState(quantity);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +30,27 @@ const CartItem = ({
     onDelete(id);
     message.success(`Successfully deleted ${ticketname}`);
   };
+
+  const handleQuantityChange = async (newQuantity) => {
+    setSelectedQuantity(newQuantity);
+
+    const userId = JSON.parse(localStorage.getItem("user")).id;
+
+    try {
+        await axios.put(`http://localhost:8031/user/${userId}/update-ticket/${id}`, {
+            quantity: newQuantity,
+        });
+        // notification.success({
+        //     message: 'Success',
+        //     description: 'Quantity updated successfully!',
+        //     placement: 'bottomRight',
+        // });
+    } catch (error) {
+        console.error('Failed to update quantity:', error);
+        message.error('Failed to update quantity.');
+    }
+};
+
 
   return (
     <div className="main-cart-item">
@@ -45,11 +70,11 @@ const CartItem = ({
               <select
                 className="select-quantity"
                 value={selectedQuantity}
-                onChange={e => setSelectedQuantity(Number(e.target.value))}
+                onChange={(e) => handleQuantityChange(Number(e.target.value))}
               >
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
               </select>
               <div
                 style={{

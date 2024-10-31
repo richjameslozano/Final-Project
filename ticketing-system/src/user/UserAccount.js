@@ -137,7 +137,7 @@ const handlePasswordSubmit = async () => {
               <div className="input-group">
                 <label>First Name</label>
                 <input
-                  className='input-info-profile'
+                  className={isEditing ? 'info-editing' : 'input-info-profile'}
                   type="text"
                   name="firstName"
                   value={userInfo.firstName}
@@ -149,7 +149,7 @@ const handlePasswordSubmit = async () => {
               <div className="input-group">
                 <label>Last Name</label>
                 <input
-                  className='input-info-profile'
+                  className={isEditing ? 'info-editing' : 'input-info-profile'}
                   type="text"
                   name="lastName"
                   value={userInfo.lastName}
@@ -162,7 +162,7 @@ const handlePasswordSubmit = async () => {
             <div className="input-group">
               <label>Username</label>
               <input
-                className='input-info-profile'
+                className={isEditing ? 'info-editing' : 'input-info-profile'}
                 type="text"
                 name="username"
                 value={userInfo.username}
@@ -174,7 +174,7 @@ const handlePasswordSubmit = async () => {
             <div className="input-group">
               <label>Email</label>
               <input
-                className='input-info-profile'
+                className={isEditing ? 'info-editing' : 'input-info-profile'}
                 type="email"
                 name="email"
                 value={userInfo.email}

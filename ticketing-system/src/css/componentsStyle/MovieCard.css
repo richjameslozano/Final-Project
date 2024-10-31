@@ -167,7 +167,7 @@ border-radius: 8px;
   color: white;
 }
 
-.ant-btn:nth-child(2){
+.custom-modal .ant-btn:nth-child(2){
   background-color: #37fd12;
   color: black;
   border: 1px solid;
@@ -180,7 +180,7 @@ border-radius: 8px;
 
 }
 
-.ant-btn:nth-child(1){
+.custom-modal .ant-btn:nth-child(1){
   background-color: inherit;
   color: white;
   outline: none;
