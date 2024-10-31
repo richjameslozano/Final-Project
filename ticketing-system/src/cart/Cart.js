@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, message } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Layout, message, Modal, Button, Radio, Input, Form } from 'antd';
 import Header from '../components/Header';
 import '../css/cart/Cart.css';
 import Footer from '../components/Footer';
@@ -10,7 +10,9 @@ const Cart = () => {
   const [totalCost, setTotalCost] = useState(0);
   const [allShows, setAllShows] = useState([]);
   const [userCart, setUserCart] = useState([]);
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  
   // Fetch all shows and user cart when component mounts
   useEffect(() => {
     const fetchData = async () => {
@@ -31,23 +33,26 @@ const Cart = () => {
     fetchData();
   }, []);
 
-  // Calculate total cost whenever userCart or allShows changes
-  useEffect(() => {
-    calculateTotalCost();
-  }, [userCart, allShows]);
-
-  const calculateTotalCost = () => {
-    const total = userCart.reduce((acc, cartItem) => {
+  // Function to calculate total cost based on current userCart and allShows
+  const calculateTotalCost = useCallback(() => {
+    return userCart.reduce((acc, cartItem) => {
       const show = allShows.find(show => show._id === cartItem.id);
       return show ? acc + show.price * cartItem.quantity : acc;
     }, 0);
-    setTotalCost(total);
-  };
+  }, [userCart, allShows]);
+
+  // Update total cost if necessary
+  useEffect(() => {
+    const newTotalCost = calculateTotalCost();
+    if (newTotalCost !== totalCost) {
+      setTotalCost(newTotalCost);
+    }
+  }, [calculateTotalCost, totalCost]);
 
   const handleQuantityChange = (id, quantity) => {
-    setUserCart(prevCart =>
-      prevCart.map(item => (item.id === id ? { ...item, quantity } : item))
-    );
+    // setUserCart(prevCart =>
+    //   prevCart.map(item => (item.id === id ? { ...item, quantity } : item))
+    // );
   };
 
   const handleItemDelete = async id => {
@@ -62,6 +67,20 @@ const Cart = () => {
       console.error('Error deleting item:', error);
       message.error('Failed to remove item.');
     }
+  };
+
+  // Handle modal open and close
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    message.success(`Payment method selected: ${selectedPaymentMethod}`);
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -112,8 +131,50 @@ const Cart = () => {
         </div>
 
         <div className="total-cost-container">
-          <h1 style={{ color: 'black' }}>PROCEED TO CHECKOUT</h1>
+          <Button type="primary" onClick={showModal} style={{ marginTop: '20px' }}>
+            PROCEED TO CHECKOUT
+          </Button>
         </div>
+
+        <Modal
+          title="Select Payment Method"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okText="Confirm Payment"
+        >
+          <Radio.Group
+            onChange={e => setSelectedPaymentMethod(e.target.value)}
+            value={selectedPaymentMethod}
+            style={{ width: '100%', marginBottom: '20px' }}
+          >
+            <Radio value="Credit Card">Credit Card</Radio>
+            <Radio value="PayPal">PayPal</Radio>
+            <Radio value="Gcash">Gcash</Radio>
+          </Radio.Group>
+
+          {selectedPaymentMethod === 'Credit Card' && (
+            <Form layout="vertical">
+              <Form.Item label="Card Number">
+                <Input placeholder="1234 5678 9012 3456" />
+              </Form.Item>
+              <Form.Item label="Expiry Date">
+                <Input placeholder="MM/YY" />
+              </Form.Item>
+              <Form.Item label="CVV">
+                <Input placeholder="123" />
+              </Form.Item>
+            </Form>
+          )}
+
+          {selectedPaymentMethod === 'PayPal' && (
+            <p>After clicking confirm, you’ll be redirected to PayPal to complete your payment.</p>
+          )}
+
+          {selectedPaymentMethod === 'Gcash' && (
+            <p>Please ensure your Gcash account is linked and ready for payment processing.</p>
+          )}
+        </Modal>
       </div>
       <Footer />
     </Layout>
