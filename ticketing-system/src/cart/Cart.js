@@ -84,7 +84,8 @@ const Cart = () => {
         place: show.place,
         time: show.time,
         quantity: cartItem.quantity,
-        price: show.price
+        price: show.price,
+        ticketId: cartItem.id
       } : null;
     }).filter(item => item !== null);
 
@@ -176,6 +177,7 @@ const Cart = () => {
             {modalCartDetails.map((item, index) => (
               <div key={index} className="modal-cart-item">
                 <p><strong>{item.ticketname}</strong></p>
+                <p>Ticket ID: {item.ticketId}</p> {/* Display Ticket ID */}
                 <p>Date: {item.date}</p>
                 <p>Venue: {item.place}</p>
                 <p>Time: {item.time}</p>
