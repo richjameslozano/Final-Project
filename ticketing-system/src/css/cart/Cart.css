@@ -262,3 +262,21 @@
   margin-bottom: 10px;
   font-weight: 600;
 }
+
+.modal-cart-item {
+  margin-bottom: 16px; /* Add space between each item */
+}
+
+.modal-cart-item p {
+  margin: 4px 0; /* Add top and bottom margin for each paragraph */
+}
+
+.modal-total-cost {
+  margin-top: 20px; /* Space above the total cost section */
+  margin-bottom: 16px; /* Space below the total cost section */
+  font-weight: bold; /* Optional: make it bold for emphasis */
+}
+
+.modal-total-cost h3 {
+  margin: 0; /* Remove default margin from h3 */
+}
