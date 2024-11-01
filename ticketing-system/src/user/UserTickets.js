@@ -18,10 +18,10 @@ const UserTickets = () => {
 
       <div className="user-profile-container">
         <div className="sidebar">
-          <h1 className='profile-title'>Profile Settings</h1>
+          <h1 className='profile-title'>Account Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
-            <li onClick={() => handleMyAccount('/profile')}>My Account</li>  
+            <li onClick={() => handleMyAccount('/profile')}>Profile</li>  
             <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>Tickets Purchased</li>  
           </ul>
         </div>

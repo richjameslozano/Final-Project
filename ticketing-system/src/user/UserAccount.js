@@ -126,16 +126,16 @@ const onhandlePurchased = (route)=>{
       <Header />
       <div className="user-profile-container">
         <div className="sidebar">
-          <h1 className='profile-title'>Profile Settings</h1>
+          <h1 className='profile-title'>Account Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
-            <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>My Account</li>
+            <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>Profile</li>
             <li onClick={() => onhandlePurchased('/purchased-tickets')}>Tickets Purchased</li>
           </ul>
         </div>
 
         <div className="profile-details">
-          <h2>My Account</h2>
+          <h2>My Profile</h2>
           <hr />
           <div className="account-info">
             <h3>Account Information</h3>
