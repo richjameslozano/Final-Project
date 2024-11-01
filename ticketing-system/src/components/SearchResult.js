@@ -51,6 +51,7 @@ const SearchResult = ({ results }) => {
             notification.success({
                 message: 'Success',
                 description: 'Item added to cart and tickets successfully!',
+                placement: 'bottomRight',
             });
     
             handleCancel(); // Close the modal

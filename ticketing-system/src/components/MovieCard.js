@@ -138,7 +138,7 @@ const MovieCard = ({ name, date, image, place, time, price, userData, setUserDat
             <div className="modal-details-container">
               <h1 className='item-title'>{name}</h1>
               <hr style={{marginTop: '-20px', marginBottom: '40px',height: '1px', backgroundColor: '#37FD12', border: 'none'}}></hr>
-              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}>₱ {price}</p>
+              <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}> {price}</p>
               <p><strong>Date:</strong> {date}</p>
               <p><strong>Venue:</strong> {place}</p>
               <p><strong>Time:</strong> {time}</p>
