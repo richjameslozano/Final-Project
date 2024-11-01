@@ -1,6 +1,7 @@
 import Header from '../components/Header';
 import React, { useEffect, useState } from 'react';
 import { Layout, Modal, message, Input } from 'antd';
+import { Navigate, useNavigate } from 'react-router-dom';
 import '../css/user/UserAccount.css';
 import axios from 'axios';
 
@@ -20,6 +21,7 @@ const UserAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
+  const naavigate = useNavigate()
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -102,6 +104,10 @@ const handlePasswordSubmit = async () => {
     }
 };
 
+const onhandlePurchased = (route)=>{
+  naavigate(route)
+}
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -123,8 +129,8 @@ const handlePasswordSubmit = async () => {
           <h1 className='profile-title'>Profile Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
-            <li style={{ listStyleType: 'none' }}>My Account</li>
-            <li style={{ listStyleType: 'none' }}>Tickets Purchased</li>
+            <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>My Account</li>
+            <li onClick={() => onhandlePurchased('/purchased-tickets')}>Tickets Purchased</li>
           </ul>
         </div>
 
