@@ -13,6 +13,8 @@ const UserAccount = () => {
     password: ''
   });
 
+  const [activeSection, setActiveSection] = useState('account');
+
   const [initialUserInfo, setInitialUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -123,8 +125,14 @@ const handlePasswordSubmit = async () => {
           <h1 className='profile-title'>Profile Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
-            <li style={{ listStyleType: 'none' }}>My Account</li>
-            <li style={{ listStyleType: 'none' }}>Tickets Purchased</li>
+            <li className={activeSection === 'account' ? 'active' : ''}
+                onClick={() => setActiveSection('account')}
+               style= {{ listStyleType: 'none' }}>My Account</li>
+            <li
+                className={activeSection === 'tickets' ? 'active' : ''}
+                onClick={() => setActiveSection('tickets')}
+                 style={{ listStyleType: 'none' }}
+                 >Tickets Purchased</li>
           </ul>
         </div>
 
