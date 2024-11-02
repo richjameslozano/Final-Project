@@ -14,6 +14,8 @@ const UserAccount = () => {
     password: ''
   });
 
+  const [activeSection, setActiveSection] = useState('account');
+
   const [initialUserInfo, setInitialUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
