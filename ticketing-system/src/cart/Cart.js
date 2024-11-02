@@ -31,6 +31,7 @@ const Cart = () => {
           id: ticket._id,
           quantity: ticket.quantity 
         })));
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -60,6 +61,7 @@ const Cart = () => {
         setTimer((prev) => prev - 1);
       }, 1000);
       return () => clearInterval(countdown);
+
     } else if (timer === 0) {
       // Remove all items from cart when timer hits zero
       handleClearCart();
@@ -73,6 +75,7 @@ const Cart = () => {
       await axios.delete(`http://localhost:8031/user/${userID}/clear-cart`);
       setUserCart([]); // Clear cart in frontend
       setTimer(60); 
+
     } catch (error) {
       console.error('Error clearing cart:', error);
       message.error('Failed to clear cart in the database.');
@@ -135,14 +138,20 @@ const Cart = () => {
   };
 
   const handleOk = async () => {
+    if (!selectedPaymentMethod) {
+      message.warning('Please select a payment method.');
+      return;
+    }
+
     try {
+      console.log("Selected Payment Method:", selectedPaymentMethod); // Debug line
+  
       const userID = JSON.parse(localStorage.getItem('user')).id;
-      // Send the ticket array to purchased array in the database
       await axios.post(`http://localhost:8031/user/${userID}/purchase`, {
-        tickets: userCart // Pass current cart tickets to the purchased array
+        tickets: userCart,
+        paymentMethod: selectedPaymentMethod
       });
-      
-      // Clear the user's cart after successful purchase
+  
       await handleClearCart();
   
       message.success(`Payment successful! Your selected payment method: ${selectedPaymentMethod}`);
@@ -152,6 +161,7 @@ const Cart = () => {
       message.error("Failed to complete purchase.");
     }
   };
+  
   
 
   const handleCancel = () => {

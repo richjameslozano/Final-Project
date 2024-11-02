@@ -31,6 +31,11 @@ const userSchema = new mongoose.Schema({
       {
         _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' },
         quantity: { type: Number, required: true, default: 1},
+        name: { type: String, required: true },
+        date: { type: String, required: true },
+        place: { type: String, required: true },
+        time: { type: String, required: true },
+        price: { type: Number, required: true },
       },
     ],
     purchased:[
@@ -40,7 +45,6 @@ const userSchema = new mongoose.Schema({
                eventdate: {type:String,required: true},
                eventtime: {type:String,required: true}, //time of show
                venue: {type:String,required: true}, //venue of show
-               genre: {type:String,required: true},
                mop: {type:String,required: true}, //mode of payment
                date: {type:String,required: true}, //try to get real time date and time
                time:{type:String,required: true},   //try to get real time date and time
@@ -179,6 +183,7 @@ const updateUser = (req, res) => {
 // Transfer tickets to purchased array and empty the ticket array
 app.post('/user/:userId/purchase', async (req, res) => {
     const { userId } = req.params;
+    const { paymentMethod } = req.body;
 
     try {
         // Find the user by their ID
@@ -192,11 +197,10 @@ app.post('/user/:userId/purchase', async (req, res) => {
             ticketId: ticket._id,
             orderId: `ORD-${new Date().getTime()}`, // Generating a unique order ID
             eventname: ticket.name ||'Unknown Event name',
-            eventdate: ticket.eventdate || '2024-01-01', // Use ticket details if available, otherwise set default
+            eventdate: ticket.date || '2024-01-01', // Use ticket details if available, otherwise set default
             eventtime: ticket.time || '00:00', // Set default time if not provided
             venue: ticket.place || 'Unknown Venue',
-            genre: ticket.genre ||'Unknown Genre',
-            mop: 'Credit Card', // Example mode of payment; you might fetch this from req.body
+            mop: paymentMethod || 'Credit Card', // Example mode of payment; you might fetch this from req.body
             date: new Date().toISOString().split('T')[0], // Current date
             time: new Date().toISOString().split('T')[1].split('.')[0], // Current time
             price: ticket.price || '0.00',
@@ -216,23 +220,25 @@ app.post('/user/:userId/purchase', async (req, res) => {
     }
 });
 
+// Fetch purchased tickets for a specific user
+app.get('/user/:userId/purchased-tickets', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log('Purchased tickets:', user.purchased); // Add this for debugging
+        res.status(200).json(user.purchased);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to retrieve purchased tickets' });
+    }
+});
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
  //Retrieving Pictures of Movies
 app.get('/movies', async (req, res) => {
     try {
