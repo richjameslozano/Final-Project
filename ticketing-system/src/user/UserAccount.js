@@ -1,7 +1,7 @@
 import Header from '../components/Header';
 import React, { useEffect, useState } from 'react';
-import { Layout, Modal, message, Input } from 'antd';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Layout, Modal, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import '../css/user/UserAccount.css';
 import axios from 'axios';
 
@@ -11,11 +11,11 @@ const UserAccount = () => {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    mobileNumber: '' // Added mobileNumber here
   });
 
   const [activeSection, setActiveSection] = useState('account');
-
   const [initialUserInfo, setInitialUserInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +23,7 @@ const UserAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
-  const naavigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -77,39 +77,38 @@ const UserAccount = () => {
 
   const saveUserInfo = async () => {
     setPasswordModalVisible(true); // Show modal for password input
-};
+  };
 
-const handlePasswordSubmit = async () => {
+  const handlePasswordSubmit = async () => {
     try {
-        // Verify the user's password
-        const verifyResponse = await axios.post(`http://localhost:8031/user/${userId}/verify-password`, { password: passwordInput });
-        if (verifyResponse.status === 200) {
-            // Proceed to update user info if password verification is successful
-            const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
-            if (response.status === 200) {
-                message.success('Profile updated successfully');
-                localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
-                setInitialUserInfo(userInfo);
-                setPasswordModalVisible(false); // Close password modal
-                setPasswordInput(''); // Clear password input
-            } else {
-                message.error(`Failed to update profile: ${response.data.message}`);
-            }
-        }
-    } catch (error) {
-        console.error('Error during update:', error);
-        if (error.response && error.response.data && error.response.data.message) {
-            message.error(`Error: ${error.response.data.message}`);
+      // Verify the user's password
+      const verifyResponse = await axios.post(`http://localhost:8031/user/${userId}/verify-password`, { password: passwordInput });
+      if (verifyResponse.status === 200) {
+        // Proceed to update user info if password verification is successful
+        const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
+        if (response.status === 200) {
+          message.success('Profile updated successfully');
+          localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
+          setInitialUserInfo(userInfo);
+          setPasswordModalVisible(false); // Close password modal
+          setPasswordInput(''); // Clear password input
         } else {
-            message.error('Failed to update profile');
+          message.error(`Failed to update profile: ${response.data.message}`);
         }
+      }
+    } catch (error) {
+      console.error('Error during update:', error);
+      if (error.response && error.response.data && error.response.data.message) {
+        message.error(`Error: ${error.response.data.message}`);
+      } else {
+        message.error('Failed to update profile');
+      }
     }
-};
+  };
 
-const onhandlePurchased = (route)=>{
-  naavigate(route)
-}
-
+  const onhandlePurchased = (route) => {
+    navigate(route);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -186,6 +185,18 @@ const onhandlePurchased = (route)=>{
                 type="email"
                 name="email"
                 value={userInfo.email}
+                readOnly={!isEditing}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Mobile Number</label> {/* Added Mobile Number input */}
+              <input
+                className={isEditing ? 'info-editing' : 'input-info-profile'}
+                type="text"
+                name="mobileNumber"
+                value={userInfo.mobileNumber}
                 readOnly={!isEditing}
                 onChange={handleInputChange}
               />

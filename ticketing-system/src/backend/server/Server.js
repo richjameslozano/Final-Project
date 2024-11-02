@@ -392,7 +392,7 @@ app.post('/signup', async (req, res) => {
 app.put('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
-        const { username, firstName, lastName, email, password } = req.body;
+        const { username, firstName, lastName, email, password, mobileNumber } = req.body;
 
         // Validate if the userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -410,6 +410,7 @@ app.put('/user/:id', async (req, res) => {
         user.firstName = firstName;
         user.lastName = lastName;
         user.email = email;
+        user.mobileNumber = mobileNumber;
 
         // You can choose to update the password if provided or leave it as is
         if (password) {
