@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Typography, message } from 'antd'; // Added message
+import { Form, Input, Button, Typography, message, notification } from 'antd'; // Added message
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,25 +8,49 @@ const { Link } = Typography;
 const Login = ({ onCancel, onLoginSuccess }) => {
     const navigate = useNavigate();
 
+    // const onFinish = async (values) => {
+    //     try {
+
+    //         const response = await axios.post('http://localhost:8031/login', values);
+    //         console.log('Login Success:', response.data);
+    //         const { id, username, lastName, firstName, email } = response.data;
+
+    //         localStorage.setItem('user', JSON.stringify({ id, username, firstName, lastName, email }));
+
+    //         onLoginSuccess(username);
+
+    //         message.success('Login successful!');
+
+    //         onCancel();
+
+    //         navigate('/homepage');
+    //     } catch (error) {
+    //         console.error('Login Failed:', error.response?.data?.message || error.message);
+
+    //         if (error.response?.status === 400) {
+    //             message.warning('Invalid credentials or user not found.');
+    //         } else {
+    //             message.error('Login failed. Please try again.');
+    //         }
+    //     }
+    // };
     const onFinish = async (values) => {
         try {
-
             const response = await axios.post('http://localhost:8031/login', values);
             console.log('Login Success:', response.data);
             const { id, username, lastName, firstName, email } = response.data;
-
+    
             localStorage.setItem('user', JSON.stringify({ id, username, firstName, lastName, email }));
-
+            localStorage.setItem('showLoginSuccess', 'true'); // Set the flag
+    
             onLoginSuccess(username);
-
-            message.success('Login successful!');
-
             onCancel();
-
+            
             navigate('/homepage');
+            window.location.reload(); // Reload the page after navigating
         } catch (error) {
             console.error('Login Failed:', error.response?.data?.message || error.message);
-
+    
             if (error.response?.status === 400) {
                 message.warning('Invalid credentials or user not found.');
             } else {
@@ -34,6 +58,8 @@ const Login = ({ onCancel, onLoginSuccess }) => {
             }
         }
     };
+    
+    
 
     const goToSignup = () => {
         navigate('/signup');

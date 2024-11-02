@@ -70,13 +70,12 @@ const SearchResult = ({ results }) => {
         <div className="search-result-container">
             {results.length > 0 ? (
                 results.map((item) => (
-                    <div key={item._id} className="search-result-item">
+                    <div key={item._id} className="search-result-item" onClick={() => showModal(item)}>
                         {item.image && <img src={item.image} alt={item.name} />}
                         <div className="search-result-info">
-                            <h3>{item.name}</h3>
-                            <p>Genre: {item.genre || 'N/A'}</p>
+                            <h3 style={{marginTop: '30px', fontSize: '18px'}}>{item.name}</h3>
+                            <p style={{margin: '0'}}>Genre: {item.genre || 'N/A'}</p>
                             <p>Date: {item.date ? new Date(item.date).toLocaleDateString() : 'N/A'}</p>
-                            <Button onClick={() => showModal(item)}>Add to Cart</Button>
                         </div>
                     </div>
                 ))
@@ -103,7 +102,7 @@ const SearchResult = ({ results }) => {
                         <div className="modal-details-container">
                             <h1 className='item-title'>{selectedItem.name}</h1>
                             <hr style={{marginTop: '-20px', marginBottom: '40px', height: '1px', backgroundColor: '#37FD12', border: 'none'}} />
-                            <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}> {selectedItem.price || 'N/A'}</p>
+                            <p style={{color: 'orange', fontWeight: '700', marginTop: '-30px', fontSize:'30px', marginBottom: '70px'}}>₱ {selectedItem.price || 'N/A'}</p>
                             <p><strong>Date:</strong> {selectedItem.date ? new Date(selectedItem.date).toLocaleDateString() : 'N/A'}</p>
                             <p><strong>Venue:</strong> {selectedItem.place || 'N/A'}</p>
                             <p><strong>Time:</strong> {selectedItem.time || 'N/A'}</p>

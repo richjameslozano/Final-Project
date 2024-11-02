@@ -1,5 +1,5 @@
 // import React from 'react';
-import { Layout } from 'antd';
+import { Layout, message } from 'antd';
 import MovieCard from '../components/MovieCard';
 import Header from '../components/Header';
 import '../css/HomePage.css';
@@ -53,6 +53,19 @@ const HomePage = () => {
   };
   
 //------------------------------------------------//
+
+useEffect(() => {
+  // Step 2: Check for the showLoginSuccess flag
+  const showLoginSuccess = localStorage.getItem('showLoginSuccess');
+  
+  if (showLoginSuccess) {
+    // Display a success notification
+    message.success('Login successful! Welcome back!');
+    
+    // Remove the flag from local storage
+    localStorage.removeItem('showLoginSuccess');
+  }
+}, []); 
 
   useEffect(() => {
     const fetchMovies = async () => {
