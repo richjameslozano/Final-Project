@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema({
                time:{type:String,required: true},   //try to get real time date and time
                price:{type:String,required: true},  
                quantity:{type:Number,required: true},
+               totalCost: { type: Number, required: true }
               }]
   });
  
@@ -204,7 +205,8 @@ app.post('/user/:userId/purchase', async (req, res) => {
             date: new Date().toISOString().split('T')[0], // Current date
             time: new Date().toISOString().split('T')[1].split('.')[0], // Current time
             price: ticket.price || '0.00',
-            quantity: ticket.quantity || 1
+            quantity: ticket.quantity || 1,
+            totalCost: (ticket.price || 0) * (ticket.quantity || 1)
         }));
 
         // Update the user document to move tickets to purchased

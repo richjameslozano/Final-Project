@@ -1,6 +1,8 @@
 import '../css/componentsStyle/Purchased.css';
 
 const Purchased = ({ ticket, firstName, lastName }) => {
+    const totalCost = ticket.price * ticket.quantity;
+
     return ( 
         <div className="purchased-container">
             <p style={{fontWeight: '700', color: 'black', fontSize: '18px', marginBottom:'5px', marginTop: '0'}}>
@@ -17,6 +19,7 @@ const Purchased = ({ ticket, firstName, lastName }) => {
                     <p>Mode of Payment: {ticket.mop}</p>
                     <p>Price: {ticket.price}</p>
                     <p>Quantity: {ticket.quantity}</p>
+                    <p style={{ fontWeight: 'bold' }}>Total Cost: ₱{totalCost}</p>
                 </div>
                 
                 <div className='detail-2'>
