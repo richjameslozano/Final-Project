@@ -134,10 +134,25 @@ const Cart = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    message.success(`Payment method selected: ${selectedPaymentMethod}`);
-    setIsModalVisible(false);
+  const handleOk = async () => {
+    try {
+      const userID = JSON.parse(localStorage.getItem('user')).id;
+      // Send the ticket array to purchased array in the database
+      await axios.post(`http://localhost:8031/user/${userID}/purchase`, {
+        tickets: userCart // Pass current cart tickets to the purchased array
+      });
+      
+      // Clear the user's cart after successful purchase
+      await handleClearCart();
+  
+      message.success(`Payment successful! Your selected payment method: ${selectedPaymentMethod}`);
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error("Error during purchase:", error);
+      message.error("Failed to complete purchase.");
+    }
   };
+  
 
   const handleCancel = () => {
     setIsModalVisible(false);
