@@ -131,19 +131,8 @@ const onhandlePurchased = (route)=>{
           <h1 className='profile-title'>Account Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
-<<<<<<< HEAD
-            <li className={activeSection === 'account' ? 'active' : ''}
-                onClick={() => setActiveSection('account')}
-               style= {{ listStyleType: 'none' }}>My Account</li>
-            <li
-                className={activeSection === 'tickets' ? 'active' : ''}
-                onClick={() => setActiveSection('tickets')}
-                 style={{ listStyleType: 'none' }}
-                 >Tickets Purchased</li>
-=======
             <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>Profile</li>
             <li onClick={() => onhandlePurchased('/purchased-tickets')}>Tickets Purchased</li>
->>>>>>> dc0362e74e36afd8b2d7830c0dfed9b20074e443
           </ul>
         </div>
 
