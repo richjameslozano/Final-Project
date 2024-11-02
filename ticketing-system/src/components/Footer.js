@@ -47,9 +47,8 @@ const Footer = () => {
                         <a className="links" onClick={handleCustomerCare}>
                         <h1 className='customer-care-title'> Customer Care</h1>
                         </a>
+                        <div>FAQs</div>
                     <div>Feedback & Inquiry</div>
-                    <div>FAQs</div>
-                    <div>Calendar of Events</div>
                 </div>
                 <div className='partnerships-container'>
                     <h1 className='footer-title'>Partnerships</h1>
