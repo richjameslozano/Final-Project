@@ -11,6 +11,13 @@ body{
   overflow: hidden;
 
 }
+.sidebar-button-list .active {
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #333333;
+  padding: 8px;
+  border-radius: 4px;
+}
 
 .user-profile-container {
   display: flex;

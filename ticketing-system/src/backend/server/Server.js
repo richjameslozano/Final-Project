@@ -31,8 +31,27 @@ const userSchema = new mongoose.Schema({
       {
         _id: { type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' },
         quantity: { type: Number, required: true, default: 1},
+        name: { type: String, required: true },
+        date: { type: String, required: true },
+        place: { type: String, required: true },
+        time: { type: String, required: true },
+        price: { type: Number, required: true },
       },
     ],
+    purchased:[
+               {ticketId: {type:mongoose.Schema.Types.ObjectId, ref: 'Ticket'},
+               orderId: {type:String,required: true},
+               eventname: {type:String,required: true},
+               eventdate: {type:String,required: true},
+               eventtime: {type:String,required: true}, //time of show
+               venue: {type:String,required: true}, //venue of show
+               mop: {type:String,required: true}, //mode of payment
+               date: {type:String,required: true}, //try to get real time date and time
+               time:{type:String,required: true},   //try to get real time date and time
+               price:{type:String,required: true},  
+               quantity:{type:Number,required: true},
+               totalCost: { type: Number, required: true }
+              }]
   });
  
 // Movie Schema
@@ -159,7 +178,69 @@ const updateUser = (req, res) => {
   app.put('/updateUser/:id', updateUser)
   app.get('/getUser/:id', getUser)
  //////////////////////////////////////////////////////////////////////////////
- 
+
+//transfering cart item to purchased:
+
+// Transfer tickets to purchased array and empty the ticket array
+app.post('/user/:userId/purchase', async (req, res) => {
+    const { userId } = req.params;
+    const { paymentMethod } = req.body;
+
+    try {
+        // Find the user by their ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Iterate through each ticket and prepare the purchased details
+        const purchasedTickets = user.ticket.map(ticket => ({
+            ticketId: ticket._id,
+            orderId: `ORD-${new Date().getTime()}`, // Generating a unique order ID
+            eventname: ticket.name ||'Unknown Event name',
+            eventdate: ticket.date || '2024-01-01', // Use ticket details if available, otherwise set default
+            eventtime: ticket.time || '00:00', // Set default time if not provided
+            venue: ticket.place || 'Unknown Venue',
+            mop: paymentMethod || 'Credit Card', // Example mode of payment; you might fetch this from req.body
+            date: new Date().toISOString().split('T')[0], // Current date
+            time: new Date().toISOString().split('T')[1].split('.')[0], // Current time
+            price: ticket.price || '0.00',
+            quantity: ticket.quantity || 1,
+            totalCost: (ticket.price || 0) * (ticket.quantity || 1)
+        }));
+
+        // Update the user document to move tickets to purchased
+        user.purchased.push(...purchasedTickets); // Add all tickets to purchased array
+        user.ticket = []; // Clear the ticket array after transferring
+
+        await user.save(); // Save the updated user document
+
+        res.status(200).json({ message: 'Tickets transferred to purchased successfully', purchasedTickets });
+    } catch (error) {
+        console.error('Error transferring tickets to purchased:', error);
+        res.status(500).json({ message: 'Failed to transfer tickets' });
+    }
+});
+
+// Fetch purchased tickets for a specific user
+app.get('/user/:userId/purchased-tickets', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        console.log('Purchased tickets:', user.purchased); // Add this for debugging
+        res.status(200).json(user.purchased);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to retrieve purchased tickets' });
+    }
+});
+
+
  //Retrieving Pictures of Movies
 app.get('/movies', async (req, res) => {
     try {
@@ -313,7 +394,7 @@ app.post('/signup', async (req, res) => {
 app.put('/user/:id', async (req, res) => {
     try {
         const userId = req.params.id;
-        const { username, firstName, lastName, email, password } = req.body;
+        const { username, firstName, lastName, email, password, mobileNumber } = req.body;
 
         // Validate if the userId is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -331,6 +412,7 @@ app.put('/user/:id', async (req, res) => {
         user.firstName = firstName;
         user.lastName = lastName;
         user.email = email;
+        user.mobileNumber = mobileNumber;
 
         // You can choose to update the password if provided or leave it as is
         if (password) {
@@ -616,7 +698,21 @@ app.delete('/user/:userId/remove-ticket/:ticketId', async (req, res) => {
     }
 });
 
-
+// Assuming you are using Express
+app.delete('/user/:userId/clear-cart', async (req, res) => {
+    const { userId } = req.params;
+  
+    try {
+      // Find the user and clear the ticket array
+      await User.findByIdAndUpdate(userId, { $set: { ticket: [] } });
+  
+      res.status(200).json({ message: 'Cart cleared successfully' });
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      res.status(500).json({ message: 'Failed to clear cart' });
+    }
+  });
+  
 
 // Start the server
 app.listen(PORT, () => {

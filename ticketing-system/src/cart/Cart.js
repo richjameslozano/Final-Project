@@ -12,7 +12,8 @@ const Cart = () => {
   const [userCart, setUserCart] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const [modalCartDetails, setModalCartDetails] = useState([]); // NEW STATE for modal details
+  const [modalCartDetails, setModalCartDetails] = useState([]);
+  const [timer, setTimer] = useState(60); // 5-minute countdown timer
 
   // Fetch all shows and user cart when component mounts
   useEffect(() => {
@@ -28,8 +29,9 @@ const Cart = () => {
         // Set the userCart with the correct quantity from the database
         setUserCart(ticketArray.map(ticket => ({
           id: ticket._id,
-          quantity: ticket.quantity // Set quantity from the database
-        }))); 
+          quantity: ticket.quantity 
+        })));
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -37,6 +39,48 @@ const Cart = () => {
 
     fetchData();
   }, []);
+
+  // Countdown timer effect
+  // useEffect(() => {
+  //   if (timer > 0) {
+  //     const countdown = setInterval(() => {
+  //       setTimer((prev) => prev - 1);
+  //     }, 1000);
+  //     return () => clearInterval(countdown);
+  //   } else {
+  //     // Remove all items from cart when timer hits zero
+  //     // setUserCart([]);
+  //     handleClearCart();
+  //     message.warning('Your session expired, items have been removed from your cart.');
+  //   }
+  // }, [timer]);
+
+  useEffect(() => {
+    if (userCart.length > 0 && timer > 0) { // Only start timer if cart has items
+      const countdown = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(countdown);
+
+    } else if (timer === 0) {
+      // Remove all items from cart when timer hits zero
+      handleClearCart();
+      message.warning('Your session expired, items have been removed from your cart.');
+    }
+  }, [timer, userCart.length]); 
+
+  const handleClearCart = async () => {
+    try {
+      const userID = JSON.parse(localStorage.getItem('user')).id;
+      await axios.delete(`http://localhost:8031/user/${userID}/clear-cart`);
+      setUserCart([]); // Clear cart in frontend
+      setTimer(60); 
+
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      message.error('Failed to clear cart in the database.');
+    }
+  };
 
   // Function to calculate total cost based on current userCart and allShows
   const calculateTotalCost = useCallback(() => {
@@ -93,13 +137,43 @@ const Cart = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    message.success(`Payment method selected: ${selectedPaymentMethod}`);
-    setIsModalVisible(false);
+  const handleOk = async () => {
+    if (!selectedPaymentMethod) {
+      message.warning('Please select a payment method.');
+      return;
+    }
+
+    try {
+      console.log("Selected Payment Method:", selectedPaymentMethod); // Debug line
+  
+      const userID = JSON.parse(localStorage.getItem('user')).id;
+      await axios.post(`http://localhost:8031/user/${userID}/purchase`, {
+        tickets: userCart,
+        paymentMethod: selectedPaymentMethod
+      });
+  
+      await handleClearCart();
+  
+      message.success(`Payment successful! Your selected payment method: ${selectedPaymentMethod}`);
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error("Error during purchase:", error);
+      message.error("Failed to complete purchase.");
+    }
   };
+  
+  
 
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+
+  const handleProceedToCheckout = () => {
+    if (userCart.length === 0) {
+      message.warning('Your Cart is empty');
+      return;
+    }
+    showModal(); // Show modal only if cart is not empty
   };
 
   return (
@@ -111,6 +185,8 @@ const Cart = () => {
       >
         <h1 className="title-one-cart">MY CART</h1>
         <h2 className="sub-title-cart">TICKET LIST</h2>
+        
+        <p>Time remaining: {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, '0')}</p>
 
         <div className="movie-cart-container-main">
           {userCart.length > 0 ? (
@@ -161,7 +237,7 @@ const Cart = () => {
           </div>
         </div>
 
-        <div className="total-cost-container" onClick={showModal}>
+        <div className="total-cost-container" onClick={handleProceedToCheckout}>
           Proceed to Checkout
         </div>
 
@@ -177,7 +253,7 @@ const Cart = () => {
             {modalCartDetails.map((item, index) => (
               <div key={index} className="modal-cart-item">
                 <p><strong>{item.ticketname}</strong></p>
-                <p>Ticket ID: {item.ticketId}</p> {/* Display Ticket ID */}
+                <p>Ticket ID: {item.ticketId}</p>
                 <p>Date: {item.date}</p>
                 <p>Venue: {item.place}</p>
                 <p>Time: {item.time}</p>
@@ -188,7 +264,6 @@ const Cart = () => {
               </div>
             ))}
 
-            {/* Display Total Cost here */}
             <div className="modal-total-cost">
               <h3>Total Cost: <span style={{ color: 'orange' }}>₱{totalCost.toFixed(2)}</span></h3>
             </div>
@@ -226,8 +301,6 @@ const Cart = () => {
             <p>Please ensure your Gcash account is linked and ready for payment processing.</p>
           )}
         </Modal>
-
-
       </div>
       <Footer />
     </Layout>

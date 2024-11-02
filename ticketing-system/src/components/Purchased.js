@@ -1,28 +1,33 @@
 import '../css/componentsStyle/Purchased.css';
 
+const Purchased = ({ ticket, firstName, lastName }) => {
+    const totalCost = ticket.price * ticket.quantity;
 
-const Purchased = () => {
     return ( 
         <div className="purchased-container">
-            <p style={{fontWeight: '700', color: 'black', fontSize: '18px', marginBottom:'5px', marginTop: '0'}}>Title goes here...</p>
+            <p style={{fontWeight: '700', color: 'black', fontSize: '18px', marginBottom:'5px', marginTop: '0'}}>
+                <h3>{ticket.eventname}</h3>
+            </p>
 
             <div className='detailz'>
                 <div className='detail-1'>
-                    <p>Order ID:</p>
-                    <p>Ticket ID:</p>
-                    <p>Price:</p>
+                    <p>Ticket Owner: {firstName} {lastName}</p>
+                    <p>Order ID: {ticket.orderId}</p>
+                    <p>Event Date: {ticket.eventdate}</p>
+                    <p>Event Time: {ticket.eventtime}</p>
+                    <p>Venue: {ticket.venue}</p>
+                    <p>Mode of Payment: {ticket.mop}</p>
+                    <p>Price: {ticket.price}</p>
+                    <p>Quantity: {ticket.quantity}</p>
+                    <p style={{ fontWeight: 'bold' }}>Total Cost: ₱{totalCost}</p>
                 </div>
-
+                
                 <div className='detail-2'>
-                    <p>Order ID:</p>
-                    <p>Ticket ID:</p>
-                    <p>Price:</p>
-                </div>
 
+                </div>
             </div>
-           
         </div>
-     );
+    );
 }
- 
+
 export default Purchased;
