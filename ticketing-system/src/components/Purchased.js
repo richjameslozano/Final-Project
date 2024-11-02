@@ -17,7 +17,7 @@ const Purchased = ({ ticket, firstName, lastName }) => {
                     <p>Event Time: {ticket.eventtime}</p>
                     <p>Venue: {ticket.venue}</p>
                     <p>Mode of Payment: {ticket.mop}</p>
-                    <p>Price: {ticket.price}</p>
+                    <p>Price: ₱{ticket.price}</p>
                     <p>Quantity: {ticket.quantity}</p>
                     <p style={{ fontWeight: 'bold' }}>Total Cost: ₱{totalCost}</p>
                 </div>
