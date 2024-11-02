@@ -616,7 +616,21 @@ app.delete('/user/:userId/remove-ticket/:ticketId', async (req, res) => {
     }
 });
 
-
+// Assuming you are using Express
+app.delete('/user/:userId/clear-cart', async (req, res) => {
+    const { userId } = req.params;
+  
+    try {
+      // Find the user and clear the ticket array
+      await User.findByIdAndUpdate(userId, { $set: { ticket: [] } });
+  
+      res.status(200).json({ message: 'Cart cleared successfully' });
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      res.status(500).json({ message: 'Failed to clear cart' });
+    }
+  });
+  
 
 // Start the server
 app.listen(PORT, () => {

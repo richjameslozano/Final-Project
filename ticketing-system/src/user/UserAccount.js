@@ -1,6 +1,7 @@
 import Header from '../components/Header';
 import React, { useEffect, useState } from 'react';
 import { Layout, Modal, message, Input } from 'antd';
+import { Navigate, useNavigate } from 'react-router-dom';
 import '../css/user/UserAccount.css';
 import axios from 'axios';
 
@@ -22,6 +23,7 @@ const UserAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
+  const naavigate = useNavigate()
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -104,6 +106,10 @@ const handlePasswordSubmit = async () => {
     }
 };
 
+const onhandlePurchased = (route)=>{
+  naavigate(route)
+}
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -122,9 +128,10 @@ const handlePasswordSubmit = async () => {
       <Header />
       <div className="user-profile-container">
         <div className="sidebar">
-          <h1 className='profile-title'>Profile Settings</h1>
+          <h1 className='profile-title'>Account Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
+<<<<<<< HEAD
             <li className={activeSection === 'account' ? 'active' : ''}
                 onClick={() => setActiveSection('account')}
                style= {{ listStyleType: 'none' }}>My Account</li>
@@ -133,11 +140,15 @@ const handlePasswordSubmit = async () => {
                 onClick={() => setActiveSection('tickets')}
                  style={{ listStyleType: 'none' }}
                  >Tickets Purchased</li>
+=======
+            <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>Profile</li>
+            <li onClick={() => onhandlePurchased('/purchased-tickets')}>Tickets Purchased</li>
+>>>>>>> dc0362e74e36afd8b2d7830c0dfed9b20074e443
           </ul>
         </div>
 
         <div className="profile-details">
-          <h2>My Account</h2>
+          <h2>My Profile</h2>
           <hr />
           <div className="account-info">
             <h3>Account Information</h3>

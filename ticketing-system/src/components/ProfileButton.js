@@ -86,7 +86,7 @@ function ProfileButton({ isLoggedIn, username, setUsername, setIsLoggedIn }) {
           {isLoggedIn ? (
             <>
               <a className="header-button" onClick={goToProfile}>
-                My Profile
+                My Account
               </a>
               <a className="header-button" onClick={handleLogoutConfirm}>
                 Logout

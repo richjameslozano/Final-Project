@@ -8,6 +8,7 @@ import MainEvent from '../events/MainEvent';
 import UserAccount from '../user/UserAccount';
 import Cart from '../cart/Cart';
 import CustomerCare from '../contact/CustomerCare';
+import UserTickets from '../user/UserTickets';
 
 
 const AppController = () => {
@@ -22,9 +23,10 @@ const AppController = () => {
             <Route path="/events" element={<MainEvent />} />
             <Route path='/signup' element={<SignUp/>}> </Route>
             <Route path="/" element={<HomePage />} />   
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login />} />+
             <Route path="/customer-care" element={<CustomerCare />} />
             <Route path="/news" element={<News/>} />
+            <Route  path='/purchased-tickets' element={<UserTickets/>}></Route>
 
 
         </Routes>

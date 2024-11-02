@@ -12,30 +12,72 @@ const Cart = () => {
   const [userCart, setUserCart] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  
+  const [modalCartDetails, setModalCartDetails] = useState([]);
+  const [timer, setTimer] = useState(60); // 5-minute countdown timer
+
   // Fetch all shows and user cart when component mounts
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const showsResponse = await axios.get('http://localhost:8031/allevents');
-            setAllShows(showsResponse.data);
+      try {
+        const showsResponse = await axios.get('http://localhost:8031/allevents');
+        setAllShows(showsResponse.data);
 
-            const userID = JSON.parse(localStorage.getItem('user')).id;
-            const userResponse = await axios.get(`http://localhost:8031/getUser/${userID}`);
-            const ticketArray = userResponse.data.ticket;
+        const userID = JSON.parse(localStorage.getItem('user')).id;
+        const userResponse = await axios.get(`http://localhost:8031/getUser/${userID}`);
+        const ticketArray = userResponse.data.ticket;
 
-            // Set the userCart with the correct quantity from the database
-            setUserCart(ticketArray.map(ticket => ({ 
-                id: ticket._id, 
-                quantity: ticket.quantity // Set quantity from the database
-            }))); 
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+        // Set the userCart with the correct quantity from the database
+        setUserCart(ticketArray.map(ticket => ({
+          id: ticket._id,
+          quantity: ticket.quantity 
+        })));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();
-}, []);
+  }, []);
+
+  // Countdown timer effect
+  // useEffect(() => {
+  //   if (timer > 0) {
+  //     const countdown = setInterval(() => {
+  //       setTimer((prev) => prev - 1);
+  //     }, 1000);
+  //     return () => clearInterval(countdown);
+  //   } else {
+  //     // Remove all items from cart when timer hits zero
+  //     // setUserCart([]);
+  //     handleClearCart();
+  //     message.warning('Your session expired, items have been removed from your cart.');
+  //   }
+  // }, [timer]);
+
+  useEffect(() => {
+    if (userCart.length > 0 && timer > 0) { // Only start timer if cart has items
+      const countdown = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(countdown);
+    } else if (timer === 0) {
+      // Remove all items from cart when timer hits zero
+      handleClearCart();
+      message.warning('Your session expired, items have been removed from your cart.');
+    }
+  }, [timer, userCart.length]); 
+
+  const handleClearCart = async () => {
+    try {
+      const userID = JSON.parse(localStorage.getItem('user')).id;
+      await axios.delete(`http://localhost:8031/user/${userID}/clear-cart`);
+      setUserCart([]); // Clear cart in frontend
+      setTimer(60); 
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      message.error('Failed to clear cart in the database.');
+    }
+  };
 
   // Function to calculate total cost based on current userCart and allShows
   const calculateTotalCost = useCallback(() => {
@@ -73,8 +115,22 @@ const Cart = () => {
     }
   };
 
-  // Handle modal open and close
+  // Handle modal open and populate details
   const showModal = () => {
+    const cartDetails = userCart.map(cartItem => {
+      const show = allShows.find(show => show._id === cartItem.id);
+      return show ? {
+        ticketname: show.name,
+        date: show.date,
+        place: show.place,
+        time: show.time,
+        quantity: cartItem.quantity,
+        price: show.price,
+        ticketId: cartItem.id
+      } : null;
+    }).filter(item => item !== null);
+
+    setModalCartDetails(cartDetails); // Set the modal details
     setIsModalVisible(true);
   };
 
@@ -87,6 +143,14 @@ const Cart = () => {
     setIsModalVisible(false);
   };
 
+  const handleProceedToCheckout = () => {
+    if (userCart.length === 0) {
+      message.warning('Your Cart is empty');
+      return;
+    }
+    showModal(); // Show modal only if cart is not empty
+  };
+
   return (
     <Layout className="cart-page-layout">
       <Header />
@@ -96,6 +160,8 @@ const Cart = () => {
       >
         <h1 className="title-one-cart">MY CART</h1>
         <h2 className="sub-title-cart">TICKET LIST</h2>
+        
+        <p>Time remaining: {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, '0')}</p>
 
         <div className="movie-cart-container-main">
           {userCart.length > 0 ? (
@@ -115,8 +181,8 @@ const Cart = () => {
                       price={ticket.price}
                       quantity={cartItem.quantity}
                       onDelete={handleItemDelete}
-                      userholder={ticket.userholder}  // Pass the userholder here
-                      eventId={ticket.eventId} // Pass the eventId here
+                      userholder={ticket.userholder}
+                      eventId={ticket.eventId}
                       onQuantityChange={handleQuantityChange}
                     />
                   )
@@ -139,17 +205,14 @@ const Cart = () => {
             </div>
   
             <div className='price-container'>
-            <h3 style={{ fontSize: '30px' }}>
-              Total Cost: <span style={{ color: 'orange' }}>₱{totalCost.toFixed(2)}</span>
-            </h3>
+              <h3 style={{ fontSize: '30px' }}>
+                Total Cost: <span style={{ color: 'orange' }}>₱{totalCost.toFixed(2)}</span>
+              </h3>
             </div>
           </div>
         </div>
 
-        <div className="total-cost-container" onClick={showModal}>
-          {/* <Button type="primary" onClick={showModal} style={{ marginTop: '20px' }}>
-            PROCEED TO CHECKOUT
-          </Button> */}
+        <div className="total-cost-container" onClick={handleProceedToCheckout}>
           Proceed to Checkout
         </div>
 
@@ -159,7 +222,28 @@ const Cart = () => {
           onOk={handleOk}
           onCancel={handleCancel}
           okText="Confirm Payment"
+          width={700}
         >
+          <div>
+            {modalCartDetails.map((item, index) => (
+              <div key={index} className="modal-cart-item">
+                <p><strong>{item.ticketname}</strong></p>
+                <p>Ticket ID: {item.ticketId}</p>
+                <p>Date: {item.date}</p>
+                <p>Venue: {item.place}</p>
+                <p>Time: {item.time}</p>
+                <p>Quantity: {item.quantity}</p>
+                <p>Price per Ticket: ₱{item.price}</p>
+                <p>Total: ₱{(item.price * item.quantity).toFixed(2)}</p>
+                <hr />
+              </div>
+            ))}
+
+            <div className="modal-total-cost">
+              <h3>Total Cost: <span style={{ color: 'orange' }}>₱{totalCost.toFixed(2)}</span></h3>
+            </div>
+          </div>
+
           <Radio.Group
             onChange={e => setSelectedPaymentMethod(e.target.value)}
             value={selectedPaymentMethod}
