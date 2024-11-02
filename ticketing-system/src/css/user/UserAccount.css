@@ -132,7 +132,7 @@ body{
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 200px;
+  margin-top: 120px;
   
 }
 
@@ -204,4 +204,23 @@ body{
   border: 3px solid #00ff0d;
   border-radius: 5px;
   font-size: 14px;
+}
+
+.confirm-modal input{
+  height: 30px;
+  width: 200px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.confirm-modal button:nth-child(2){
+  background-color: green;
+}
+
+.confirm-modal button:nth-child(2):hover{
+  background-color: rgb(24, 175, 24);
+}
+
+.confirm-modal .ant-modal-close-x{
+  display: none;
 }

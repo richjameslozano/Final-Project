@@ -130,7 +130,7 @@ const UserAccount = () => {
           <h1 className='profile-title'>Account Settings</h1>
           <hr></hr>
           <ul className='sidebar-button-list'>
-            <li style={{backgroundColor:'rgba(255,255,255,0.2)'}}>Profile</li>
+            <li style={{backgroundColor:'rgba(150,150,150,0.2)'}}>Profile</li>
             <li onClick={() => onhandlePurchased('/purchased-tickets')}>Tickets Purchased</li>
           </ul>
         </div>
@@ -219,6 +219,7 @@ const UserAccount = () => {
           </div>
 
           <Modal
+            className='confirm-modal'
               title="Verify Password"
               visible={passwordModalVisible}
               onOk={handlePasswordSubmit}

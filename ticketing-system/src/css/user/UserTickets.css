@@ -22,18 +22,7 @@ body{
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   }
-  
-  .main-container-signup{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: #121212;
-    justify-content: center;
-    padding-bottom: 20px;
-    border: 2px solid black;
-  
-  }
-  
+
   .sidebar {
     width: 400px;
     height: 100%;
@@ -76,9 +65,6 @@ body{
     position: relative;
   }
   
-  .ticket-purchased-details h2 {
-    margin-bottom: 30px;
-  }
   
   .profile-title{
     color: white;
@@ -89,4 +75,32 @@ body{
   
   .sidebar-button-list{
     margin-left: -35px;
+  }
+
+  .purchased-container{
+    margin-bottom: 5px;
+  }
+
+
+  .ticket-list-container{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 540px;
+    padding-right: 20px;
+  }
+
+  .ticket-list-container::-webkit-scrollbar{
+    width: 5px;
+    background: white;
+  }
+
+  .ticket-list-container::-webkit-scrollbar-thumb{
+    width: 5px;
+    background: rgb(150, 150, 150);
+    border: none;
+  }
+
+  .ticket-list-container::-webkit-scrollbar-track{
+    background-color: white;
   }

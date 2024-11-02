@@ -48,12 +48,12 @@ const UserTickets = () => {
           <hr />
           <ul className="sidebar-button-list">
             <li onClick={() => handleMyAccount('/profile')}>Profile</li>
-            <li style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}>Tickets Purchased</li>
+            <li style={{backgroundColor:'rgba(150,150,150,0.2)'}}>Tickets Purchased</li>
           </ul>
         </div>
 
         <div className="ticket-purchased-details">
-          <h2>My Tickets</h2>
+          <h2 style={{marginBottom: '30px'}}>My Tickets</h2>
           <hr style={{ marginBottom: '20px' }} />
 
           <div className="ticket-list-container">

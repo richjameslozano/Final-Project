@@ -32,6 +32,14 @@
 
 .signup-section {
     width: 100%;
+
+}
+
+.signup-section .half-width .name-input{
+   width: 300px;
+   height: 35px;
+   margin-left: 10px;
+   padding-left: 10px;
 }
 
 .signup-field {

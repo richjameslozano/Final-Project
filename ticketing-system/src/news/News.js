@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../css/news/News.css"
 import { useState } from "react";
+import { Color } from "antd/es/color-picker";
 
 
 
@@ -28,7 +29,7 @@ const News = () => {
                     <span className="news-date"> December 1, 2024</span>
                         <h2 className="news-title"> 'UNIS in CURIOUSland' fancon in Manila and Cebu</h2>
                         <div className="news-description">
-                        <p>South Korean K-Pop sensation UNIS are set to thrill their Filipino EverAfters with their first-ever fan con in the Philippines. <br/>
+                        <p style={{color: "white", fontSize: '14px'}}>South Korean K-Pop sensation UNIS are set to thrill their Filipino EverAfters with their first-ever fan con in the Philippines. <br/>
                             The special event, titled 'UNIS in CURIOUSland,' is set to be a double treat this October. <br/>
                             Following the exciting announcement of their fan con in Manila, 'UNIS in CURIOUSland' will also be making a stop in Cebu. <br/>
                             Filipino fans can now catch the girls in two cities for their first-ever fan con in the Philippines, happening on:<br/>
@@ -45,7 +46,7 @@ const News = () => {
                         <span className="news-date"> November 16 and 17, 2024</span>
                             <h2 className="news-title"> The Grand BINIverse</h2>
                             <div className="news-description">
-                            <p>The Biniverse event, titled "The Grand BINIverse," is scheduled to take place on November 16 and 17, 2024, at the Araneta Coliseum in Manila, Philippines. This highly anticipated concert event will showcase the popular Filipino girl group BINI, known for their vibrant performances and dynamic music.
+                            <p style={{color: 'white', fontSize: '14px'}}>The Biniverse event, titled "The Grand BINIverse," is scheduled to take place on November 16 and 17, 2024, at the Araneta Coliseum in Manila, Philippines. This highly anticipated concert event will showcase the popular Filipino girl group BINI, known for their vibrant performances and dynamic music.
 
 The event will feature various activities, including live performances, special guest appearances, and fan engagement opportunities. BINI has been gaining significant traction in the P-pop scene, and this concert is expected to attract many fans, highlighting their growth and popularity within the industry. 
 
@@ -62,7 +63,7 @@ As excitement builds for the event, fans are encouraged to participate in pre-co
                         <span className="news-date">November 19, 2024</span>
                             <h2 className="news-title">Avengers: Secret Wars is an upcoming superhero film in the Marvel Cinematic Universe (MCU)</h2>
                             <div className="news-description">
-                            <p>Avengers: Secret Wars is an upcoming superhero film in the Marvel Cinematic Universe (MCU) that is anticipated to serve as a climax to the Multiverse Saga. Scheduled for release on November 19, 2024, the film follows Avengers: The Kang Dynasty, which is set to premiere in 2024. The movie is being developed with a focus on bringing together various characters and storylines that have been introduced throughout the MCU, particularly those related to the multiverse and its complexities.
+                            <p style={{color: 'white', fontSize: '14px'}}>Avengers: Secret Wars is an upcoming superhero film in the Marvel Cinematic Universe (MCU) that is anticipated to serve as a climax to the Multiverse Saga. Scheduled for release on November 19, 2024, the film follows Avengers: The Kang Dynasty, which is set to premiere in 2024. The movie is being developed with a focus on bringing together various characters and storylines that have been introduced throughout the MCU, particularly those related to the multiverse and its complexities.
 
  <br/> <br/>The film will be penned by Stephen McFeely, taking over from Michael Waldron, who wrote the scripts for earlier installments like Doctor Strange in the Multiverse of Madness.
 

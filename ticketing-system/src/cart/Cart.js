@@ -217,7 +217,7 @@ const Cart = () => {
               <p className="no-items">No shows available.</p>
             )
           ) : (
-            <p className="no-items">There are no items in your cart</p>
+            <p className="no-items" style={{marginBottom: '100px'}}>There are no items in your cart</p>
           )}
 
           <div className="total-cost">

@@ -163,7 +163,7 @@ const handleCategoryClick = (category) => {
 
           <div className='main-content-container' style={{backgroundImage: 'url(/images/HomeImages/homepage-bg.png)'}}>
             <h1 className='title-one'>FEATURED SHOWS</h1>
-            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INFORMATION</h2>
+            <h2 className='sub-title' style={{marginBottom: '50px'}}>FROM INFORMATION TECHNOLOGY</h2>
         
             <div className="movie-card-container-main">
             {fshows.map((featureds) => (
@@ -187,16 +187,9 @@ const handleCategoryClick = (category) => {
             <div className='other-events-container'>
               <h1 className='title-one'>Other Events</h1>
               <div className='category-poster-container'>
-                {/* <div className='category-container'>
-                  <ul className='categories'>
-                    <li onClick={() => handleCategoryClick('Movies')}>Movies</li>
-                    <li onClick={() => handleCategoryClick('Concerts & Shows')}>Concerts & Shows</li>
-                    <li onClick={() => handleCategoryClick('Sports')}>Sports </li>
-                    <li onClick={() => handleCategoryClick('Tours & Attractions')}>Tours & Attractions</li>
-                    <li onClick={() => handleCategoryClick('Family')}>Family</li>
-                    
-                  </ul>
-                </div> */}
+
+
+                
                 <div className='category-container'>
   <ul className='categories'>
     <li 

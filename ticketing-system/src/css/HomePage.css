@@ -32,13 +32,26 @@ body{
   overflow-x: hidden;
 }
 
+body::-webkit-scrollbar{
+  width: 5px;
+}
+
+body::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb{
+  border: none;
+  background-color: white;
+}
+
 /* Main layout styles */
 .home-page-layout {
     min-height: 100vh;
     overflow-x: hidden;
     overflow: hidden;
 }
-  
+
 .fade-out {
   opacity: 0;
 }
