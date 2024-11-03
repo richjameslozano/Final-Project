@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Layout, message, Modal, Button, Radio, Input, Form } from 'antd';
+import { Layout, message, Modal, Button, Radio, Input, Form, notification } from 'antd';
 import Header from '../components/Header';
 import '../css/cart/Cart.css';
 import Footer from '../components/Footer';
@@ -155,6 +155,11 @@ const Cart = () => {
       await handleClearCart();
   
       message.success(`Payment successful! Your selected payment method: ${selectedPaymentMethod}`);
+        notification.success({
+            message: 'Success',
+            description: 'Check your ticket on Ticket Purchased Page!',
+            placement: 'bottomRight',
+        });
       setIsModalVisible(false);
     } catch (error) {
       console.error("Error during purchase:", error);
