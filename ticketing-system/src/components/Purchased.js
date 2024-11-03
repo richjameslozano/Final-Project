@@ -7,44 +7,48 @@ const Purchased = ({ ticket, firstName, lastName }) => {
 
     const handleDownloadPDF = () => {
         const doc = new jsPDF();
-        
+
         // Load logo from the public folder
         const logo = new Image();
         logo.src = `${process.env.PUBLIC_URL}/images/onepixel.png`;
 
         logo.onload = () => {
-            let yPosition = 10; // Start y-position for the first card
+            // Add Logo and Header only once at the top of the PDF
+            doc.addImage(logo, 'PNG', 10, 10, 30, 30); // Adjust position as needed
+            doc.setFontSize(20);
+            doc.text("ONEPIXEL.TICKET", 80, 20);
 
+            // Title and event name
+            doc.text(ticket.eventname, 70, 30);
+
+            // Initial y-position for the first card, adjusted after the header
+            let yPosition = 45;
+
+            // Loop through quantity to create multiple cards
             for (let i = 0; i < ticket.quantity; i++) {
-                // Add logo for each card
-                doc.addImage(logo, 'PNG', 10, yPosition, 30, 30); // Adjust as needed
-
-                // Card Border and Title
+                // Card border for each ticket
                 doc.setLineWidth(0.5);
-                doc.rect(10, yPosition + 35, 190, 120); // Rectangle for card layout
-                doc.setFontSize(20);
-                doc.text("ONEPIXEL.TICKET", 80, yPosition + 20);
-                doc.text(ticket.eventname, 70, yPosition + 30);
+                doc.rect(10, yPosition, 190, 120); // Rectangle for card layout
 
                 // Add Ticket Details
                 doc.setFontSize(12);
-                doc.text(`Order ID: ${ticket.orderId}`, 20, yPosition + 50);
-                doc.text(`Ordered by: ${firstName} ${lastName}`, 20, yPosition + 60);
-                doc.text(`Mode of Payment: ${ticket.mop}`, 20, yPosition + 70);
-                doc.text(`Event Date: ${ticket.eventdate}`, 20, yPosition + 80);
-                doc.text(`Event Time: ${ticket.eventtime}`, 20, yPosition + 90);
-                doc.text(`Venue: ${ticket.venue}`, 20, yPosition + 100);
-                doc.text(`Quantity: 1`, 20, yPosition + 110); // Each card represents one ticket
-                doc.text(`Price per Ticket: ₱${ticket.price}`, 20, yPosition + 120);
-                doc.text(`Total Cost: ₱${ticket.price}`, 20, yPosition + 130); // Display price per ticket on each card
+                doc.text(`Order ID: ${ticket.orderId}`, 20, yPosition + 15);
+                doc.text(`Ordered by: ${firstName} ${lastName}`, 20, yPosition + 25);
+                doc.text(`Mode of Payment: ${ticket.mop}`, 20, yPosition + 35);
+                doc.text(`Event Date: ${ticket.eventdate}`, 20, yPosition + 45);
+                doc.text(`Event Time: ${ticket.eventtime}`, 20, yPosition + 55);
+                doc.text(`Venue: ${ticket.venue}`, 20, yPosition + 65);
+                doc.text(`Quantity: 1`, 20, yPosition + 75); // Display each card as one ticket
+                doc.text(`Price per Ticket: ₱${ticket.price}`, 20, yPosition + 85);
+                doc.text(`Total Cost: ₱${ticket.price}`, 20, yPosition + 95); // Display price per ticket on each card
 
                 // Additional styling for Total Cost
                 doc.setFontSize(14);
                 doc.setTextColor(255, 0, 0); // Red color for emphasis
-                doc.text(`Total: ₱${ticket.price}`, 20, yPosition + 140);
+                doc.text(`Total: ₱${ticket.price}`, 20, yPosition + 105);
 
                 // Adjust yPosition for the next card
-                yPosition += 160; // Space between each card
+                yPosition += 140; // Space between each card
             }
 
             // Save the PDF
