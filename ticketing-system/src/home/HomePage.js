@@ -60,7 +60,7 @@ useEffect(() => {
   
   if (showLoginSuccess) {
     // Display a success notification
-    message.success('Login successful! Welcome back!');
+    message.success('Login successful!');
     
     // Remove the flag from local storage
     localStorage.removeItem('showLoginSuccess');
@@ -265,7 +265,7 @@ const handleCategoryClick = (category) => {
               </div>
             </div>
                   <div className='main-about-us-container'>
-                    <div className='about-us-title'> ABOUT US </div>
+                    <div className='about-us-title'> Know more about <img src='/images/HomeImages/onepixel-logo.png'></img> </div>
                       <div className='dev-card-container'>
                             <div className='dev-cards'>
                             <img src='/images/tristan.jpg' className='dev-image' alt="dev-photo"></img>

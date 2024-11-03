@@ -28,7 +28,6 @@ const CartItem = ({
 
   const handleDelete = () => {
     onDelete(id);
-    message.success(`Successfully deleted ${ticketname}`);
   };
 
   const handleQuantityChange = async (newQuantity) => {

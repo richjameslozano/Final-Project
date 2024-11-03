@@ -210,7 +210,7 @@ app.post('/user/:userId/purchase', async (req, res) => {
         }));
 
         // Update the user document to move tickets to purchased
-        user.purchased.push(...purchasedTickets); // Add all tickets to purchased array
+        user.purchased.unshift(...purchasedTickets); // Add all tickets to purchased array
         user.ticket = []; // Clear the ticket array after transferring
 
         await user.save(); // Save the updated user document
