@@ -205,11 +205,14 @@ body::-webkit-scrollbar-thumb{
   box-shadow: inset 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 .about-us-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 font-family: Akira;
 font-size: 50px;
 color: black;
 margin-top: 50px;
-margin-bottom: 30px;
+margin-bottom: 50px;
 }
 .dev-card-container{
   display: flex;

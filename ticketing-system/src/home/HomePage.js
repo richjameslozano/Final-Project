@@ -265,7 +265,17 @@ const handleCategoryClick = (category) => {
               </div>
             </div>
                   <div className='main-about-us-container'>
-                    <div className='about-us-title'> Know more about <img src='/images/HomeImages/onepixel-logo.png'></img> </div>
+                    <div className='about-us-title'> Know more about 
+                      <img src='/images/HomeImages/ONEPIXEL-LOGO-BLACK.png' 
+                      style={{
+                        height: '100px', 
+                        width: '100px',
+                        marginLeft: '40px'}}></img> 
+                      
+                      </div>
+
+
+                    
                       <div className='dev-card-container'>
                             <div className='dev-cards'>
                             <img src='/images/tristan.jpg' className='dev-image' alt="dev-photo"></img>
