@@ -46,6 +46,12 @@ const UserAccount = () => {
     } else {
       setIsLoggedIn(false);
     }
+
+      // Check for the profile update flag in localStorage
+    if (localStorage.getItem('profileUpdated') === 'true') {
+      message.success('Profile updated successfully');
+      localStorage.removeItem('profileUpdated'); // Clear the flag
+    }
   }, []);
 
   const hasChanges = () => {
@@ -79,6 +85,33 @@ const UserAccount = () => {
     setPasswordModalVisible(true); // Show modal for password input
   };
 
+  // const handlePasswordSubmit = async () => {
+  //   try {
+  //     // Verify the user's password
+  //     const verifyResponse = await axios.post(`http://localhost:8031/user/${userId}/verify-password`, { password: passwordInput });
+  //     if (verifyResponse.status === 200) {
+  //       // Proceed to update user info if password verification is successful
+  //       const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
+  //       if (response.status === 200) {
+  //         message.success('Profile updated successfully');
+  //         localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
+  //         setInitialUserInfo(userInfo);
+  //         setPasswordModalVisible(false); // Close password modal
+  //         setPasswordInput(''); // Clear password input
+  //       } else {
+  //         message.error(`Failed to update profile: ${response.data.message}`);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during update:', error);
+  //     if (error.response && error.response.data && error.response.data.message) {
+  //       message.error(`Error: ${error.response.data.message}`);
+  //     } else {
+  //       message.error('Failed to update profile');
+  //     }
+  //   }
+  // };
+
   const handlePasswordSubmit = async () => {
     try {
       // Verify the user's password
@@ -87,11 +120,14 @@ const UserAccount = () => {
         // Proceed to update user info if password verification is successful
         const response = await axios.put(`http://localhost:8031/user/${userId}`, userInfo);
         if (response.status === 200) {
-          message.success('Profile updated successfully');
+          
           localStorage.setItem('user', JSON.stringify({ ...userInfo, id: userId }));
           setInitialUserInfo(userInfo);
           setPasswordModalVisible(false); // Close password modal
           setPasswordInput(''); // Clear password input
+          localStorage.setItem('profileUpdated', 'true'); // Set profile update flag
+          window.location.reload(); // Reload the page
+          // message.success('Profile updated successfully');
         } else {
           message.error(`Failed to update profile: ${response.data.message}`);
         }
@@ -105,6 +141,7 @@ const UserAccount = () => {
       }
     }
   };
+  
 
   const onhandlePurchased = (route) => {
     navigate(route);
