@@ -30,7 +30,7 @@ const Purchased = ({ ticket, firstName, lastName }) => {
 
                 <div className='detail-3'>
                     <p><span style={{fontWeight:'bold', fontSize: '15px', marginRight: '10px'}}>Quantity:</span> {ticket.quantity}</p>
-                    <p><span style={{fontWeight:'bold', fontSize: '15px', marginRight: '10px'}}>Price:</span> {ticket.price}</p>
+                    <p><span style={{fontWeight:'bold', fontSize: '15px', marginRight: '10px'}}>Price:</span> ₱{ticket.price}</p>
                     
                 </div>
 
