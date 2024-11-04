@@ -18,7 +18,7 @@ const Purchased = ({ ticket, firstName, lastName }) => {
         const cut = new Image();
         cut.src= `${process.env.PUBLIC_URL}/images/cut.png`;
 
-    
+
         logo.onload = () => {
             // Add logo and main title at the top of the PDF
             doc.addImage(logo, 'PNG', 10, 10, 20, 20); // Smaller logo for compact layout
