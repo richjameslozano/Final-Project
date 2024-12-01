@@ -34,6 +34,8 @@ const Footer = () => {
         handleNavigation('/customer-care');
       };
 
+
+      
     return(
         <div className="footer-container" style={{backgroundImage: 'url(/images/HomeImages/footer-bg.png)'}}>
             <div className='footer-details-container'>
